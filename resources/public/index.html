@@ -11,16 +11,25 @@
     <script src="js/main.js"></script>
   </head>
   <body>
-      <h1>Hello</h1>
-
       <div id="main"></div>
 
       <script type="text/template" id="submitFormTemplate">
+        <div class="offset2">
+        <h1>Hello</h1>
         <form id="submitForm">
-          E-mail: <input type="email" id="emailField" required="required"/><br/>
-          <input type="submit" id="submitButton"/>
-        </form>
+          <fieldset>
+            <legend>Presentation format</legend>
+              <div class="btn-group" data-toggle="buttons-radio">
+                <button class="btn" type="button" name="presFormat" value="presentation">Presentation</button>
+                <button class="btn" type="button" name="presFormat" value="lightning">Lightning talk</button>
+              </div>
 
+            <legend>E-mail</legend>
+            <input type="email" id="emailField" required="required"/><br/>
+            <button type="submit" id="submitButton" class="btn">Submit</button>
+          </fieldset>
+        </form>
+        </div>
 
       
     </script>
