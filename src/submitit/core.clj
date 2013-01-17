@@ -1,5 +1,12 @@
-(ns submitit.core (:use [clojure.java.io]
-	[clojure.string :only (split)]))
+(ns submitit.core (:use 
+  [clojure.java.io]
+	[clojure.string :only (split)]
+  [noir.core]
+  [noir.request]
+  [noir.response :only [redirect]]
+  )
+  (:require [noir.server :as server])
+)
 
 (defn keyval [x]
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
@@ -28,9 +35,21 @@
       (.send))	
 	)
 
+(defn startup []  
+  (let [mode :dev
+        port (Integer. (get (System/getenv) "PORT" "8080"))
+        ]
+    (server/start port {:mode mode
+                        :ns 'submitit.core}))
+)
+
+(defpage "/" []
+  (redirect "/index.html"))
+
 (defn -main [& m]
 	(println "Starting");
-	(let [setup (read-enviroment-variables (first m))]
-		(if (and setup (second m)) (send-mail setup (second m)) nil)
-		)	
+  (startup)
+;	(let [setup (read-enviroment-variables (first m))]
+;		(if (and setup (second m)) (send-mail setup (second m)) nil)
+;		)	
 		)
