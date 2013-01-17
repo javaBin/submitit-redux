@@ -5,6 +5,7 @@
   	[org.clojure/clojure "1.3.0"] 
   	[org.apache.commons/commons-email "1.2"]
   	[noir "1.3.0-alpha10"]
+  	[ring-middleware-format "0.1.1"]
   	]
   :main ^{:skip-aot true} submitit.core
   )

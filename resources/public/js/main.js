@@ -24,6 +24,25 @@ var SubmitFormView = Backbone.View.extend({
 			return true;
 		}
 
+		var self = this;
+
+		this.model.set({
+			presentationType : self.$("#presentationTypeGrp button.active").val(),
+			title: self.$("#titleInput").val(),
+			abstract: self.$("#abstractInput").val(),
+			language: self.$("#languageGrp button.active").val(),
+			level: self.$("#levelGrp button.active").val(),
+			outline: self.$("#outlineInput").val(),
+			highlight: self.$("#highlightInput").val(),
+			equipment: self.$("#equipmentInput").val(),
+			expectedAudience: self.$("#expectedAudienceInput").val()
+		});
+
+		this.model.url="/addTalk";
+
+		this.model.save();
+
+
 		return false;
 	}
 

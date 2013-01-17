@@ -6,6 +6,7 @@
   [noir.response :only [redirect]]
   )
   (:require [noir.server :as server])
+  (:require [ring.middleware.format-params :as format-params])
 )
 
 (defn keyval [x]
@@ -35,16 +36,23 @@
       (.send))	
 	)
 
+
 (defn startup []  
   (let [mode :dev
         port (Integer. (get (System/getenv) "PORT" "8080"))
         ]
+    (server/add-middleware format-params/wrap-json-params)    
     (server/start port {:mode mode
                         :ns 'submitit.core}))
 )
 
 (defpage "/" []
   (redirect "/index.html"))
+
+(defpage [:post "/addTalk"] {:as talk}
+  (println talk)
+  "Hoi"
+  )
 
 (defn -main [& m]
 	(println "Starting");

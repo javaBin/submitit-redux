@@ -19,19 +19,55 @@
         <form id="submitForm">
           <fieldset>
             <legend>Presentation format</legend>
-              <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn" type="button" name="presFormat" value="presentation">Presentation</button>
-                <button class="btn" type="button" name="presFormat" value="lightning">Lightning talk</button>
-              </div>
+            <div class="btn-group" data-toggle="buttons-radio" id="presentationTypeGrp">
+              <button class="btn active" type="button" name="presFormat" value="presentation">Presentation</button>
+              <button class="btn" type="button" name="presFormat" value="lightning">Lightning talk</button>
+            </div>
 
-            <legend>E-mail</legend>
-            <input type="email" id="emailField" required="required"/><br/>
+            <legend>Title</legend>
+            <input type="text" required="required" class="span8" id="titleInput"/>
+
+            <legend>Abstract</legend>
+            <textarea rows="8" required="required" class="span8" id="abstractInput"/>
+
+            <legend>Language</legend>
+            <div class="btn-group" data-toggle="buttons-radio" id="languageGrp">
+              <button class="btn active" type="button" name="language" value="english">English</button>
+              <button class="btn" type="button" name="language" value="norwegian">Norwegian</button>
+            </div>
+
+            <legend>Level</legend>
+            <div class="btn-group" data-toggle="buttons-radio" id="levelGrp">
+              <button class="btn active" type="button" name="level" value="beginner">Beginner</button>
+              <button class="btn" type="button" name="level" value="intermediate">Intermediate</button>
+              <button class="btn" type="button" name="level" value="advanced">Advanced</button>
+              <button class="btn" type="button" name="level" value="hardcore">Hardcore</button>
+            </div>
+
+            <legend>Outline</legend>
+            <textarea rows="8" required="required" class="span8" id="outlineInput"/>
+
+            <legend>Highlight summary</legend>
+            <textarea rows="3" required="required" class="span8" id="highlightInput"/>
+
+            <legend>Equipment</legend>
+            <textarea rows="3" class="span8" id="equipmentInput"/>
+
+            <legend>Expected audience</legend>
+            <textarea rows="8" required="required" class="span8" id="expectedAudienceInput"/>
+            
+            <legend>Submit talk</legend>
             <button type="submit" id="submitButton" class="btn">Submit</button>
           </fieldset>
         </form>
         </div>
-
       
+    </script>
+
+    <script type="text/template" id="speakerTemplate">
+        <legend>E-mail</legend>
+            <input type="email" id="emailField" required="required"/><br/>
+            
     </script>
 
   </body>
