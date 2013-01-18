@@ -1,7 +1,26 @@
 "use strict";
 
-var SubmitFormModel = Backbone.Model.extend({
+var SpeakerModel = Backbone.Model.extend({
 
+});
+
+var SpeakerCollection = Backbone.Collection.extend({
+
+});
+
+var SpeakerView = Backbone.View.extend({
+	initialize: function (attrs) {
+		this.template = _.template(attrs.template);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+	}
+})
+
+var SubmitFormModel = Backbone.Model.extend({
+	initialize: function (attrs) {	
+	}
 });
 
 var SubmitFormView = Backbone.View.extend({
@@ -11,10 +30,22 @@ var SubmitFormView = Backbone.View.extend({
 
 	initialize: function (attrs) {
 		this.template = _.template(attrs.template);
+		this.speakerTemplateText = attrs.speakerTemplate;
 	},
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
+		var speakerDom = this.$("#speakerList");
+		var self = this;
+		this.model.get("speakers").each(function(speakerModel) {
+			var speakerView = new SpeakerView({
+				model: speakerModel,
+				template: self.speakerTemplateText
+			});
+			speakerView.render();
+			speakerDom.append(speakerView.el);
+
+		});
 	},
 
 	submitClicked: function() {
@@ -49,10 +80,18 @@ var SubmitFormView = Backbone.View.extend({
 });
 
 $(function() {
+	var speakerCollection = new SpeakerCollection;
+	speakerCollection.add({});
+
+	var submitFormModel = new SubmitFormModel({
+		speakers: speakerCollection
+	});
+
 	var fv=new SubmitFormView({
-		model: new SubmitFormModel,
+		model: submitFormModel,
 		el: $("#main"),
-		template: $("#submitFormTemplate").html()
+		template: $("#submitFormTemplate").html(),
+		speakerTemplate: $("#speakerTemplate").html()
 	})
 	fv.render();
 });

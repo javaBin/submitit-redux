@@ -55,6 +55,10 @@
 
             <legend>Expected audience</legend>
             <textarea rows="8" required="required" class="span8" id="expectedAudienceInput"/>
+
+            <h2>Speakers</h2>
+
+            <div id="speakerList"></div>
             
             <legend>Submit talk</legend>
             <button type="submit" id="submitButton" class="btn">Submit</button>
@@ -65,8 +69,11 @@
     </script>
 
     <script type="text/template" id="speakerTemplate">
+        <legend>Name</legend>
+        <input type="text" id="speakerNameInput" required="required"/>
         <legend>E-mail</legend>
-            <input type="email" id="emailField" required="required"/><br/>
+        <input type="email" id="emailInput" required="required"/>
+
             
     </script>
 
