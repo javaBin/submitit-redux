@@ -1,0 +1,36 @@
+Thank you for submitting your presentation titled "%title%".
+
+You can access the submitted presentation at somewhere
+
+
+Best regards,
+
+JavaZone Programme Committee
+program@java.no
+
+
+
+The following has been registered:
+
+Format: %presentationType%
+Title: %title%
+
+Abstract:
+%abstract%
+
+Summary:
+%highlight%
+
+Outline:
+%outline%
+
+
+Language: %language% 
+Level: %level%
+Equipment: %equipment%
+
+
+Expected audience:
+%expectedAudience%
+
+Tags:

@@ -9,6 +9,8 @@
   (:require [ring.middleware.format-params :as format-params])
 )
 
+(def setupenv (ref {}))
+
 (defn keyval [x]
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
   )
@@ -23,15 +25,15 @@
   )
   )
 
-(defn send-mail [setup mailaddress]
+(defn send-mail [setup mailaddress message]
 	(doto (org.apache.commons.mail.SimpleEmail.)
       (.setHostName (setup :hostname))
       (.setSslSmtpPort (setup :smtpport))
       (.setSSL true)
       (.addTo mailaddress)
-      (.setFrom mailaddress "Someone")
-      (.setSubject "Hello from clojure")
-      (.setMsg "Wasn't that easy?")
+      (.setFrom (setup :mailFrom) "Javazone program commitee")
+      (.setSubject "Confirmation of your JavaZone submission")
+      (.setMsg message)
       (.setAuthentication (setup :user) (setup :password))
       (.send))	
 	)
@@ -49,14 +51,31 @@
 (defpage "/" []
   (redirect "/index.html"))
 
+(defn generate-mail-text [template value-map]
+  (if (empty? value-map) template
+    (let [[tkey tvalue] (first value-map)]
+      (generate-mail-text
+      (clojure.string/replace template (re-pattern (str "%" tkey "%")) tvalue)
+      (dissoc value-map tkey))
+    )
+  )
+  )
+
 (defpage [:post "/addTalk"] {:as talk}
-  (println talk)
+;  (println talk)
+  (send-mail @setupenv ((first (talk "speakers")) "email")
+  (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
   "Hoi"
   )
 
+
+
 (defn -main [& m]
 	(println "Starting");
-  (startup)
+  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
+  (if @setupenv
+    (startup)
+    nil)
 ;	(let [setup (read-enviroment-variables (first m))]
 ;		(if (and setup (second m)) (send-mail setup (second m)) nil)
 ;		)	
