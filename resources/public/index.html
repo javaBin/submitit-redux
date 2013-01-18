@@ -19,25 +19,25 @@
         <form id="submitForm">
           <fieldset>
             <legend>Presentation format</legend>
-            <div class="btn-group" data-toggle="buttons-radio" id="presentationTypeGrp">
+            <div class="btn-group talkInput" data-toggle="buttons-radio" id="presentationTypeGrp">
               <button class="btn active" type="button" name="presFormat" value="presentation">Presentation</button>
               <button class="btn" type="button" name="presFormat" value="lightning">Lightning talk</button>
             </div>
 
             <legend>Title</legend>
-            <input type="text" required="required" class="span8" id="titleInput"/>
+            <input type="text" required="required" class="span8 talkInput" id="titleInput"/>
 
             <legend>Abstract</legend>
-            <textarea rows="8" required="required" class="span8" id="abstractInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"/>
 
             <legend>Language</legend>
-            <div class="btn-group" data-toggle="buttons-radio" id="languageGrp">
+            <div class="btn-group talkInput" data-toggle="buttons-radio" id="languageGrp">
               <button class="btn active" type="button" name="language" value="english">English</button>
               <button class="btn" type="button" name="language" value="norwegian">Norwegian</button>
             </div>
 
             <legend>Level</legend>
-            <div class="btn-group" data-toggle="buttons-radio" id="levelGrp">
+            <div class="btn-group talkInput" data-toggle="buttons-radio" id="levelGrp">
               <button class="btn active" type="button" name="level" value="beginner">Beginner</button>
               <button class="btn" type="button" name="level" value="intermediate">Intermediate</button>
               <button class="btn" type="button" name="level" value="advanced">Advanced</button>
@@ -45,16 +45,16 @@
             </div>
 
             <legend>Outline</legend>
-            <textarea rows="8" required="required" class="span8" id="outlineInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput"/>
 
             <legend>Highlight summary</legend>
-            <textarea rows="3" required="required" class="span8" id="highlightInput"/>
+            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"/>
 
             <legend>Equipment</legend>
-            <textarea rows="3" class="span8" id="equipmentInput"/>
+            <textarea rows="3" class="span8 talkInput" id="equipmentInput"/>
 
             <legend>Expected audience</legend>
-            <textarea rows="8" required="required" class="span8" id="expectedAudienceInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"/>
 
             <h2>Speakers</h2>
 
@@ -70,10 +70,11 @@
 
     <script type="text/template" id="speakerTemplate">
         <legend>Name</legend>
-        <input type="text" id="speakerNameInput" required="required"/>
-        <legend>E-mail</legend>
-        <input type="email" id="emailInput" required="required"/>
+        <input class="speakerInput" type="text" id="speakerNameInput" required="required"/>
 
+        <legend>E-mail</legend>
+        <input class="speakerInput" type="email" id="emailInput" required="required"/>
+        <hr/>
             
     </script>
 

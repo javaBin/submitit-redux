@@ -4,28 +4,45 @@ var SpeakerModel = Backbone.Model.extend({
 
 });
 
-var SpeakerCollection = Backbone.Collection.extend({
 
+var SpeakerCollection = Backbone.Collection.extend({
+	model: SpeakerModel
 });
 
 var SpeakerView = Backbone.View.extend({
+	events: {
+            "change .speakerInput" : "speakerInputChanged",
+    },
+
 	initialize: function (attrs) {
 		this.template = _.template(attrs.template);
 	},
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
+	},
+
+	speakerInputChanged: function() {
+		var self = this;
+		self.model.set({
+			speakerName: self.$("#speakerNameInput").val(),
+			email: self.$("#emailInput").val()
+		});
 	}
 })
 
 var SubmitFormModel = Backbone.Model.extend({
 	initialize: function (attrs) {	
 	}
+	
+
 });
 
 var SubmitFormView = Backbone.View.extend({
 	events: {
-            "click #submitButton": "submitClicked"
+            "click #submitButton": "submitClicked",
+            "change .talkInput" : "inputChanged",
+            "click .talkInput" : "inputChanged"
     },
 
 	initialize: function (attrs) {
@@ -55,6 +72,17 @@ var SubmitFormView = Backbone.View.extend({
 			return true;
 		}
 
+		this.model.url="/addTalk";
+
+		console.log(this.model);
+
+		this.model.save();
+
+
+		return false;
+	},
+
+	inputChanged: function() {
 		var self = this;
 
 		this.model.set({
@@ -68,24 +96,17 @@ var SubmitFormView = Backbone.View.extend({
 			equipment: self.$("#equipmentInput").val(),
 			expectedAudience: self.$("#expectedAudienceInput").val()
 		});
+	},
 
-		this.model.url="/addTalk";
-
-		this.model.save();
-
-
-		return false;
-	}
-
+	
 });
 
-$(function() {
-	var speakerCollection = new SpeakerCollection;
-	speakerCollection.add({});
+$(function() {	
 
 	var submitFormModel = new SubmitFormModel({
-		speakers: speakerCollection
+		speakers: new SpeakerCollection({})
 	});
+	
 
 	var fv=new SubmitFormView({
 		model: submitFormModel,
