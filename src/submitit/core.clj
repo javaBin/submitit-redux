@@ -4,7 +4,7 @@
   [noir.core]
   [noir.request]
   [noir.response :only [redirect]]
-  [cheshire.core :only [generate-string]]
+  [cheshire.core :only [generate-string parse-string]]
   )
   (:require [noir.server :as server])
   (:require [ring.middleware.format-params :as format-params])
@@ -76,22 +76,40 @@
       {:name "outline" :value (talk "outline")}
       {:name "equipment" :value (talk "equipment")}
       {:name "lang" :value (talk "language")}
+      {:name "keywords" :array ["Alternative languages" "Mobile"]}
     ]
     }})
   )
 
-(defn post-talk [json-talk]
-  (client/post "http://10.0.0.71:8081/server/events/4c18f45a-054a-4699-a2bc-6a59a9dd8382/sessions" {
+(defn post-talk [json-talk address]
+  (println "Posting: " json-talk)
+  (client/post address {
+    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
     :body json-talk
     :content-type "application/vnd.collection+json"
     })
   )
 
+(defn speaker-add-path [talk-post-res]
+  ;(((parse-string talk-post-res) "collection") "links")
+  ((first (filter #(= "collection speaker" (% "rel")) ((first (((parse-string talk-post-res) "collection") "items")) "links"))) "href")
+  )
+
+(defn talk-path [talk-post-res]
+  ;(((parse-string talk-post-res) "collection") "links")
+  ((first (((parse-string talk-post-res) "collection") "items")) "href")
+  )
+
+
 (defpage [:post "/addTalk"] {:as talk}
 ;  (println talk)
 ;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
 ;  (println (submit-talk-json talk))
-  (println (post-talk (submit-talk-json talk)))
+;  (let [post-result (post-talk (submit-talk-json talk) "http://10.0.0.71:8081/server/events/4c18f45a-054a-4699-a2bc-6a59a9dd8382/sessions")]
+ (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
+    (println "Post-res: " post-result)
+    ;(println (parse-string post-result))
+    )
   "Hoi"
   )
 
