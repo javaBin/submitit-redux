@@ -6,6 +6,8 @@
   	[org.apache.commons/commons-email "1.2"]
   	[noir "1.3.0-alpha10"]
   	[ring-middleware-format "0.1.1"]
+    [cheshire "4.0.3"]
+    [clj-http "0.6.3"]
   	]
   :main ^{:skip-aot true} submitit.core
   )

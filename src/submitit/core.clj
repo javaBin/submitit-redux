@@ -4,9 +4,11 @@
   [noir.core]
   [noir.request]
   [noir.response :only [redirect]]
+  [cheshire.core :only [generate-string]]
   )
   (:require [noir.server :as server])
   (:require [ring.middleware.format-params :as format-params])
+  (:require [clj-http.client :as client])
 )
 
 (def setupenv (ref {}))
@@ -61,10 +63,35 @@
   )
   )
 
+(defn submit-talk-json [talk]
+  (generate-string
+  {:template {
+    :data [
+      {:name "title" :value (talk "title")}
+      {:name "level" :value (talk "level")}
+      {:name "format" :value (talk "presentationType")}
+      {:name "body" :value (talk "abstract")}
+      {:name "summary" :value (talk "highlight")}
+      {:name "audience" :value (talk "expectedAudience")}
+      {:name "outline" :value (talk "outline")}
+      {:name "equipment" :value (talk "equipment")}
+      {:name "lang" :value (talk "language")}
+    ]
+    }})
+  )
+
+(defn post-talk [json-talk]
+  (client/post "http://10.0.0.71:8081/server/events/4c18f45a-054a-4699-a2bc-6a59a9dd8382/sessions" {
+    :body json-talk
+    :content-type "application/vnd.collection+json"
+    })
+  )
+
 (defpage [:post "/addTalk"] {:as talk}
 ;  (println talk)
-  (send-mail @setupenv ((first (talk "speakers")) "email")
-  (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
+;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
+;  (println (submit-talk-json talk))
+  (println (post-talk (submit-talk-json talk)))
   "Hoi"
   )
 
