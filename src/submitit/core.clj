@@ -10,9 +10,19 @@
   (:require [noir.server :as server])
   (:require [ring.middleware.format-params :as format-params])
   (:require [clj-http.client :as client])
+  (:require [clojure.data.codec.base64 :as b64])
 )
 
 (def setupenv (ref {}))
+
+
+(defn encode-string [x] 
+  (apply str (map char (b64/encode (.getBytes x))))
+  )
+
+(defn decode-string [x]
+  (apply str (map char (b64/decode (.getBytes x))))
+  )
 
 (defn keyval [x]
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
@@ -151,6 +161,7 @@
   ;    [body ]
   ;  )
   ))
+
 
 
 (defn -main [& m]

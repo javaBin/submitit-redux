@@ -8,6 +8,7 @@
   	[ring-middleware-format "0.1.1"]
     [cheshire "4.0.3"]
     [clj-http "0.6.3"]
+    [org.clojure/data.codec "0.1.0"]
   	]
   :main ^{:skip-aot true} submitit.core
   )
