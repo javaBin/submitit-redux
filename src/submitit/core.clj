@@ -129,6 +129,12 @@
     )
   )
 
+(defn get-talk [encoded-url]
+  (client/get (decode-string encoded-url) {
+      :content-type "application/vnd.collection+json"
+    })
+  )
+
 (defn speaker-post-addr [post-result]
   (str ((post-result :headers) "location") "/speakers")
   )
@@ -147,19 +153,35 @@
   "Hoi"
   )
 
+(defn tval [tm akey]
+  ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
+)
+  
+
 (defpage [:get "/talkDetail"] {:as talkd}
-  (let [t-as-json 
-  (client/get (str (@setupenv :emsSubmitTalk) "/" (talkd :id)) {
-    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
-    :content-type "application/vnd.collection+json"
-    }
-    ) ]
-  (println t-as-json)
-  "Hoi"
-  ;(html5
-  ;    (page-header)
-  ;    [body ]
-  ;  )
+  (let [talk-map (parse-string ((get-talk (talkd :talkid)) :body))]
+
+  (html5
+      (page-header)
+      [:body 
+      [:div {:class "offset1 span10"}
+      [:h1 (str "Talk: \""(tval talk-map "title") "\"")]
+      [:legend "Presentation format"]
+      [:p (tval talk-map "format")]
+      [:legend "Language"]
+      [:p (if (= (tval talk-map "locale") "no") "Norwegian" "English")]
+      [:legend "Level"]
+      [:p (tval talk-map "level")]
+      [:legend "Outline"]
+      [:p (tval talk-map "outline")]
+      [:legend "Highligh summary"]
+      [:p (tval talk-map "summary")]
+      [:legend "Equipment"]
+      [:p (tval talk-map "equipment")]
+      [:legend "Expected audience"]
+      [:p (tval talk-map "audience")]
+      ]]
+    )
   ))
 
 
