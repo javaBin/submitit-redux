@@ -61,8 +61,12 @@
                         :ns 'submitit.core}))
 )
 
-(defpage "/" []
-  (redirect "/index.html"))
+
+
+(defpage [:get "/"] {:as attrs}
+  (redirect (if (attrs :talkid) (str "/index.html?talkid=" (attrs :talkid)) "/index.html"))
+  ) 
+
 
 (defpartial page-header[] 
   [:head 
