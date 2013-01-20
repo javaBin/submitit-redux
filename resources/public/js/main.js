@@ -26,7 +26,8 @@ var SpeakerView = Backbone.View.extend({
 		var self = this;
 		self.model.set({
 			speakerName: self.$("#speakerNameInput").val(),
-			email: self.$("#emailInput").val()
+			email: self.$("#emailInput").val(),
+			bio: self.$("#speakerBioInput").val()
 		});
 	}
 })

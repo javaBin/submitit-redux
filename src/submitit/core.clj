@@ -5,6 +5,7 @@
   [noir.request]
   [noir.response :only [redirect]]
   [cheshire.core :only [generate-string parse-string]]
+  [hiccup.page-helpers :only [html5 link-to  include-js]]
   )
   (:require [noir.server :as server])
   (:require [ring.middleware.format-params :as format-params])
@@ -53,6 +54,14 @@
 (defpage "/" []
   (redirect "/index.html"))
 
+(defpartial page-header[] 
+  [:head 
+  [:link {:href "css/bootstrap.min.css" :rel "stylesheet"}]
+  [:script {:src "js/jquery-1.7.2.js"}]
+  [:script {:src "js/bootstrap.min.js"}]
+    ]
+  )
+
 (defn generate-mail-text [template value-map]
   (if (empty? value-map) template
     (let [[tkey tvalue] (first value-map)]
@@ -81,38 +90,67 @@
     }})
   )
 
+
+(defn submit-speakers-json [talk]
+  (let [speak (first (talk "speakers"))]
+   (generate-string
+  {:template {
+    :data [ 
+    {:name "name" :value (speak "speakerName")}
+    {:name "email" :value (speak "email")}
+    {:name "bio" :value (speak "bio")}
+   ]
+    }})
+  ))
+
 (defn post-talk [json-talk address]
-  (println "Posting: " json-talk)
-  (client/post address {
+  (println "Posting to " address " : " json-talk)
+
+  (client/post address (if (@setupenv :emsUser) 
+  {
     :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
     :body json-talk
     :content-type "application/vnd.collection+json"
+    }
+    {
+      :body json-talk
+      :content-type "application/vnd.collection+json"
     })
+    )
   )
 
-(defn speaker-add-path [talk-post-res]
-  ;(((parse-string talk-post-res) "collection") "links")
-  ((first (filter #(= "collection speaker" (% "rel")) ((first (((parse-string talk-post-res) "collection") "items")) "links"))) "href")
+(defn speaker-post-addr [post-result]
+  (str ((post-result :headers) "location") "/speakers")
   )
-
-(defn talk-path [talk-post-res]
-  ;(((parse-string talk-post-res) "collection") "links")
-  ((first (((parse-string talk-post-res) "collection") "items")) "href")
-  )
-
 
 (defpage [:post "/addTalk"] {:as talk}
-;  (println talk)
+  (println talk)
 ;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
 ;  (println (submit-talk-json talk))
-;  (let [post-result (post-talk (submit-talk-json talk) "http://10.0.0.71:8081/server/events/4c18f45a-054a-4699-a2bc-6a59a9dd8382/sessions")]
  (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
     (println "Post-res: " post-result)
-    ;(println (parse-string post-result))
+;    (if (map? post-result) (println "WE have a map") (println "No way map"))
+    (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
+      (println "Speakerpost: " speaker-post)
+      )
     )
   "Hoi"
   )
 
+(defpage [:get "/talkDetail"] {:as talkd}
+  (let [t-as-json 
+  (client/get (str (@setupenv :emsSubmitTalk) "/" (talkd :id)) {
+    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
+    :content-type "application/vnd.collection+json"
+    }
+    ) ]
+  (println t-as-json)
+  "Hoi"
+  ;(html5
+  ;    (page-header)
+  ;    [body ]
+  ;  )
+  ))
 
 
 (defn -main [& m]
