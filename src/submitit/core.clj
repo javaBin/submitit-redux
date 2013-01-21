@@ -170,6 +170,8 @@
       [:body 
       [:div {:class "offset1 span10"}
       [:h1 (str "Talk: \""(tval talk-map "title") "\"")]
+      [:legend "Abstract"]
+      [:p (tval talk-map "body")]
       [:legend "Presentation format"]
       [:p (tval talk-map "format")]
       [:legend "Language"]
