@@ -25,36 +25,36 @@
             </div>
 
             <legend>Title</legend>
-            <input type="text" required="required" class="span8 talkInput" id="titleInput"/>
+            <input type="text" required="required" class="span8 talkInput" id="titleInput" value="<%= title %>"/>
 
             <legend>Abstract</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput" value="<%= abstract %>"/>
 
             <legend>Language</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="languageGrp">
-              <button class="btn active" type="button" name="language" value="en">English</button>
-              <button class="btn" type="button" name="language" value="no">Norwegian</button>
+              <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
+              <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
             </div>
 
             <legend>Level</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="levelGrp">
-              <button class="btn active" type="button" name="level" value="beginner">Beginner</button>
-              <button class="btn" type="button" name="level" value="intermediate">Intermediate</button>
-              <button class="btn" type="button" name="level" value="advanced">Advanced</button>
-              <button class="btn" type="button" name="level" value="hardcore">Hardcore</button>
+              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="beginner">Beginner</button>
+              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="intermediate">Intermediate</button>
+              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
+              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
             </div>
 
             <legend>Outline</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput" value="<%= outline %>"/>
 
             <legend>Highlight summary</legend>
-            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"/>
+            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput" value="<%= highlight %>"/>
 
             <legend>Equipment</legend>
-            <textarea rows="3" class="span8 talkInput" id="equipmentInput"/>
+            <textarea rows="3" class="span8 talkInput" id="equipmentInput" value="<%= equipment %>"/>
 
             <legend>Expected audience</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput" value="<%= expectedAudience %>"/>
 
             <h2>Speakers</h2>
 
@@ -70,13 +70,13 @@
 
     <script type="text/template" id="speakerTemplate">
         <legend>Name</legend>
-        <input class="speakerInput" type="text" id="speakerNameInput" required="required"/>
+        <input class="speakerInput" type="text" id="speakerNameInput" required="required" value="<%= speakerName %>"/>
 
         <legend>E-mail</legend>
-        <input class="speakerInput" type="email" id="emailInput" required="required"/>
+        <input class="speakerInput" type="email" id="emailInput" required="required" value="<%= email %>"/>
 
         <legend>Speaker bio</legend>
-        <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"/>
+        <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput" value="<%= bio %>/>
 
         <hr/>
             

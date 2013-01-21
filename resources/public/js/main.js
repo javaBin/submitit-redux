@@ -1,5 +1,11 @@
 "use strict";
 
+$.urlParam = function(name){
+    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results ? results[1] || 0 : 0;
+}
+
+
 var SpeakerModel = Backbone.Model.extend({
 
 });
@@ -105,7 +111,20 @@ var SubmitFormView = Backbone.View.extend({
 $(function() {	
 
 	var submitFormModel = new SubmitFormModel({
-		speakers: new SpeakerCollection({})
+		presentationType : "",
+		title: "",
+		abstract: "",
+		language: "no",
+		level: "",
+		outline: "",
+		highlight: "",
+		equipment: "",
+		expectedAudience: "",
+		speakers: new SpeakerCollection({
+			speakerName: "",
+			email: "",
+			bio: ""
+		})
 	});
 	
 
