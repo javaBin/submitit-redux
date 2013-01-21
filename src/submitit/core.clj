@@ -190,6 +190,23 @@
     )
   ))
 
+(defpage [:get "/talkJson"] {:as talkd}
+  (let [talk-map (parse-string ((get-talk (talkd :talkid)) :body))]
+    (generate-string
+    {
+      :presentationType  (tval talk-map "format"),
+      :title (tval talk-map "title")
+      :abstract (tval talk-map "body")
+      :language (tval talk-map "locale")
+      :level (tval talk-map "level")
+      :outline (tval talk-map "outline")
+      :highlight (tval talk-map "summary")
+      :equipment (tval talk-map "equipment")
+      :expectedAudience (tval talk-map "audience")
+    })
+  )
+  )
+
 
 
 (defn -main [& m]
