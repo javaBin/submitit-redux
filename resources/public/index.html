@@ -28,7 +28,7 @@
             <input type="text" required="required" class="span8 talkInput" id="titleInput" value="<%= title %>"/>
 
             <legend>Abstract</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput" value="<%= abstract %>"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"><%= abstract %></textarea>
 
             <legend>Language</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="languageGrp">
@@ -39,22 +39,22 @@
             <legend>Level</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="levelGrp">
               <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="beginner">Beginner</button>
-              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="intermediate">Intermediate</button>
-              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
-              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
+              <button class="btn <% if (level === 'intermediate') { %>active<% } %>" type="button" name="level" value="intermediate">Intermediate</button>
+              <button class="btn <% if (level === 'advanced') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
+              <button class="btn <% if (level === 'hardcore') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
             </div>
 
             <legend>Outline</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput" value="<%= outline %>"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput"><%= outline %></textarea>
 
             <legend>Highlight summary</legend>
-            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput" value="<%= highlight %>"/>
+            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"><%= highlight %></textarea>
 
             <legend>Equipment</legend>
-            <textarea rows="3" class="span8 talkInput" id="equipmentInput" value="<%= equipment %>"/>
+            <textarea rows="3" class="span8 talkInput" id="equipmentInput"><%= equipment %></textarea>
 
             <legend>Expected audience</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput" value="<%= expectedAudience %>"/>
+            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"><%= expectedAudience %></textarea>
 
             <h2>Speakers</h2>
 
@@ -76,7 +76,7 @@
         <input class="speakerInput" type="email" id="emailInput" required="required" value="<%= email %>"/>
 
         <legend>Speaker bio</legend>
-        <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput" value="<%= bio %>/>
+        <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
 
         <hr/>
             

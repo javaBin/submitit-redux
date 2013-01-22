@@ -33,7 +33,7 @@
   (if (and filename (.exists (new java.io.File filename)))
     (apply hash-map (flatten (map keyval (clojure.string/split-lines (slurp filename)))))
     (let [res nil]
-    (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>'.")
+    (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE.")
     res)
 
   ))

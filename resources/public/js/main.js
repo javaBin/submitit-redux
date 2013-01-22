@@ -39,8 +39,6 @@ var SpeakerView = Backbone.View.extend({
 })
 
 var SubmitFormModel = Backbone.Model.extend({
-	initialize: function (attrs) {	
-	}
 	
 
 });
@@ -109,23 +107,38 @@ var SubmitFormView = Backbone.View.extend({
 });
 
 $(function() {	
-
-	var submitFormModel = new SubmitFormModel({
-		presentationType : "",
-		title: "",
-		abstract: "",
-		language: "no",
-		level: "",
-		outline: "",
-		highlight: "",
-		equipment: "",
-		expectedAudience: "",
-		speakers: new SpeakerCollection({
-			speakerName: "",
-			email: "",
-			bio: ""
-		})
-	});
+	var givenId = $.urlParam("talkid");
+	var submitFormModel;
+	if (givenId === 0) {
+		submitFormModel = new SubmitFormModel({
+			presentationType : "",
+			title: "",
+			abstract: "",
+			language: "no",
+			level: "",
+			outline: "",
+			highlight: "",
+			equipment: "",
+			expectedAudience: "",
+			speakers: new SpeakerCollection({
+				speakerName: "",
+				email: "",
+				bio: ""
+			})
+		});
+	} else {
+		submitFormModel = new SubmitFormModel;
+		submitFormModel.fetch({
+			async : false,
+			url : "talkJson?talkid=" + givenId 
+		});
+		var speakArr = submitFormModel.get("speakers");
+		var speakColl = new SpeakerCollection(speakArr);
+		console.log(speakColl);
+		submitFormModel.set({
+			speakers: speakColl
+		}, {silent: true});
+	}
 	
 
 	var fv=new SubmitFormView({
