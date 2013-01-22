@@ -10,5 +10,7 @@
     [clj-http "0.6.3"]
     [org.clojure/data.codec "0.1.0"]
   	]
+  :dev-dependencies [[lein-ring "0.4.3"]]
+  :ring {:handler submitit.core/handler}  
   :main ^{:skip-aot true} submitit.core
   )

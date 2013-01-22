@@ -207,11 +207,13 @@
   )
   )
 
+(def handler (server/gen-handler {:mode :dev
+                                  :ns 'submitit.core}))
 
 
 (defn -main [& m]
 	(println "Starting");
-  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
+;  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
   (if @setupenv
     (startup)
     nil)
