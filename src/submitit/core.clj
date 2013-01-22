@@ -64,7 +64,7 @@
 
 
 (defpage [:get "/"] {:as attrs}
-  (redirect (if (attrs :talkid) (str "/index.html?talkid=" (attrs :talkid)) "/index.html"))
+  (redirect (if (attrs :talkid) (str "index.html?talkid=" (attrs :talkid)) "index.html"))
   ) 
 
 
