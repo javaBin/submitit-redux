@@ -134,8 +134,8 @@
     )
   )
 
-(defn get-talk [encoded-url]
-  (client/get (decode-string encoded-url) {
+(defn get-talk [decoded-url]
+  (client/get decoded-url {
       :content-type "application/vnd.collection+json"
     })
   )
@@ -164,7 +164,7 @@
   
 
 (defpage [:get "/talkDetail"] {:as talkd}
-  (let [talk-map (parse-string ((get-talk (talkd :talkid)) :body))]
+  (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))]
 
   (html5
       (page-header)
@@ -191,8 +191,22 @@
     )
   ))
 
+(defn val-from-data-map [anitem dkey]
+  ((first (filter #(= (% "name") dkey) (anitem "data"))) "value")
+  )
+
+(defn speakers-from-talk [decoded-talk-url]
+  (vec (map (fn [anitem] {:speakerName (val-from-data-map anitem "name") :email (val-from-data-map anitem "email") :bio (val-from-data-map anitem "bio")}) 
+    (((parse-string ((client/get (str decoded-talk-url "/speakers") {
+      :content-type "application/vnd.collection+json"
+    }) :body)) "collection") "items")))
+)
+  
+
+
 (defpage [:get "/talkJson"] {:as talkd}
-  (let [talk-map (parse-string ((get-talk (talkd :talkid)) :body))]
+  (let [decoded-url (decode-string (talkd :talkid))] 
+  (let [talk-map (parse-string ((get-talk decoded-url) :body)) speaker-list (speakers-from-talk decoded-url)]
     (generate-string
     {
       :presentationType  (tval talk-map "format"),
@@ -204,8 +218,9 @@
       :highlight (tval talk-map "summary")
       :equipment (tval talk-map "equipment")
       :expectedAudience (tval talk-map "audience")
+      :speakers speaker-list
     })
-  )
+  ))
   )
 
 (def handler (server/gen-handler {:mode :dev
@@ -214,7 +229,7 @@
 
 (defn -main [& m]
 	(println "Starting");
-;  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
+  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
   (if @setupenv
     (startup)
     nil)
