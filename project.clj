@@ -13,4 +13,5 @@
   :dev-dependencies [[lein-ring "0.4.3"]]
   :ring {:handler submitit.core/handler}  
   :main ^{:skip-aot true} submitit.core
+  :plugins [[lein-ring "0.8.2"]]
   )
