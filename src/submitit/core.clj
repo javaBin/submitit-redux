@@ -28,14 +28,15 @@
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
   )
 
-(defn read-enviroment-variables [filename]
+(defn read-enviroment-variables [given-filename]
+  (let [filename (get (java.lang.System/getenv) "SUBMITIT_SETUP_FILE" given-filename)]
   (if (and filename (.exists (new java.io.File filename)))
     (apply hash-map (flatten (map keyval (clojure.string/split-lines (slurp filename)))))
     (let [res nil]
     (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>'.")
     res)
 
-  )
+  ))
   )
 
 (defn send-mail [setup mailaddress message]
