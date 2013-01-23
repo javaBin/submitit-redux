@@ -78,6 +78,13 @@
         <legend>Speaker bio</legend>
         <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
 
+        <legend>Picture</legend>
+        <input id="speakerPicture" type="file" />
+
+        <% if (picture !== null) { %>
+          <img class="thumb" src="<%= picture %>"/>
+        <% } %>
+
         <hr/>
             
     </script>

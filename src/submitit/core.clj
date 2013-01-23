@@ -119,7 +119,7 @@
   ))
 
 (defn post-talk [json-talk address]
-  (println "Posting to " address " : " json-talk)
+;  (println "Posting to " address " : " json-talk)
 
   (client/post address (if (@setupenv :emsUser) 
   {
@@ -151,9 +151,11 @@
   )
 
 (defn get-talk [decoded-url]
-  (client/get decoded-url {
+  (let [res (client/get decoded-url {
       :content-type "application/vnd.collection+json"
-    })
+    })]
+    (println res)
+    res)
   )
 
 (defn speaker-post-addr [post-result]
@@ -161,9 +163,8 @@
   )
 
 (defpage [:post "/addTalk"] {:as talk}
-  (println talk (if (talk "addKey") "Has ket" "no key"))
 ;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
-;  (println (submit-talk-json talk))
+
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)

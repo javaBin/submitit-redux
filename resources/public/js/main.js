@@ -18,6 +18,7 @@ var SpeakerCollection = Backbone.Collection.extend({
 var SpeakerView = Backbone.View.extend({
 	events: {
             "change .speakerInput" : "speakerInputChanged",
+            "change #speakerPicture" : "speakerPictureAdded"
     },
 
 	initialize: function (attrs) {
@@ -35,7 +36,30 @@ var SpeakerView = Backbone.View.extend({
 			email: self.$("#emailInput").val(),
 			bio: self.$("#speakerBioInput").val()
 		});
+	},
+
+	speakerPictureAdded: function(eve) {
+
+		var givenFile = eve.target.files[0];
+
+		var reader = new FileReader();
+
+		var self = this;
+
+		reader.onload = (function(theFile) {
+			return function(e) {
+				console.log(e.target.result);
+				self.model.set({
+					picture: e.target.result
+				});
+				self.render();
+			}
+		})(givenFile);
+
+		reader.readAsDataURL(givenFile);
+
 	}
+
 })
 
 var SubmitFormModel = Backbone.Model.extend({
@@ -47,7 +71,7 @@ var SubmitFormView = Backbone.View.extend({
 	events: {
             "click #submitButton": "submitClicked",
             "change .talkInput" : "inputChanged",
-            "click .talkInput" : "inputChanged"
+            "click .talkInput" : "inputChanged"            
     },
 
 	initialize: function (attrs) {
@@ -103,6 +127,8 @@ var SubmitFormView = Backbone.View.extend({
 		});
 	},
 
+
+
 	
 });
 
@@ -123,7 +149,8 @@ $(function() {
 			speakers: new SpeakerCollection({
 				speakerName: "",
 				email: "",
-				bio: ""
+				bio: "",
+				picture: null
 			})
 		});
 	} else {
@@ -137,7 +164,7 @@ $(function() {
 		console.log(speakColl);
 		submitFormModel.set({
 			speakers: speakColl
-		}, {silent: true});
+		}, {silent: true});e
 	}
 	
 
