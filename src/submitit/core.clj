@@ -134,6 +134,22 @@
     )
   )
 
+(defn update-talk [json-talk address]
+  (println "Putting to " address " : " json-talk)
+
+  (client/put address (if (@setupenv :emsUser) 
+  {
+    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
+    :body json-talk
+    :content-type "application/vnd.collection+json"
+    }
+    {
+      :body json-talk
+      :content-type "application/vnd.collection+json"
+    })
+    )
+  )
+
 (defn get-talk [decoded-url]
   (client/get decoded-url {
       :content-type "application/vnd.collection+json"
@@ -145,15 +161,19 @@
   )
 
 (defpage [:post "/addTalk"] {:as talk}
-  (println talk)
+  (println talk (if (talk "addKey") "Has ket" "no key"))
 ;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
 ;  (println (submit-talk-json talk))
- (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
+  (if (talk "addKey")
+    (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
+      (println "Update-res: " put-result)
+      )
+    (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
     (println "Post-res: " post-result)
-;    (if (map? post-result) (println "WE have a map") (println "No way map"))
     (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
       (println "Speakerpost: " speaker-post)
       )
+    )
     )
   "Hoi"
   )
@@ -218,6 +238,7 @@
       :highlight (tval talk-map "summary")
       :equipment (tval talk-map "equipment")
       :expectedAudience (tval talk-map "audience")
+      :addKey (talkd :talkid)
       :speakers speaker-list
     })
   ))
