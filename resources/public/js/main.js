@@ -60,12 +60,27 @@ var SpeakerView = Backbone.View.extend({
 
 	}
 
-})
+});
+
+var ResultModel = Backbone.Model.extend({
+	
+});
+
+var ResultView = Backbone.View.extend({
+	initialize: function (attrs) {
+		this.template = _.template(attrs.template);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+	}
+});
 
 var SubmitFormModel = Backbone.Model.extend({
 	
 
 });
+
 
 var SubmitFormView = Backbone.View.extend({
 	events: {
@@ -77,6 +92,7 @@ var SubmitFormView = Backbone.View.extend({
 	initialize: function (attrs) {
 		this.template = _.template(attrs.template);
 		this.speakerTemplateText = attrs.speakerTemplate;
+		this.resultTemplateText = attrs.resultTemplate;
 	},
 
 	render: function() {
@@ -103,9 +119,22 @@ var SubmitFormView = Backbone.View.extend({
 
 		this.model.url="/addTalk";
 
-		console.log(this.model);
+		var self = this;
 
-		this.model.save();
+		var talkDetail = window.location.origin + "/talkDetail?talkid=";
+
+		this.model.save({}, {success: function(model, response){
+			var resultModel = new ResultModel({
+				talkAddress: talkDetail + response.resultid
+			});
+			var resultView = new ResultView({
+				model: resultModel,
+				template: self.resultTemplateText
+			});
+			resultView.render();
+			self.$el.html(resultView.el);
+		}});
+
 
 
 		return false;
@@ -172,7 +201,8 @@ $(function() {
 		model: submitFormModel,
 		el: $("#main"),
 		template: $("#submitFormTemplate").html(),
-		speakerTemplate: $("#speakerTemplate").html()
+		speakerTemplate: $("#speakerTemplate").html(),
+		resultTemplate: $("#resultTemplate").html()
 	})
 	fv.render();
 });

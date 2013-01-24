@@ -168,16 +168,18 @@
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
-      )
+      (generate-string {:resultid (talk "addKey")})
+    )
     (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
-    (println "Post-res: " post-result)
-    (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
-      (println "Speakerpost: " speaker-post)
-      )
+      (println "Post-res: " post-result)
+      (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
+        (println "Speakerpost: " speaker-post)
+        (generate-string {:resultid "xxx"})
+        )      
     )
-    )
-  "Hoi"
   )
+  
+)
 
 (defn tval [tm akey]
   ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
