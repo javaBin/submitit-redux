@@ -29,14 +29,15 @@ var SpeakerView = Backbone.View.extend({
 		this.$el.html(this.template(this.model.toJSON()));
 	},
 
-	speakerInputChanged: function() {
+	speakerInputChanged: function() {		
 		var self = this;
 		self.model.set({
 			speakerName: self.$("#speakerNameInput").val(),
 			email: self.$("#emailInput").val(),
 			bio: self.$("#speakerBioInput").val(),
-			zipCode: self.$("speakerZipCodeInput").val()
+			zipCode: self.$("#speakerZipCodeInput").val()
 		});
+		console.log(self.model);
 	},
 
 	speakerPictureAdded: function(eve) {

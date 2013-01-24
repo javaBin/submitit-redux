@@ -106,21 +106,9 @@
   )
 
 
-(defn submit-speakers-json [talk]
-  (let [speak (first (talk "speakers"))]
-   (generate-string
-  {:template {
-    :data [ 
-    {:name "name" :value (speak "speakerName")}
-    {:name "email" :value (speak "email")}
-    {:name "bio" :value (speak "bio")}
-    {:name "zip-code" :value (get speak "zipCode" "")}
-   ]
-    }})
-  ))
 
 (defn post-talk [json-talk address]
-;  (println "Posting to " address " : " json-talk)
+  (println "Posting to " address " : " json-talk)
 
   (client/post address (if (@setupenv :emsUser) 
   {
@@ -163,9 +151,43 @@
   (str ((post-result :headers) "location") "/speakers")
   )
 
+(defn submit-speakers-json [talk]
+  (let [speak (first (talk "speakers"))]
+   (generate-string
+  {:template {
+    :data [ 
+    {:name "name" :value (speak "speakerName")}
+    {:name "email" :value (speak "email")}
+    {:name "bio" :value (speak "bio")}
+    {:name "zip-code" :value (get speak "zipCode" "")}
+   ]
+    }})
+  ))
+
+
+(defn submit-speakers-to-talk [speakers postaddr]
+  (doseq [speak speakers]
+    (let [speaker-post (post-talk 
+      (generate-string
+          {:template {
+            :data [ 
+            {:name "name" :value (speak "speakerName")}
+            {:name "email" :value (speak "email")}
+            {:name "bio" :value (speak "bio")}
+            {:name "zip-code" :value (get speak "zipCode" "")}
+           ]
+            }})
+          postaddr)]
+        (println "Speakerpost: " speaker-post)        
+        )
+   
+  ))
+
+
+
 (defpage [:post "/addTalk"] {:as talk}
 ;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
-
+  (println "+++TALK+++" talk)
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
@@ -173,10 +195,10 @@
     )
     (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
       (println "Post-res: " post-result)
-      (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
-        (println "Speakerpost: " speaker-post)
-        
-        )
+;      (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
+;        (println "Speakerpost: " speaker-post)        
+;        )
+      (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
       (generate-string {:resultid (encode-string ((post-result :headers) "location"))})        
     )
   )
