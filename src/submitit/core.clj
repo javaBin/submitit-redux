@@ -191,8 +191,6 @@
 (defpage [:get "/talkDetail"] {:as talkd}
   (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
     speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
-  ;(println (spval (first speaker-vec) "name"))
-  (println (map (fn[aspeak] [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")]]) speaker-vec))
   (html5
       (page-header)
       [:body 
