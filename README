@@ -1,6 +1,6 @@
 # submitit
 
-FIXME: write description
+This project is in development
 
 ## Usage
 
@@ -11,3 +11,8 @@ FIXME: write
 Copyright (C) 2013 FIXME
 
 Distributed under the Eclipse Public License, the same as Clojure.
+
+## Todos
+
+* Store speaker image (server side)
+* Fix error in put (not mod since)
