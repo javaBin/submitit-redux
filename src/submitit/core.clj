@@ -227,7 +227,7 @@
   )
 
 (defn speakers-from-talk [decoded-talk-url]
-  (vec (map (fn [anitem] {:speakerName (val-from-data-map anitem "name") :email (val-from-data-map anitem "email") :bio (val-from-data-map anitem "bio")}) 
+  (vec (map (fn [anitem] {:speakerName (val-from-data-map anitem "name") :email (val-from-data-map anitem "email") :bio (val-from-data-map anitem "bio") :picture nil :zipCode (val-from-data-map anitem "zip-code")}) 
     (((parse-string ((client/get (str decoded-talk-url "/speakers") {
       :content-type "application/vnd.collection+json"
     }) :body)) "collection") "items")))
