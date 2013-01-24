@@ -164,7 +164,7 @@ $(function() {
 		console.log(speakColl);
 		submitFormModel.set({
 			speakers: speakColl
-		}, {silent: true});e
+		}, {silent: true});
 	}
 	
 

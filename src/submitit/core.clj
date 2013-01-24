@@ -182,11 +182,17 @@
 (defn tval [tm akey]
   ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
 )
+
+(defn spval [tm akey]
+  ((first (filter #(= akey (% "name")) (tm "data"))) "value")
+  )
   
 
 (defpage [:get "/talkDetail"] {:as talkd}
-  (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))]
-
+  (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
+    speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
+  ;(println (spval (first speaker-vec) "name"))
+  (println (map (fn[aspeak] [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")]]) speaker-vec))
   (html5
       (page-header)
       [:body 
@@ -208,6 +214,7 @@
       [:p (tval talk-map "equipment")]
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
+      (vec (cons :div (reduce conj [] (map (fn[aspeak] [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")]]) speaker-vec))))
       ]]
     )
   ))
