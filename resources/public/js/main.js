@@ -34,7 +34,8 @@ var SpeakerView = Backbone.View.extend({
 		self.model.set({
 			speakerName: self.$("#speakerNameInput").val(),
 			email: self.$("#emailInput").val(),
-			bio: self.$("#speakerBioInput").val()
+			bio: self.$("#speakerBioInput").val(),
+			zipCode: self.$("speakerZipCodeInput").val()
 		});
 	},
 
@@ -152,7 +153,7 @@ var SubmitFormView = Backbone.View.extend({
 			outline: self.$("#outlineInput").val(),
 			highlight: self.$("#highlightInput").val(),
 			equipment: self.$("#equipmentInput").val(),
-			expectedAudience: self.$("#expectedAudienceInput").val()
+			expectedAudience: self.$("#expectedAudienceInput").val()			
 		});
 	},
 
@@ -170,7 +171,7 @@ $(function() {
 			title: "",
 			abstract: "",
 			language: "no",
-			level: "",
+			level: "beginner",
 			outline: "",
 			highlight: "",
 			equipment: "",
@@ -179,7 +180,8 @@ $(function() {
 				speakerName: "",
 				email: "",
 				bio: "",
-				picture: null
+				picture: null,
+				zipCode: ""
 			})
 		});
 	} else {

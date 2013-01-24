@@ -114,6 +114,7 @@
     {:name "name" :value (speak "speakerName")}
     {:name "email" :value (speak "email")}
     {:name "bio" :value (speak "bio")}
+    {:name "zip-code" :value (get speak "zipCode" "")}
    ]
     }})
   ))
@@ -174,8 +175,9 @@
       (println "Post-res: " post-result)
       (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
         (println "Speakerpost: " speaker-post)
-        (generate-string {:resultid "xxx"})
-        )      
+        
+        )
+      (generate-string {:resultid (encode-string ((post-result :headers) "location"))})        
     )
   )
   
@@ -214,7 +216,8 @@
       [:p (tval talk-map "equipment")]
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
-      (vec (cons :div (reduce conj [] (map (fn[aspeak] [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")]]) speaker-vec))))
+      (vec (cons :div (reduce conj [] (map (fn[aspeak] 
+        [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")] [:legend "Zip-code"] [:p (spval aspeak "zip-code")]]) speaker-vec))))
       ]]
     )
   ))
