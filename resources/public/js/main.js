@@ -37,7 +37,6 @@ var SpeakerView = Backbone.View.extend({
 			bio: self.$("#speakerBioInput").val(),
 			zipCode: self.$("#speakerZipCodeInput").val()
 		});
-		console.log(self.model);
 	},
 
 	speakerPictureAdded: function(eve) {
@@ -232,7 +231,7 @@ $(function() {
 			outline: "",
 			highlight: "",
 			equipment: "",
-			talkTags: ["Security"],
+			talkTags: [],
 			expectedAudience: "",
 			speakers: new SpeakerCollection({
 				speakerName: "",

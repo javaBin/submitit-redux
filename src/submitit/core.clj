@@ -100,7 +100,7 @@
       {:name "outline" :value (talk "outline")}
       {:name "equipment" :value (talk "equipment")}
       {:name "lang" :value (talk "language")}
-      {:name "keywords" :array ["Alternative languages" "Mobile"]}
+      {:name "keywords" :array (talk "talkTags")}
     ]
     }})
   )
