@@ -56,6 +56,11 @@
             <legend>Expected audience</legend>
             <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"><%= expectedAudience %></textarea>
 
+            <legend>Tags</legend>
+            <div class="row" id="tagBoxes"></div>
+
+            <hr/>
+
             <h2>Speakers</h2>
 
             <div id="speakerList"></div>
@@ -92,10 +97,17 @@
             
     </script>
 
+    <script type="text/template" id="tagTemplate">
+      <label class="checkbox inline">
+          <input type="checkbox" class="tagCheckbox" value="<%= value %>" <% if (checked) { %>checked<% } %> ><%= value %></input>
+      </label>
+    </script>
+
     <script type="text/template" id="resultTemplate">
       <h1>Your talk has been submitted</h1>
       You can review your talk at <a href="<%= talkAddress %>"><%= talkAddress %></a>
     </script>
+
 
   </body>
 </html>

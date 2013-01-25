@@ -18,7 +18,7 @@ var SpeakerCollection = Backbone.Collection.extend({
 var SpeakerView = Backbone.View.extend({
 	events: {
             "change .speakerInput" : "speakerInputChanged",
-            "change #speakerPicture" : "speakerPictureAdded"
+            "change #speakerPicture" : "speakerPictureAdded"            
     },
 
 	initialize: function (attrs) {
@@ -78,23 +78,55 @@ var ResultView = Backbone.View.extend({
 	}
 });
 
+var TagModel = Backbone.Model.extend({
+
+});
+
+var TagCollection = Backbone.Collection.extend({
+	model: TagModel,
+
+	setupChecked : function (talkTags) {
+		this.each(function(tagModel) {
+			var toCheck = (talkTags.indexOf(tagModel.get("value")) !== -1);
+			tagModel.set({
+				checked: toCheck
+			},{silent:true});
+		});
+	}
+});
+
+var TagView  = Backbone.View.extend({
+	initialize: function (attrs) {
+		this.template = _.template(attrs.template);
+	},
+
+	render: function() {
+		this.$el.append(this.template(this.model.toJSON()));
+	}
+});
+
 var SubmitFormModel = Backbone.Model.extend({
 	
 
 });
 
 
+
+
 var SubmitFormView = Backbone.View.extend({
 	events: {
             "click #submitButton": "submitClicked",
             "change .talkInput" : "inputChanged",
-            "click .talkInput" : "inputChanged"            
+            "click .talkInput" : "inputChanged",
+            "click .tagCheckbox" : "tagCheckboxChanged"            
     },
 
 	initialize: function (attrs) {
 		this.template = _.template(attrs.template);
 		this.speakerTemplateText = attrs.speakerTemplate;
 		this.resultTemplateText = attrs.resultTemplate;
+		this.tagTemplate = attrs.tagTemplate;
+		this.tagCollection = attrs.tagCollection;
 	},
 
 	render: function() {
@@ -109,6 +141,17 @@ var SubmitFormView = Backbone.View.extend({
 			speakerView.render();
 			speakerDom.append(speakerView.el);
 
+		});
+
+		var tagDom = this.$("#tagBoxes");
+
+		this.tagCollection.each(function(tagModel) {
+			var tagView = new TagView({
+				model: tagModel,
+				template: self.tagTemplate
+			});
+			tagView.$el = tagDom;
+			tagView.render();
 		});
 	},
 
@@ -158,6 +201,19 @@ var SubmitFormView = Backbone.View.extend({
 		});
 	},
 
+	tagCheckboxChanged: function(e) {
+		var talkList = this.model.get("talkTags");
+
+		if (e.currentTarget.checked) {
+			talkList.push(e.currentTarget.value);
+		} else {
+			talkList.splice(talkList.indexOf(e.currentTarget.value), 1);
+		}
+		this.model.set({
+			talkTags: talkList
+		});
+	}
+
 
 
 	
@@ -176,6 +232,7 @@ $(function() {
 			outline: "",
 			highlight: "",
 			equipment: "",
+			talkTags: ["Security"],
 			expectedAudience: "",
 			speakers: new SpeakerCollection({
 				speakerName: "",
@@ -198,14 +255,37 @@ $(function() {
 			speakers: speakColl
 		}, {silent: true});
 	}
+
+	var tagCollection = new TagCollection([
+		 {value : "Alternative languages"},
+		 {value : "Architecture in practise"},
+		 {value : "Big Data and NoSQL"},
+		 {value : "Continous delivery"},
+		 {value : "Core Java"},
+		 {value : "Distributed systems and cloud"},
+		 {value : "Enterprise"},
+		 {value : "Experience report"},
+		 {value : "Frontend"},
+		 {value : "Functional Programming"},
+		 {value : "Innovation and Startups"},
+		 {value : "Mobile"},
+		 {value : "Research and Trends"},
+		 {value : "Security"},
+		 {value : "Craftsmanship and Tools"}
+		]);
 	
+	tagCollection.setupChecked(submitFormModel.get("talkTags"));
+
+	console.log(tagCollection);
 
 	var fv=new SubmitFormView({
 		model: submitFormModel,
+		tagCollection: tagCollection,
 		el: $("#main"),
 		template: $("#submitFormTemplate").html(),
 		speakerTemplate: $("#speakerTemplate").html(),
-		resultTemplate: $("#resultTemplate").html()
+		resultTemplate: $("#resultTemplate").html(),
+		tagTemplate: $("#tagTemplate").html()
 	})
 	fv.render();
 });
