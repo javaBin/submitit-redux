@@ -220,7 +220,8 @@ var SubmitFormView = Backbone.View.extend({
 				email: "",
 				bio: "",
 				picture: null,
-				zipCode: ""
+				zipCode: "",
+				givenId: null
 		});
 		this.model.get("speakers").add(newSpeaker);
 		this.render();
@@ -251,7 +252,8 @@ $(function() {
 				email: "",
 				bio: "",
 				picture: null,
-				zipCode: ""
+				zipCode: "",
+				givenId: null
 			})
 		});
 	} else {
