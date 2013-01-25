@@ -117,7 +117,8 @@ var SubmitFormView = Backbone.View.extend({
             "click #submitButton": "submitClicked",
             "change .talkInput" : "inputChanged",
             "click .talkInput" : "inputChanged",
-            "click .tagCheckbox" : "tagCheckboxChanged"            
+            "click .tagCheckbox" : "tagCheckboxChanged",
+            "click #addSpeaker" : "addSpeaker"
     },
 
 	initialize: function (attrs) {
@@ -211,6 +212,18 @@ var SubmitFormView = Backbone.View.extend({
 		this.model.set({
 			talkTags: talkList
 		});
+	},
+
+	addSpeaker: function() {
+		var newSpeaker = new SpeakerModel({
+				speakerName: "",
+				email: "",
+				bio: "",
+				picture: null,
+				zipCode: ""
+		});
+		this.model.get("speakers").add(newSpeaker);
+		this.render();
 	}
 
 

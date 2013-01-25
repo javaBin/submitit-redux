@@ -195,9 +195,6 @@
     )
     (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
       (println "Post-res: " post-result)
-;      (let [speaker-post (post-talk (submit-speakers-json talk) (speaker-post-addr post-result))]
-;        (println "Speakerpost: " speaker-post)        
-;        )
       (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
       (generate-string {:resultid (encode-string ((post-result :headers) "location"))})        
     )
