@@ -209,6 +209,10 @@
   ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
 )
 
+(defn tarrval [tm akey]
+  ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "array")
+)
+
 (defn spval [tm akey]
   ((first (filter #(= akey (% "name")) (tm "data"))) "value")
   )
@@ -236,6 +240,10 @@
       [:p (tval talk-map "summary")]
       [:legend "Equipment"]
       [:p (tval talk-map "equipment")]
+      [:legend "Tags"]
+      [:p
+        (reduce (fn [a b] (str a ", " b)) (tarrval talk-map "keywords"))
+      ]
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
       (vec (cons :div (reduce conj [] (map (fn[aspeak] 
@@ -257,6 +265,8 @@
   
 
 
+
+
 (defpage [:get "/talkJson"] {:as talkd}
   (let [decoded-url (decode-string (talkd :talkid))] 
   (let [talk-map (parse-string ((get-talk decoded-url) :body)) speaker-list (speakers-from-talk decoded-url)]
@@ -271,6 +281,7 @@
       :highlight (tval talk-map "summary")
       :equipment (tval talk-map "equipment")
       :expectedAudience (tval talk-map "audience")
+      :talkTags (tarrval talk-map "keywords")
       :addKey (talkd :talkid)
       :speakers speaker-list
     })
