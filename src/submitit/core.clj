@@ -167,8 +167,7 @@
 
 (defn submit-speakers-to-talk [speakers postaddr]
   (doseq [speak speakers]
-    (let [speaker-post (post-talk 
-      (generate-string
+    (let [json-data (generate-string
           {:template {
             :data [ 
             {:name "name" :value (speak "speakerName")}
@@ -176,10 +175,20 @@
             {:name "bio" :value (speak "bio")}
             {:name "zip-code" :value (get speak "zipCode" "")}
            ]
-            }})
-          postaddr)]
-        (println "Speakerpost: " speaker-post)        
+            }})]
+;      (if (speak "givenId")
+;        (let [speaker-post (update-talk 
+;            json-data  
+;            (decode-string (speak "given-id")))]
+;          (println "Speakerpost: " speaker-post)        
+;          )  
+        (let [speaker-post (post-talk 
+            json-data  
+            postaddr)]
+          (println "Speakerpost: " speaker-post)        
         )
+;      )
+    )
    
   ))
 
@@ -191,6 +200,7 @@
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
+      (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       (generate-string {:resultid (talk "addKey")})
     )
     (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]

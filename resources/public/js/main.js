@@ -224,7 +224,18 @@ var SubmitFormView = Backbone.View.extend({
 				givenId: null
 		});
 		this.model.get("speakers").add(newSpeaker);
-		this.render();
+		var speakerDom = this.$("#speakerList");
+		speakerDom.html("");
+		var self = this;
+		this.model.get("speakers").each(function(speakerModel) {
+			var speakerView = new SpeakerView({
+				model: speakerModel,
+				template: self.speakerTemplateText
+			});
+			speakerView.render();
+			speakerDom.append(speakerView.el);
+
+		});
 	}
 
 
