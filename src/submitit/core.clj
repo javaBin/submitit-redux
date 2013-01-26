@@ -263,7 +263,8 @@
 
 (defpage [:post "/addTalk"] {:as talk}
   (let [talk-result (communicate-talk-to-ems talk)]
-    (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
+    (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
+      (assoc talk "host" (@setupenv :serverhostname) "talkid" (talk-result :resultid))))
     (generate-string talk-result)
     )
   )

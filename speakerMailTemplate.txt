@@ -1,6 +1,6 @@
 Thank you for submitting your presentation titled "%title%".
 
-You can access the submitted presentation at somewhere
+You can access the submitted presentation at %host%/talkDetail?talkid=%talkid%
 
 
 Best regards,
