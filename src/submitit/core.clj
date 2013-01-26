@@ -39,17 +39,34 @@
   ))
   )
 
-(defn send-mail [setup mailaddress message]
-	(doto (org.apache.commons.mail.SimpleEmail.)
+(defn create-mail-sender [setup message]
+  (if (= "true" (setup :mailSsl))
+  (doto (org.apache.commons.mail.SimpleEmail.)
       (.setHostName (setup :hostname))
       (.setSslSmtpPort (setup :smtpport))
       (.setSSL true)
-      (.addTo mailaddress)
+      (.setFrom (setup :mailFrom) "Javazone program commitee")
+      (.setSubject "Confirmation of your JavaZone submission")
+      (.setAuthentication (setup :user) (setup :password))
+      (.setMsg message)
+      )  
+  (doto (org.apache.commons.mail.SimpleEmail.)
+      (.setHostName (setup :hostname))
+      (.setSmtpPort (java.lang.Integer/parseInt (setup :smtpport)))
       (.setFrom (setup :mailFrom) "Javazone program commitee")
       (.setSubject "Confirmation of your JavaZone submission")
       (.setMsg message)
-      (.setAuthentication (setup :user) (setup :password))
-      (.send))	
+      )  
+
+  ))
+
+
+(defn send-mail [setup send-to message]
+  (let [sender (create-mail-sender setup message)]
+    (doseq [sto send-to] (.addTo sender sto))
+    (.addCc sender (setup :mailFrom))
+    (.send sender)    
+    )
 	)
 
 
@@ -310,10 +327,8 @@
 (defn -main [& m]
 	(println "Starting");
   (dosync (ref-set setupenv (read-enviroment-variables (first m))))
+;  (send-mail @setupenv ["a@a.com" "b@.com"] "Mew dfgjdløjgf")
   (if @setupenv
     (startup)
     nil)
-;	(let [setup (read-enviroment-variables (first m))]
-;		(if (and setup (second m)) (send-mail setup (second m)) nil)
-;		)	
 		)
