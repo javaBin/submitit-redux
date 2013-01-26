@@ -94,15 +94,6 @@
     ]
   )
 
-(defn generate-mail-text [template value-map]
-  (if (empty? value-map) template
-    (let [[tkey tvalue] (first value-map)]
-      (generate-mail-text
-      (clojure.string/replace template (re-pattern (str "%" tkey "%")) tvalue)
-      (dissoc value-map tkey))
-    )
-  )
-  )
 
 (defn submit-talk-json [talk]
   (generate-string
@@ -209,25 +200,74 @@
    
   ))
 
-
-
-(defpage [:post "/addTalk"] {:as talk}
-;  (send-mail @setupenv ((first (talk "speakers")) "email") (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
+(defn communicate-talk-to-ems [talk]
   (println "+++TALK+++" talk)
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
       (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
-      (generate-string {:resultid (talk "addKey")})
+      {:resultid (talk "addKey")}
     )
     (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
       (println "Post-res: " post-result)
       (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
-      (generate-string {:resultid (encode-string ((post-result :headers) "location"))})        
+      {:resultid (encode-string ((post-result :headers) "location"))}
     )
   )
-  
+
 )
+
+
+(defn handle-arr [template tkey tvalue]
+  (if (re-find (re-pattern (str "%a" tkey "%")) template)
+    (clojure.string/replace template (re-pattern (str "%a" tkey "%")) (reduce (fn [a b] (str a ", " b)) tvalue))
+    template
+    )
+  )
+
+(defn replace-vector [generate-mail-text template value-vector result]
+  (if (empty? value-vector)
+    result
+    (replace-vector generate-mail-text template (rest value-vector) (str result (generate-mail-text template (first value-vector))))
+  )
+)
+
+(defn handle-template [generate-mail-text template tkey value-vector]
+  (let [temp-no-lf (clojure.string/join "%newline%" (clojure.string/split template #"\n"))]
+  (let [inner-template (re-find (re-pattern (str "%t" tkey "(.*)t%")) temp-no-lf)]
+    (if (nil? inner-template) template
+      (clojure.string/join "\n" (clojure.string/split
+        (clojure.string/replace temp-no-lf (re-pattern (str "%t" tkey ".*t%"))
+        (replace-vector generate-mail-text (inner-template 1) value-vector ""))
+        #"%newline%"))
+  )))
+)
+
+(defn generate-mail-text [template value-map]
+  (if (empty? value-map) template
+    (let [[tkey tvalue] (first value-map)]
+      (generate-mail-text
+      (clojure.string/replace
+       (handle-arr 
+        (handle-template generate-mail-text template tkey tvalue) 
+        tkey tvalue) 
+       (re-pattern (str "%" tkey "%")) tvalue)
+      (dissoc value-map tkey))
+    )
+  )
+  )
+
+(defn speaker-mail-list [talk]
+  (map #(% "email") (talk "speakers"))
+  )
+
+(defpage [:post "/addTalk"] {:as talk}
+  (let [talk-result (communicate-talk-to-ems talk)]
+    (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") talk))
+    (generate-string talk-result)
+    )
+  )
+
 
 (defn tval [tm akey]
   ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")

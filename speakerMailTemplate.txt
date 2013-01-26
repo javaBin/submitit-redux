@@ -24,13 +24,25 @@ Summary:
 Outline:
 %outline%
 
-
 Language: %language% 
+
 Level: %level%
-Equipment: %equipment%
+
+Equipment: 
+%equipment%
 
 
 Expected audience:
 %expectedAudience%
 
 Tags:
+%atalkTags%
+
+Speakers:
+%tspeakers
+Name: %speakerName%
+Email: %email%
+Post code:%zipCode%
+Speakers profile:
+%bio%
+t%
