@@ -172,6 +172,19 @@
     }})
   ))
 
+(defn add-photo [address photo]
+  (println "Adding photo to " address)
+  (try 
+   (client/post address 
+    {
+      :content-type "image/jpeg"
+      :content-disposition "inline; filename=picture.jpeg"
+      :body (decode-string photo)
+    }
+    )
+   (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+  )
+
 
 (defn submit-speakers-to-talk [speakers postaddr]
   (doseq [speak speakers]
@@ -193,7 +206,10 @@
         (let [speaker-post (post-talk 
             json-data  
             postaddr)]
-          (println "Speakerpost: " speaker-post)        
+          (println "Speakerpost: " speaker-post)
+          (if (speak "picture") 
+            (add-photo (str ((speaker-post :headers) "location") "/photo") (speak "picture"))            
+          )        
         )
 ;      )
     )
@@ -201,7 +217,7 @@
   ))
 
 (defn communicate-talk-to-ems [talk]
-  (println "+++TALK+++" talk)
+;  (println "+++TALK+++" talk)
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
