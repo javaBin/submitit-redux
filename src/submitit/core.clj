@@ -174,14 +174,25 @@
 
 (defn add-photo [address photo]
   (println "Adding photo to " address)
+  
   (try 
-   (client/post address 
-    {
-      :content-type "image/jpeg"
-      :content-disposition "inline; filename=picture.jpeg"
-      :body (decode-string photo)
-    }
+    (let [connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "POST")
+      (.addRequestProperty connection "content-disposition" "inline; filename=picture.jpeg")
+      (.addRequestProperty connection "content-type" "image/jpeg")
+      (.setDoOutput connection true)
+      (.connect connection)
+      (let [writer (.getOutputStream connection)]
+        (.write writer (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
+        (.close writer)
+        )
+;      (let [res
+;        (with-open [rdr (.getInputStream connection)]
+;        (reduce conj [] (line-seq rdr)))]
+;        (println res))
+
     )
+
    (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
   )
 
