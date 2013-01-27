@@ -288,13 +288,20 @@
   (map #(% "email") (talk "speakers"))
   )
 
-(defpage [:post "/addTalk"] {:as talk}
-  (let [talk-result (communicate-talk-to-ems talk)]
-    (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
-      (assoc talk "host" (@setupenv :serverhostname) "talkid" (talk-result :resultid))))
-    (generate-string talk-result)
-    )
+(defn validate-input [talk]
+  (generate-string {:errormessage "Error message something"})
   )
+
+(defpage [:post "/addTalk"] {:as talk}
+  (let [error-response (validate-input talk)]
+    (if error-response error-response
+      (let [talk-result (communicate-talk-to-ems talk)]
+        (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
+          (assoc talk "host" (@setupenv :serverhostname) "talkid" (talk-result :resultid))))
+        (generate-string talk-result)
+      )
+    )
+  ))
 
 
 (defn tval [tm akey]

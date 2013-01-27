@@ -6,6 +6,20 @@ $.urlParam = function(name){
 }
 
 
+var ErrorPageModel = Backbone.Model.extend({
+
+});
+
+var ErrorPageView = Backbone.View.extend({
+	initialize: function (attrs) {
+		this.template = _.template(attrs.template);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+	}
+});
+
 var SpeakerModel = Backbone.Model.extend({
 
 });
@@ -127,6 +141,7 @@ var SubmitFormView = Backbone.View.extend({
 		this.resultTemplateText = attrs.resultTemplate;
 		this.tagTemplate = attrs.tagTemplate;
 		this.tagCollection = attrs.tagCollection;
+		this.errorPageTemplate = attrs.errorPageTemplate;
 	},
 
 	render: function() {
@@ -169,15 +184,27 @@ var SubmitFormView = Backbone.View.extend({
 		var talkDetail = window.location.origin + "/talkDetail?talkid=";
 
 		this.model.save({}, {success: function(model, response){
-			var resultModel = new ResultModel({
-				talkAddress: talkDetail + response.resultid
-			});
-			var resultView = new ResultView({
-				model: resultModel,
-				template: self.resultTemplateText
-			});
-			resultView.render();
-			self.$el.html(resultView.el);
+			if (response.errormessage) {
+				var errorPageModel = new ErrorPageModel({
+					errormessage: response.errormessage
+				});
+				var errorPageView = new ErrorPageView({
+					model: errorPageModel,
+					template: self.errorPageTemplate
+				});
+				errorPageView.render();
+				self.$el.html(errorPageView.el);
+			} else {
+				var resultModel = new ResultModel({
+					talkAddress: talkDetail + response.resultid
+				});
+				var resultView = new ResultView({
+					model: resultModel,
+					template: self.resultTemplateText
+				});
+				resultView.render();
+				self.$el.html(resultView.el);
+			}
 		}});
 
 
@@ -310,7 +337,8 @@ $(function() {
 		template: $("#submitFormTemplate").html(),
 		speakerTemplate: $("#speakerTemplate").html(),
 		resultTemplate: $("#resultTemplate").html(),
-		tagTemplate: $("#tagTemplate").html()
+		tagTemplate: $("#tagTemplate").html(),
+		errorPageTemplate: $("#errorPageTemplate").html()
 	})
 	fv.render();
 });
