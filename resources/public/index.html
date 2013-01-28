@@ -105,7 +105,11 @@
 
     <script type="text/template" id="resultTemplate">
       <h1>Your talk has been submitted</h1>
+      <% if (submitError) { %>
+      There was a problem in our system so your talk is not availible. We will send you an email shortly with a link to your talk
+      <% } else { %>
       You can review your talk at <a href="<%= talkAddress %>"><%= talkAddress %></a>
+      <% } %>
     </script>
 
     <script type="text/template" id="errorPageTemplate">

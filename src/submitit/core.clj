@@ -229,6 +229,7 @@
 
 (defn communicate-talk-to-ems [talk]
 ;  (println "+++TALK+++" talk "+++")
+  (try 
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
@@ -241,6 +242,7 @@
       {:resultid (encode-string ((post-result :headers) "location"))}
     )
   )
+  (catch Exception e {:submitError (str "Exception: " (.getMessage e) "->" e)}))
 
 )
 
@@ -298,7 +300,7 @@
       (para-error? (speaker "speakerName")) "Speaker name is required"
       (para-error? (speaker "email")) "Email is required"
       (para-error? (speaker "bio")) "Speaker bio"
-      (or (not (speaker "picture")) (> (count (speaker "picture")) 500000)) (str "Picture is too large (" (count (speaker "picture")) " bytes)")
+      (and (speaker "picture") (> (count (speaker "picture")) 500000)) (str "Picture is too large (" (count (speaker "picture")) " bytes)")
       :else nil)
       ]
       (if errormsg errormsg (validate-speaker-input (rest speakers)))
@@ -317,12 +319,19 @@
   (if error-msg (generate-string {:errormessage error-msg}) nil)
   ))
 
+(defn generate-mail-talk-mess [talk-result]
+  (if (talk-result :submitError)
+    (str "Due to an error you can not review your talk at this time. We will send you another email when we have fixed this. Error " (talk-result :submitError))
+    (str "You can access the submitted presentation at " (@setupenv :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))
+    )
+  )
+
 (defpage [:post "/addTalk"] {:as talk}
   (let [error-response (validate-input talk)]
     (if error-response error-response
       (let [talk-result (communicate-talk-to-ems talk)]
         (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
-          (assoc talk "host" (@setupenv :serverhostname) "talkid" (talk-result :resultid))))
+          (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
         (generate-string talk-result)
       )
     )
