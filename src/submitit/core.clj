@@ -228,7 +228,7 @@
   ))
 
 (defn communicate-talk-to-ems [talk]
-  (println "+++TALK+++" talk "+++")
+;  (println "+++TALK+++" talk "+++")
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
@@ -292,12 +292,30 @@
   (or (not para) (= "" para))
   )
 
+(defn validate-speaker-input [speakers]
+  (if (empty? speakers) nil
+    (let [speaker (first speakers) errormsg (cond 
+      (para-error? (speaker "speakerName")) "Speaker name is required"
+      (para-error? (speaker "email")) "Email is required"
+      (para-error? (speaker "bio")) "Speaker bio"
+      (or (not (speaker "picture")) (> (count (speaker "picture")) 500000)) (str "Picture is too large (" (count (speaker "picture")) " bytes)")
+      :else nil)
+      ]
+      (if errormsg errormsg (validate-speaker-input (rest speakers)))
+      )
+    )
+  )
+
 (defn validate-input [talk]
-  (cond 
-  (para-error? (talk "abstract")) (generate-string {:errormessage "Abstract is required"})
-  :else nil
-  )
-  )
+  (let [error-msg 
+    (cond 
+    (para-error? (talk "abstract")) "Abstract is required"
+    (< (count (talk "speakers")) 1) "One speaker must be added"  
+    (> (count (talk "speakers")) 5) "Max 5 speakers is allowed"  
+    :else (validate-speaker-input (talk "speakers"))
+  )]
+  (if error-msg (generate-string {:errormessage error-msg}) nil)
+  ))
 
 (defpage [:post "/addTalk"] {:as talk}
   (let [error-response (validate-input talk)]
