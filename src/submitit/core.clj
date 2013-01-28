@@ -31,7 +31,7 @@
 (defn read-enviroment-variables [given-filename]
   (let [filename (get (java.lang.System/getenv) "SUBMITIT_SETUP_FILE" given-filename)]
   (if (and filename (.exists (new java.io.File filename)))
-    (apply hash-map (flatten (map keyval (clojure.string/split-lines (slurp filename)))))
+    (apply hash-map (flatten (map keyval (filter #(not (.startsWith % "#")) (clojure.string/split-lines (slurp filename))))))
     (let [res nil]
     (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE.")
     res)
@@ -228,7 +228,7 @@
   ))
 
 (defn communicate-talk-to-ems [talk]
-;  (println "+++TALK+++" talk)
+  (println "+++TALK+++" talk "+++")
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
@@ -288,8 +288,15 @@
   (map #(% "email") (talk "speakers"))
   )
 
+(defn para-error? [para]
+  (or (not para) (= "" para))
+  )
+
 (defn validate-input [talk]
-  (generate-string {:errormessage "Error message something"})
+  (cond 
+  (para-error? (talk "abstract")) (generate-string {:errormessage "Abstract is required"})
+  :else nil
+  )
   )
 
 (defpage [:post "/addTalk"] {:as talk}
