@@ -253,7 +253,6 @@
   ))
 
 (defn communicate-talk-to-ems [talk]
-  (println "+++TALK+++" talk "+++")
   (try 
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
@@ -338,7 +337,7 @@
 (defn validate-input [talk]
   (let [error-msg 
     (cond 
-    (para-error? (talk "abstract")) "Abstract is required"
+    (para-error? (talk "abstract")) (str "Abstract is required (" talk ")")
     (< (count (talk "speakers")) 1) "One speaker must be added"  
     (> (count (talk "speakers")) 5) "Max 5 speakers is allowed"  
     :else (validate-speaker-input (talk "speakers"))
@@ -354,6 +353,7 @@
   )
 
 (defpage [:post "/addTalk"] {:as talk}
+  (println "+++TALK+++" talk "+++")
   (let [error-response (validate-input talk)]
     (if error-response error-response
       (let [talk-result (communicate-talk-to-ems talk)]
