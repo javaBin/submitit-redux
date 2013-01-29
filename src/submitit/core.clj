@@ -41,12 +41,13 @@
 
 (defn read-setup [keyval]
   (if (empty? @setupenv) 
-    (let [read-setup (read-enviroment-variables)]
-      (if read-setup
-      (dosync 
-        (ref-set setupenv read-setup)
-        (read-setup keyval)
+    (let [setup-map (read-enviroment-variables)]
+      (if setup-map
+        (let [x 1]
+        (dosync 
+          (ref-set setupenv setup-map)
         )
+        (@setupenv keyval))
       (throw (new java.lang.RuntimeException "Could not read setupfile"))
       )
     )
@@ -464,7 +465,7 @@
 
 (defn -main [& m]
 	(println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
-  (println (read-setup :serverhostname))
+;  (println (read-setup :serverhostname))
   ;(java.lang.System/set) "SUBMITIT_SETUP_FILE" nil)]
   ;(dosync (ref-set setupenv (read-enviroment-variables (first m))))
 ;  (send-mail @setupenv ["a@a.com" "b@.com"] "Mew dfgjdløjgf")
