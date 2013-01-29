@@ -146,21 +146,6 @@
     )
   )
 
-(defn update-talk [json-talk address]
-  (println "Putting to " address " : " json-talk)
-
-  (client/put address (if (read-setup :emsUser) 
-  {
-    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
-    :body json-talk
-    :content-type "application/vnd.collection+json"
-    }
-    {
-      :body json-talk
-      :content-type "application/vnd.collection+json"
-    })
-    )
-  )
 
 (defn get-talk [decoded-url]
   (let [res (client/get decoded-url {
@@ -169,6 +154,31 @@
     (println res)
     res)
   )
+
+(defn update-talk [json-talk address]
+
+  (let [last-mod (((get-talk address) :headers) "last-modified")]
+
+  (println "Putting to " address)
+
+  (let [putme (if (read-setup :emsUser) 
+  {
+    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
+    :headers {"if-unmodified-since" last-mod}
+    :body json-talk
+    :content-type "application/vnd.collection+json"
+    }
+    {
+      :headers {"if-unmodified-since" last-mod}
+      :body json-talk
+      :content-type "application/vnd.collection+json"
+    })]
+  (println putme)
+  (client/put address putme
+    )
+  )))
+
+
 
 (defn speaker-post-addr [post-result]
   (str ((post-result :headers) "location") "/speakers")
@@ -243,7 +253,7 @@
   ))
 
 (defn communicate-talk-to-ems [talk]
-;  (println "+++TALK+++" talk "+++")
+  (println "+++TALK+++" talk "+++")
   (try 
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
@@ -257,7 +267,10 @@
       {:resultid (encode-string ((post-result :headers) "location"))}
     )
   )
-  (catch Exception e {:submitError (str "Exception: " (.getMessage e) "->" e)}))
+  (println "Communicated ok")
+  (catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
+    (println errormsg)
+    {:submitError errormsg})))
 
 )
 
