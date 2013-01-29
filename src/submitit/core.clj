@@ -266,8 +266,7 @@
       (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
       {:resultid (encode-string ((post-result :headers) "location"))}
     )
-  )
-  (println "Communicated ok")
+  )  
   (catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
     (println errormsg)
     {:submitError errormsg})))
@@ -358,6 +357,7 @@
   (let [error-response (validate-input talk)]
     (if error-response error-response
       (let [talk-result (communicate-talk-to-ems talk)]
+        (println "TALKRES:" talk-result)
         (send-mail (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
           (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
         (generate-string talk-result)
