@@ -89,7 +89,7 @@
   (let [mode :dev
         port (Integer. (get (System/getenv) "PORT" "8080"))
         ]
-    (server/add-middleware format-params/wrap-json-params)    
+;    (server/add-middleware format-params/wrap-json-params)    
     (server/start port {:mode mode
                         :ns 'submitit.core}))
 )
@@ -457,8 +457,13 @@
   ))
   )
 
-(def handler (server/gen-handler {:mode :dev
-                                  :ns 'submitit.core}))
+(defn setup-handler []
+  (server/add-middleware format-params/wrap-json-params)    
+  (server/gen-handler {:mode :dev
+                                  :ns 'submitit.core})
+  )
+
+(def handler (setup-handler))
 
 
 (defn -main [& m]
