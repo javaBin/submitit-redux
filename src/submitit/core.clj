@@ -89,7 +89,6 @@
   (let [mode :dev
         port (Integer. (get (System/getenv) "PORT" "8080"))
         ]
-;    (server/add-middleware format-params/wrap-json-params)    
     (server/start port {:mode mode
                         :ns 'submitit.core}))
 )
@@ -352,18 +351,19 @@
     )
   )
 
-(defpage [:post "/addTalk"] {:as talk}
-  (println "+++TALK+++" talk "+++")
-  (let [error-response (validate-input talk)]
-    (if error-response error-response
-      (let [talk-result (communicate-talk-to-ems talk)]
-        (println "TALKRES:" talk-result)
-        (send-mail (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
-          (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
-        (generate-string talk-result)
+(defpage [:post "/addTalk"] {:as empty-post}
+  (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
+;    (println "+++TALK+++" talk "+++")
+    (let [error-response (validate-input talk)]
+      (if error-response error-response
+        (let [talk-result (communicate-talk-to-ems talk)]
+          (println "TALKRES:" talk-result)
+          (send-mail (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
+            (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
+          (generate-string talk-result)
+        )
       )
-    )
-  ))
+  )))
 
 
 (defn tval [tm akey]
@@ -457,13 +457,9 @@
   ))
   )
 
-(defn setup-handler []
-  (server/add-middleware format-params/wrap-json-params)    
-  (server/gen-handler {:mode :dev
-                                  :ns 'submitit.core})
-  )
 
-(def handler (setup-handler))
+(def handler (server/gen-handler {:mode :dev
+                                  :ns 'submitit.core}))
 
 
 (defn -main [& m]
