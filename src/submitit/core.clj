@@ -28,8 +28,8 @@
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
   )
 
-(defn read-enviroment-variables [given-filename]
-  (let [filename (get (java.lang.System/getenv) "SUBMITIT_SETUP_FILE" given-filename)]
+(defn read-enviroment-variables []
+  (let [filename (get (java.lang.System/getenv) "SUBMITIT_SETUP_FILE" nil)]
   (if (and filename (.exists (new java.io.File filename)))
     (apply hash-map (flatten (map keyval (filter #(not (.startsWith % "#")) (clojure.string/split-lines (slurp filename))))))
     (let [res nil]
@@ -39,21 +39,36 @@
   ))
   )
 
-(defn create-mail-sender [setup message]
-  (if (= "true" (setup :mailSsl))
+(defn read-setup [keyval]
+  (if (empty? @setupenv) 
+    (let [read-setup (read-enviroment-variables)]
+      (if read-setup
+      (dosync 
+        (ref-set setupenv read-setup)
+        (read-setup keyval)
+        )
+      (throw (new java.lang.RuntimeException "Could not read setupfile"))
+      )
+    )
+    (@setupenv keyval)
+  )
+  )
+
+(defn create-mail-sender [message]
+  (if (= "true" (read-setup :mailSsl))
   (doto (org.apache.commons.mail.SimpleEmail.)
-      (.setHostName (setup :hostname))
-      (.setSslSmtpPort (setup :smtpport))
+      (.setHostName (read-setup :hostname))
+      (.setSslSmtpPort (read-setup :smtpport))
       (.setSSL true)
-      (.setFrom (setup :mailFrom) "Javazone program commitee")
+      (.setFrom (read-setup :mailFrom) "Javazone program commitee")
       (.setSubject "Confirmation of your JavaZone submission")
-      (.setAuthentication (setup :user) (setup :password))
+      (.setAuthentication (read-setup :user) (read-setup :password))
       (.setMsg message)
       )  
   (doto (org.apache.commons.mail.SimpleEmail.)
-      (.setHostName (setup :hostname))
-      (.setSmtpPort (java.lang.Integer/parseInt (setup :smtpport)))
-      (.setFrom (setup :mailFrom) "Javazone program commitee")
+      (.setHostName (read-setup :hostname))
+      (.setSmtpPort (java.lang.Integer/parseInt (read-setup :smtpport)))
+      (.setFrom (read-setup :mailFrom) "Javazone program commitee")
       (.setSubject "Confirmation of your JavaZone submission")
       (.setMsg message)
       )  
@@ -61,10 +76,10 @@
   ))
 
 
-(defn send-mail [setup send-to message]
-  (let [sender (create-mail-sender setup message)]
+(defn send-mail [send-to message]
+  (let [sender (create-mail-sender message)]
     (doseq [sto send-to] (.addTo sender sto))
-    (.addCc sender (setup :mailFrom))
+    (.addCc sender (read-setup :mailFrom))
     (.send sender)    
     )
 	)
@@ -118,9 +133,9 @@
 (defn post-talk [json-talk address]
   (println "Posting to " address " : " json-talk)
 
-  (client/post address (if (@setupenv :emsUser) 
+  (client/post address (if (read-setup :emsUser) 
   {
-    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
+    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
     :body json-talk
     :content-type "application/vnd.collection+json"
     }
@@ -134,9 +149,9 @@
 (defn update-talk [json-talk address]
   (println "Putting to " address " : " json-talk)
 
-  (client/put address (if (@setupenv :emsUser) 
+  (client/put address (if (read-setup :emsUser) 
   {
-    :basic-auth [(@setupenv :emsUser) (@setupenv :emsPassword)]
+    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
     :body json-talk
     :content-type "application/vnd.collection+json"
     }
@@ -236,7 +251,7 @@
       (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
     )
-    (let [post-result (post-talk (submit-talk-json talk) (@setupenv :emsSubmitTalk))]
+    (let [post-result (post-talk (submit-talk-json talk) (read-setup :emsSubmitTalk))]
       (println "Post-res: " post-result)
       (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
       {:resultid (encode-string ((post-result :headers) "location"))}
@@ -322,7 +337,7 @@
 (defn generate-mail-talk-mess [talk-result]
   (if (talk-result :submitError)
     (str "Due to an error you can not review your talk at this time. We will send you another email when we have fixed this. Error " (talk-result :submitError))
-    (str "You can access the submitted presentation at " (@setupenv :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))
+    (str "You can access the submitted presentation at " (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))
     )
   )
 
@@ -330,7 +345,7 @@
   (let [error-response (validate-input talk)]
     (if error-response error-response
       (let [talk-result (communicate-talk-to-ems talk)]
-        (send-mail @setupenv (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
+        (send-mail (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
           (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
         (generate-string talk-result)
       )
@@ -434,10 +449,10 @@
 
 
 (defn -main [& m]
-	(println "Starting");
-  (dosync (ref-set setupenv (read-enviroment-variables (first m))))
+	(println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
+  (println (read-setup :serverhostname))
+  ;(java.lang.System/set) "SUBMITIT_SETUP_FILE" nil)]
+  ;(dosync (ref-set setupenv (read-enviroment-variables (first m))))
 ;  (send-mail @setupenv ["a@a.com" "b@.com"] "Mew dfgjdløjgf")
-  (if @setupenv
-    (startup)
-    nil)
+  (startup)
 		)
