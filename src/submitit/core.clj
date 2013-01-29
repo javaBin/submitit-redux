@@ -358,7 +358,7 @@
       (if error-response error-response
         (let [talk-result (communicate-talk-to-ems talk)]
           (println "TALKRES:" talk-result)
-          (send-mail (speaker-mail-list talk) (generate-mail-text (slurp "speakerMailTemplate.txt") 
+          (send-mail (speaker-mail-list talk) (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
             (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
           (generate-string talk-result)
         )
