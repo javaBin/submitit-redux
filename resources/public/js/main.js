@@ -177,7 +177,7 @@ var SubmitFormView = Backbone.View.extend({
 			return true;
 		}
 
-		this.model.url="/addTalk";
+		this.model.url="addTalk";
 
 		var self = this;
 
