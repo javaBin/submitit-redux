@@ -168,9 +168,12 @@ var SubmitFormView = Backbone.View.extend({
 			tagView.$el = tagDom;
 			tagView.render();
 		});
+
+
 	},
 
 	submitClicked: function() {
+		this.$("#submitButton").button('loading');
 		var myForm = this.$('#submitForm');
 		var valid = myForm[0].checkValidity();
 		if (!valid) {
