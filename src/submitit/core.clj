@@ -349,6 +349,8 @@
     )
   )
 
+
+
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
 ;    (println "+++TALK+++" talk "+++")
@@ -358,7 +360,8 @@
           (println "TALKRES:" talk-result)
           (send-mail (speaker-mail-list talk) (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
             (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
-          (generate-string talk-result)
+          (generate-string (merge talk-result 
+            (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
         )
       )
   )))

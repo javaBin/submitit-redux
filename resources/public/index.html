@@ -16,7 +16,7 @@
       <script type="text/template" id="submitFormTemplate">
         <div class="offset2">
         <h1>Hello</h1>
-        Version: 201301312159
+        Version: 201301312254
         <form id="submitForm">
           <fieldset>
             <legend>Presentation format</legend>
@@ -106,10 +106,10 @@
 
     <script type="text/template" id="resultTemplate">
       <h1>Your talk has been submitted</h1>
-      <% if (submitError) { %>
+      <% if (retError) { %>
       There was a problem in our system so your talk is not availible. We will send you an email shortly with a link to your talk
       <% } else { %>
-      You can review your talk at <a href="<%= talkAddress %>"><%= talkAddress %></a>
+      You can review your talk at <a href="<%= address %>"><%= address %></a>
       <% } %>
     </script>
 

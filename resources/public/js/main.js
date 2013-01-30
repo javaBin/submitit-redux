@@ -195,18 +195,10 @@ var SubmitFormView = Backbone.View.extend({
 				errorPageView.render();
 				self.$el.html(errorPageView.el);
 			} else {
-				var resultModel;
-				if (response.resultid) {
-					resultModel = new ResultModel({
-						submitError: false,
-						talkAddress: talkDetail + response.resultid
-					});
-				} else {
-					resultModel = new ResultModel({
-						submitError: true,
-						talkAddress: "xx"
-					});						
-				}
+				var resultModel = resultModel = new ResultModel({
+					address: response.addr,
+					retError: response.retError
+				});
 				var resultView = new ResultView({
 					model: resultModel,
 					template: self.resultTemplateText
