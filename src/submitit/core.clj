@@ -194,15 +194,23 @@
     }})
   ))
 
+(defn create-encoded-auth []
+  (if (read-setup :emsUser)
+  (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64 (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)))))
+  nil
+  ))
+
 (defn add-photo [address photo]
   (println "Adding photo to " address)
   
   (try 
-    (let [connection (.openConnection (new java.net.URL address))]
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
+      (println author)
       (.setRequestMethod connection "POST")
       (.addRequestProperty connection "content-disposition" "inline; filename=picture.jpeg")
       (.addRequestProperty connection "content-type" "image/jpeg")
       (.setDoOutput connection true)
+      (if author (.addRequestProperty connection "Authorization" author))
       (.connect connection)
       (let [writer (.getOutputStream connection)]
         (.write writer (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
@@ -215,8 +223,21 @@
 
     )
 
-   (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
-  )
+  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+)
+
+;(defn read-picture [address]
+;    (let [connection (.openConnection (new java.net.URL address))]
+;      (.setRequestMethod connection "GET")
+;      (.addRequestProperty connection "content-type" "image/jpeg")
+;      (.connect connection)
+;      (let [reader (.getInputStream connection)]
+;        (.write reader (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
+;        (.close writer)
+;        )
+;
+;    )    
+;  )
 
 
 (defn submit-speakers-to-talk [speakers postaddr]
@@ -235,6 +256,9 @@
             json-data  
             (decode-string (speak "givenId")) nil)]
           (println "Speakerpost: " speaker-post)        
+          (if (speak "picture") 
+            (add-photo (str (decode-string (speak "givenId")) "/photo") (speak "picture"))            
+          )        
           )  
         (let [speaker-post (post-talk 
             json-data  
@@ -485,6 +509,8 @@
     })
   ))
   )
+
+
 
 
 (def handler (server/gen-handler {:mode :dev
