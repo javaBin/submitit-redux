@@ -414,6 +414,21 @@
     )
   ))
 
+(defn setup-str [setup]
+  (clojure.string/join "\n" (map #(if (.startsWith % "emsPassword") "emsPassword=XXX" %) (clojure.string/split setup #"\n")))
+  )
+
+(defpage [:get "/status"] {:as nothing}
+  (html5
+    [:body
+      [:h1 "Status"]
+      [:p (str "EnvFile: " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))]
+      [:hr]
+      [:pre (setup-str (slurp (java.lang.System/getenv "SUBMITIT_SETUP_FILE")))]
+    ]
+    )
+  )
+
 (defn val-from-data-map [anitem dkey]
   ((first (filter #(= (% "name") dkey) (anitem "data"))) "value")
   )
