@@ -139,18 +139,16 @@
 (defn post-talk [json-talk address]
   (println "Posting to " address " : " json-talk)
 
-  (client/post address (if (read-setup :emsUser) 
-  {
-    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
-    :body json-talk
-    :content-type "application/vnd.collection+json"
-    }
-    {
+  (client/post address  
+    (merge 
+      {    
       :body json-talk
       :content-type "application/vnd.collection+json"
-    })
+      } (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
     )
+    
   )
+)
 
 
 (defn get-talk [decoded-url]
@@ -167,21 +165,17 @@
 
   (println "Putting to " address)
 
-  (let [putme (if (read-setup :emsUser) 
-  {
+  (let [putme 
+  (merge {
     :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
     :headers {"if-unmodified-since" last-mod}
     :body json-talk
     :content-type "application/vnd.collection+json"
     }
-    {
-      :headers {"if-unmodified-since" last-mod}
-      :body json-talk
-      :content-type "application/vnd.collection+json"
-    })]
+    (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
+    )]
   (println putme)
-  (client/put address putme
-    )
+  (client/put address putme)
   )))
 
 
@@ -263,7 +257,7 @@
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")))]
       (println "Update-res: " put-result)
-      (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
+      ;(submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
     )
     (let [post-result (post-talk (submit-talk-json talk) (read-setup :emsSubmitTalk))]
@@ -360,7 +354,7 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-;    (println "+++TALK+++" talk "+++")
+    (println "+++TALK+++" talk "+++")
     (let [error-response (validate-input talk)]
       (if error-response error-response
         (let [talk-result (communicate-talk-to-ems talk)]
@@ -434,7 +428,7 @@
       [:p (str "EnvFile: '" setupfile "'")]
       [:hr]
       (if (and setupfile (.exists (new java.io.File setupfile)))
-      [:pre (setup-str (slurp setupfile))]
+      [:pre (setup-str (slurp setupfile)  )]
       [:p "Could not find setupfile"])
       [:hr]
       [:pre (reduce (fn[a b] (str a "\n" b)) (java.lang.System/getProperties))]
