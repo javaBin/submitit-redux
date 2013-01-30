@@ -165,12 +165,11 @@
 
   (let [putme 
   (merge {
-    :basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]
-    :headers {"if-unmodified-since" last-mod}
     :body json-talk
     :content-type "application/vnd.collection+json"
     }
     (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
+    (if last-mod {:headers {"if-unmodified-since" last-mod}} {})
     )]
   (println putme)
   (client/put address putme)
