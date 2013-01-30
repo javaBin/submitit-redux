@@ -407,6 +407,9 @@
       [:p (tval talk-map "audience")]
       (vec (cons :div (reduce conj [] (map (fn[aspeak] 
         [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")] [:legend "Zip-code"] [:p (spval aspeak "zip-code")]]) speaker-vec))))
+      
+      [:legend "Update talk"]
+      (link-to (str (read-setup :serverhostname) "/index.html?talkid=" (talkd :talkid)) "Update your talk")
       ]]
     )
   ))
