@@ -428,6 +428,8 @@
       (if (and setupfile (.exists (new java.io.File setupfile)))
       [:pre (setup-str (slurp (java.lang.System/getenv "SUBMITIT_SETUP_FILE")))]
       [:p "Could not find setupfile"])
+      [:hr]
+      [:pre (reduce (fn[a b] (str a "\n" b)) (java.lang.System/getProperties))]
     ]
     )
   ))
