@@ -423,14 +423,14 @@
   (html5
     [:body
       [:h1 "Status"]
-      [:p (str "EnvFile: " setupfile)]
+      [:p (str "EnvFile: '" setupfile "'")]
       [:hr]
       (if (and setupfile (.exists (new java.io.File setupfile)))
       [:pre (setup-str (slurp (java.lang.System/getenv "SUBMITIT_SETUP_FILE")))]
       [:p "Could not find setupfile"])
     ]
     )
-  )
+  ))
 
 (defn val-from-data-map [anitem dkey]
   ((first (filter #(= (% "name") dkey) (anitem "data"))) "value")
