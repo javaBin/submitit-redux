@@ -307,6 +307,7 @@ $(function() {
 		submitFormModel = new SubmitFormModel;
 		submitFormModel.fetch({
 			async : false,
+			cache: false,
 			url : "talkJson?talkid=" + givenId 
 		});
 		var speakArr = submitFormModel.get("speakers");

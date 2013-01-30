@@ -230,12 +230,12 @@
             {:name "zip-code" :value (get speak "zipCode" "")}
            ]
             }})]
-;      (if (speak "givenId")
-;        (let [speaker-post (update-talk 
-;            json-data  
-;            (decode-string (speak "given-id")))]
-;          (println "Speakerpost: " speaker-post)        
-;          )  
+      (if (speak "givenId")
+        (let [speaker-post (update-talk 
+            json-data  
+            (decode-string (speak "givenId")) nil)]
+          (println "Speakerpost: " speaker-post)        
+          )  
         (let [speaker-post (post-talk 
             json-data  
             postaddr)]
@@ -244,7 +244,7 @@
             (add-photo (str ((speaker-post :headers) "location") "/photo") (speak "picture"))            
           )        
         )
-;      )
+      )
     )
    
   ))
@@ -254,7 +254,7 @@
   (if (talk "addKey")
     (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")) (((get-talk (decode-string (talk "addKey"))) :headers) "last-modified"))]
       (println "Update-res: " put-result)
-      ;(submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
+      (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
     )
     (let [post-result (post-talk (submit-talk-json talk) (read-setup :emsSubmitTalk))]
@@ -351,7 +351,7 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-    (println "+++TALK+++" talk "+++")
+;    (println "+++TALK+++" talk "+++")
     (let [error-response (validate-input talk)]
       (if error-response error-response
         (let [talk-result (communicate-talk-to-ems talk)]
@@ -406,7 +406,10 @@
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
       (vec (cons :div (reduce conj [] (map (fn[aspeak] 
-        [:div [:legend "Speaker"] [:p (spval aspeak "name")] [:legend "Email"] [:p (spval aspeak "email")] [:legend "Zip-code"] [:p (spval aspeak "zip-code")]]) speaker-vec))))
+        [:div [:legend "Speaker"] [:p (spval aspeak "name")] 
+              [:legend "Email"] [:p (spval aspeak "email")] 
+              [:legend "Speakers profile"] [:p (spval aspeak "bio")]
+              [:legend "Zip-code"] [:p (spval aspeak "zip-code")]]) speaker-vec))))
       
       [:legend "Update talk"]
       (link-to (str (read-setup :serverhostname) "/index.html?talkid=" (talkd :talkid)) "Update your talk")
