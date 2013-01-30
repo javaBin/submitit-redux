@@ -28,8 +28,14 @@
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
   )
 
+(defn get-setup-filename []
+  (let [filen (java.lang.System/getenv "SUBMITIT_SETUP_FILE")]
+  (if (and filen (not= filen "")) filen
+    (java.lang.System/getProperty "SUBMITIT_SETUP_FILE")
+  )))
+
 (defn read-enviroment-variables []
-  (let [filename (get (java.lang.System/getenv) "SUBMITIT_SETUP_FILE" nil)]
+  (let [filename (get-setup-filename)]
   (if (and filename (.exists (new java.io.File filename)))
     (apply hash-map (flatten (map keyval (filter #(not (.startsWith % "#")) (clojure.string/split-lines (slurp filename))))))
     (let [res nil]
@@ -418,8 +424,10 @@
   (clojure.string/join "\n" (map #(if (.startsWith % "emsPassword") "emsPassword=XXX" %) (clojure.string/split setup #"\n")))
   )
 
+
+
 (defpage [:get "/status"] {:as nothing}
-  (let [setupfile (java.lang.System/getenv "SUBMITIT_SETUP_FILE")]
+  (let [setupfile (get-setup-filename)]
   (html5
     [:body
       [:h1 "Status"]
