@@ -305,9 +305,9 @@ $(function() {
 			cache: false,
 			url : "talkJson?talkid=" + givenId 
 		});
+		console.log(submitFormModel);
 		var speakArr = submitFormModel.get("speakers");
 		var speakColl = new SpeakerCollection(speakArr);
-		console.log(speakColl);
 		submitFormModel.set({
 			speakers: speakColl
 		}, {silent: true});
@@ -333,7 +333,6 @@ $(function() {
 	
 	tagCollection.setupChecked(submitFormModel.get("talkTags"));
 
-	console.log(tagCollection);
 
 	var fv=new SubmitFormView({
 		model: submitFormModel,

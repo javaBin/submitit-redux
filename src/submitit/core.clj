@@ -493,7 +493,7 @@
 
 (defpage [:get "/talkJson"] {:as talkd}
   (let [decoded-url (decode-string (talkd :talkid))] 
-  (let [talk-map (parse-string ((get-talk decoded-url) :body)) speaker-list (speakers-from-talk decoded-url)]
+  (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) speaker-list (speakers-from-talk decoded-url)]
     (generate-string
     {
       :presentationType  (tval talk-map "format"),
@@ -507,6 +507,7 @@
       :expectedAudience (tval talk-map "audience")
       :talkTags (tarrval talk-map "keywords")
       :addKey (talkd :talkid)
+      :lastModified ((get-result :headers) "last-modified")
       :speakers speaker-list
     })
   ))
