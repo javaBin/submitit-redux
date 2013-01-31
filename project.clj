@@ -10,10 +10,12 @@
     [cheshire "4.0.3"]
     [clj-http "0.6.3"]
     [org.clojure/data.codec "0.1.0"]
-    [net.sf.jlue/jlue-core "1.3"]
+    [com.google.code.maven-play-plugin.org.playframework/jj-simplecaptcha "1.1"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
   :ring {:handler submitit.core/handler}  
   :main ^{:skip-aot true} submitit.core
   :plugins [[lein-ring "0.8.2"]]
   )
+
+            

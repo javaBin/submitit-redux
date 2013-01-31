@@ -522,13 +522,26 @@
 (defn gen-captcha-text []
   (->> #(rand-int 26) (repeatedly 6) (map (partial + 97)) (map char) (apply str)))
 
+
+(defn build-captcha []  
+  (-> (new jj.play.ns.nl.captcha.Captcha$Builder 200 50)
+    (.addText)
+    (.addNoise)
+    (.addNoise)
+    (.addBackground)
+    (.build)
+    (.getImage)
+    )
+  )
+
 (defpage [:get "/captcha"] {:as noting}
   (noir.response/content-type 
     "image/jpeg" 
     (let [out (new java.io.ByteArrayOutputStream)]
-      (javax.imageio.ImageIO/write (.gen (new net.sf.jlue.util.Captcha) (gen-captcha-text) 250 40) "jpeg" out)
+      (javax.imageio.ImageIO/write (build-captcha) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out))))  
   )
+
 
 
 (defn -main [& m]
