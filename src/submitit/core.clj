@@ -278,7 +278,7 @@
 (defn communicate-talk-to-ems [talk]
   (try 
   (if (talk "addKey")
-    (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")) (((get-talk (decode-string (talk "addKey"))) :headers) "last-modified"))]
+    (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")) (talk "lastModified"))]
       (println "Update-res: " put-result)
       (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
