@@ -10,6 +10,7 @@
     [cheshire "4.0.3"]
     [clj-http "0.6.3"]
     [org.clojure/data.codec "0.1.0"]
+    [net.sf.jlue/jlue-core "1.3"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
   :ring {:handler submitit.core/handler}  

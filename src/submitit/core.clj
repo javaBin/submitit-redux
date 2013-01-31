@@ -519,6 +519,17 @@
 (def handler (server/gen-handler {:mode :dev
                                   :ns 'submitit.core}))
 
+(defn gen-captcha-text []
+  (->> #(rand-int 26) (repeatedly 6) (map (partial + 97)) (map char) (apply str)))
+
+(defpage [:get "/captcha"] {:as noting}
+  (noir.response/content-type 
+    "image/jpeg" 
+    (let [out (new java.io.ByteArrayOutputStream)]
+      (javax.imageio.ImageIO/write (.gen (new net.sf.jlue.util.Captcha) (gen-captcha-text) 250 40) "jpeg" out)
+      (new java.io.ByteArrayInputStream (.toByteArray out))))  
+  )
+
 
 (defn -main [& m]
 	(println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
