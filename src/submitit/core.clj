@@ -143,6 +143,7 @@
     (merge 
       {    
       :body json-talk
+      :body-encoding "UTF-8"
       :content-type "application/vnd.collection+json"
       } (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
     )
@@ -166,6 +167,7 @@
   (let [putme 
   (merge {
     :body json-talk
+    :body-encoding "UTF-8"
     :content-type "application/vnd.collection+json"
     }
     (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})

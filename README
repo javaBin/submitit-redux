@@ -14,7 +14,5 @@ Distributed under the Eclipse Public License, the same as Clojure.
 
 ## Todos
 
-* Store speaker image (server side)
 * Fix error in put (not mod since)
-* Norwegian letters (nemesis :))
 
