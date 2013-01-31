@@ -305,7 +305,6 @@ $(function() {
 			cache: false,
 			url : "talkJson?talkid=" + givenId 
 		});
-		console.log(submitFormModel);
 		var speakArr = submitFormModel.get("speakers");
 		var speakColl = new SpeakerCollection(speakArr);
 		submitFormModel.set({
