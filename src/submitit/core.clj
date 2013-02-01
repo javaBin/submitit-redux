@@ -529,16 +529,22 @@
     (.addNoise)
     (.addNoise)
     (.addBackground)
-    (.build)
-    (.getImage)
+    (.build)    
     )
   )
+
+(defpage [:get "/loadCaptcha"] {:as noting}
+  (let [gen-cap (build-captcha)]
+    (noir.session/put! :capt-image (.getImage gen-cap))
+    (generate-string {:fact (.trim (.getAnswer gen-cap))})
+    ) 
+)
 
 (defpage [:get "/captcha"] {:as noting}
   (noir.response/content-type 
     "image/jpeg" 
     (let [out (new java.io.ByteArrayOutputStream)]
-      (javax.imageio.ImageIO/write (build-captcha) "png" out)      
+      (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out))))  
   )
 

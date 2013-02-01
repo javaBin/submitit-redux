@@ -48,7 +48,7 @@ var SpeakerView = Backbone.View.extend({
 		self.model.set({
 			speakerName: self.$("#speakerNameInput").val(),
 			email: self.$("#emailInput").val(),
-			bio: self.$("#speakerBioInput").val(),
+			bio: self.$("#speakerBioInput").val(), 
 			zipCode: self.$("#speakerZipCodeInput").val()
 		});
 	},
@@ -124,6 +124,19 @@ var SubmitFormModel = Backbone.Model.extend({
 });
 
 
+var CaptchaModel = Backbone.Model.extend({
+	url: "loadCaptcha"
+});
+
+var CaptchaView  = Backbone.View.extend({
+	initialize: function (attrs) {
+		this.template = _.template(attrs.template);
+	},
+
+	render: function() {
+		this.$el.append(this.template({}));
+	}
+});
 
 
 var SubmitFormView = Backbone.View.extend({
@@ -142,6 +155,7 @@ var SubmitFormView = Backbone.View.extend({
 		this.tagTemplate = attrs.tagTemplate;
 		this.tagCollection = attrs.tagCollection;
 		this.errorPageTemplate = attrs.errorPageTemplate;
+		this.captchaTemplate = attrs.captchaTemplate;
 	},
 
 	render: function() {
@@ -168,6 +182,16 @@ var SubmitFormView = Backbone.View.extend({
 			tagView.$el = tagDom;
 			tagView.render();
 		});
+
+		var captchaView = new CaptchaView({
+			template: this.captchaTemplate
+		});
+
+		captchaView.render();
+
+		console.log(captchaView.el);
+
+		this.$("#captchaPart").html(captchaView.el);
 
 
 	},
@@ -332,16 +356,24 @@ $(function() {
 	
 	tagCollection.setupChecked(submitFormModel.get("talkTags"));
 
+	var captchModel = new CaptchaModel;
+
+	captchModel.fetch({async: false, cache: false});
+
+	console.log(captchModel);
+
 
 	var fv=new SubmitFormView({
 		model: submitFormModel,
 		tagCollection: tagCollection,
+		captchaModel: captchModel,
 		el: $("#main"),
 		template: $("#submitFormTemplate").html(),
 		speakerTemplate: $("#speakerTemplate").html(),
 		resultTemplate: $("#resultTemplate").html(),
 		tagTemplate: $("#tagTemplate").html(),
-		errorPageTemplate: $("#errorPageTemplate").html()
+		errorPageTemplate: $("#errorPageTemplate").html(),
+		captchaTemplate: $("#captchaTemplate").html()
 	})
 	fv.render();
 });

@@ -20,9 +20,8 @@
         <h1>Hello</h1>
         Version: 201301312349
         <form id="submitForm">
-          <fieldset>
-            <legend>Captcha</legend>
-            <img src="captcha"/>
+          <fieldset>            
+            
             <legend>Presentation format</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="presentationTypeGrp">
               <button class="btn active" type="button" name="presFormat" value="presentation">Presentation</button>
@@ -70,6 +69,11 @@
 
             <div id="speakerList"></div>
             <button class="btn" id="addSpeaker">Add speaker</button>
+
+            <hr/>
+
+            <div id="captchaPart"></div>
+
             <legend>Submit talk</legend>
             <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk</button>
           </fieldset>
@@ -121,6 +125,11 @@
       <h1>Sorry this did not work</h1>
       <%= errormessage %>
     </script>
+
+    <script type="text/template" id="captchaTemplate">
+      <legend>Captcha</legend>
+      <img src="captcha"/>
+    </script>        
 
 
   </body>
