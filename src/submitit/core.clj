@@ -375,19 +375,27 @@
     )
   )
 
-
+(defn captcha-error? [answer fact]
+  (not= answer fact)
+  )
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
     (println "+++TALK+++" talk "+++")
-    (let [error-response (validate-input talk)]
-      (if error-response error-response
-        (let [talk-result (communicate-talk-to-ems talk)]
-          (println "TALKRES:" talk-result)
-          (send-mail (speaker-mail-list talk) (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
-            (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
-          (generate-string (merge talk-result 
-            (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
+    (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
+        (let [errme (generate-string {:captchaError true})]
+          (println "CaptchError:" + errme)
+          errme
+          )
+      (let [error-response (validate-input talk)]
+        (if error-response error-response
+          (let [talk-result (communicate-talk-to-ems talk)]
+            (println "TALKRES:" talk-result)
+            (send-mail (speaker-mail-list talk) (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
+              (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
+            (generate-string (merge talk-result 
+              (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
+          )
         )
       )
   )))

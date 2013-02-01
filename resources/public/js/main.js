@@ -209,7 +209,9 @@ var SubmitFormView = Backbone.View.extend({
 	},
 
 	submitClicked: function() {
-		this.$("#submitButton").button('loading');
+		var submitBtn = this.$("#submitButton");		
+		submitBtn.button('loading');
+		this.$("#captchaError").addClass("hideit");
 		var myForm = this.$('#submitForm');
 		var valid = myForm[0].checkValidity();
 		if (!valid) {
@@ -227,10 +229,13 @@ var SubmitFormView = Backbone.View.extend({
 			captchaAnswer: self.captchaModel.get("userRespone")
 		},{silent:true});
 
-		console.log(this.model);
 
 		this.model.save({}, {success: function(model, response){
-			if (response.errormessage) {
+			if (response.captchaError) {
+				self.$("#captchaError").removeClass("hideit");
+				submitBtn.button('reset');
+			}
+			else if (response.errormessage) {
 				var errorPageModel = new ErrorPageModel({
 					errormessage: response.errormessage
 				});

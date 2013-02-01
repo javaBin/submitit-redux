@@ -18,7 +18,7 @@
       <script type="text/template" id="submitFormTemplate">
         <div class="offset2">
         <h1>Hello</h1>
-        Version: 201301312349
+        Version: 201302012333
         <form id="submitForm">
           <fieldset>            
             
@@ -130,6 +130,11 @@
       <legend>Captcha</legend>
       <img src="captcha"/><br/>
       <input type="text" required="required" class="span3" id="captchaInput" placeholder="Type the letters in the image"/>
+      <div class="row hideit" id="captchaError">
+        <div class="alert alert-error span4">
+            Captcha was wrong. Try again.
+        </div>
+      </div>
     </script>        
 
 
