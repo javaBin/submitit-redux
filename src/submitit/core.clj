@@ -379,7 +379,7 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-;    (println "+++TALK+++" talk "+++")
+    (println "+++TALK+++" talk "+++")
     (let [error-response (validate-input talk)]
       (if error-response error-response
         (let [talk-result (communicate-talk-to-ems talk)]

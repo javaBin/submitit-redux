@@ -129,12 +129,24 @@ var CaptchaModel = Backbone.Model.extend({
 });
 
 var CaptchaView  = Backbone.View.extend({
+
+	events: {
+		"change #captchaInput": "captchaChanged"
+	},
+
 	initialize: function (attrs) {
 		this.template = _.template(attrs.template);
 	},
 
 	render: function() {
 		this.$el.append(this.template({}));
+	},
+
+	captchaChanged: function() {
+		var self = this;
+		self.model.set({
+			userRespone: self.$("#captchaInput").val()
+		});
 	}
 });
 
@@ -156,6 +168,7 @@ var SubmitFormView = Backbone.View.extend({
 		this.tagCollection = attrs.tagCollection;
 		this.errorPageTemplate = attrs.errorPageTemplate;
 		this.captchaTemplate = attrs.captchaTemplate;
+		this.captchaModel = attrs.captchaModel;
 	},
 
 	render: function() {
@@ -184,12 +197,11 @@ var SubmitFormView = Backbone.View.extend({
 		});
 
 		var captchaView = new CaptchaView({
-			template: this.captchaTemplate
+			template: this.captchaTemplate,
+			model: this.captchaModel
 		});
 
 		captchaView.render();
-
-		console.log(captchaView.el);
 
 		this.$("#captchaPart").html(captchaView.el);
 
@@ -209,6 +221,13 @@ var SubmitFormView = Backbone.View.extend({
 		var self = this;
 
 		var talkDetail = window.location.origin + "/talkDetail?talkid=";
+
+		this.model.set({
+			captchaFact: self.captchaModel.get("fact"),
+			captchaAnswer: self.captchaModel.get("userRespone")
+		},{silent:true});
+
+		console.log(this.model);
 
 		this.model.save({}, {success: function(model, response){
 			if (response.errormessage) {
@@ -356,17 +375,14 @@ $(function() {
 	
 	tagCollection.setupChecked(submitFormModel.get("talkTags"));
 
-	var captchModel = new CaptchaModel;
+	var captchaModel = new CaptchaModel;
 
-	captchModel.fetch({async: false, cache: false});
-
-	console.log(captchModel);
-
+	captchaModel.fetch({async: false, cache: false});
 
 	var fv=new SubmitFormView({
 		model: submitFormModel,
 		tagCollection: tagCollection,
-		captchaModel: captchModel,
+		captchaModel: captchaModel,
 		el: $("#main"),
 		template: $("#submitFormTemplate").html(),
 		speakerTemplate: $("#speakerTemplate").html(),
