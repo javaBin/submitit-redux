@@ -15,6 +15,8 @@
 
 (def setupenv (ref {}))
 
+(def random-salt (noir.util.crypt/gen-salt))
+
 
 (defn encode-string [x] 
   (apply str (map char (b64/encode (.getBytes x))))
@@ -377,12 +379,12 @@
   )
 
 (defn captcha-error? [answer fact]
-  (not= answer fact)
+  (not= (noir.util.crypt/encrypt random-salt answer) fact)
   )
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-    (println "+++TALK+++" talk "+++")
+    (println "+++TALK+++" talk "+++")    
     (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
         (let [errme (generate-string {:captchaError true})]
           (println "CaptchError:" + errme)
@@ -545,7 +547,7 @@
 (defpage [:get "/loadCaptcha"] {:as noting}
   (let [gen-cap (build-captcha)]
     (noir.session/put! :capt-image (.getImage gen-cap))
-    (generate-string {:fact (.trim (.getAnswer gen-cap))})
+    (generate-string {:fact (noir.util.crypt/encrypt random-salt (.trim (.getAnswer gen-cap)))})
     ) 
 )
 
