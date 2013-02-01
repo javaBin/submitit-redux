@@ -298,7 +298,8 @@
 
 (defn handle-arr [template tkey tvalue]
   (if (re-find (re-pattern (str "%a" tkey "%")) template)
-    (clojure.string/replace template (re-pattern (str "%a" tkey "%")) (reduce (fn [a b] (str a ", " b)) tvalue))
+    (clojure.string/replace template (re-pattern (str "%a" tkey "%")) (if (empty? tvalue) 
+      "None selected" (reduce (fn [a b] (str a ", " b)) tvalue)))
     template
     )
   )
