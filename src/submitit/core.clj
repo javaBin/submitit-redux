@@ -461,7 +461,7 @@
               [:legend "Email"] [:p (spval aspeak "email")] 
               [:legend "Speakers profile"] [:p (spval aspeak "bio")]
               [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
-              [:legend "Image"] [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (fetch-picture aspeak)}]
+;              [:legend "Image"] [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (fetch-picture aspeak)}]
 ;              <img class="thumbnail" style="width: 180px; height: 260px;" src="<%= picture %>"/>
 
         ]) speaker-vec))))
@@ -574,6 +574,45 @@
     (let [out (new java.io.ByteArrayOutputStream)]
       (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out))))  
+  )
+
+(defn to-byte-array [f] 
+  (with-open [input (new java.io.FileInputStream f)
+              buffer (new java.io.ByteArrayOutputStream)]
+    (clojure.java.io/copy input buffer)
+    (.toByteArray buffer)))
+
+(defn another-add-photo [address photo-map]
+  (println "Adding photo to " address)  
+;  (try 
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "POST")
+      (.addRequestProperty connection "content-disposition" (str "inline; filename=" (photo-map :filename)))
+      (.addRequestProperty connection "content-type" (photo-map :content-type))
+      (.setDoOutput connection true)
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      (let [writer (.getOutputStream connection)]
+        (.write writer (to-byte-array (photo-map :tempfile)))
+        (.close writer)
+        )
+      (println "Reponse code: '" (.getResponseCode connection) "'")
+      (println "Reponse: '" (.getResponseMessage connection) "'")
+
+    )
+
+;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+)
+
+
+(defpage [:post "/addPic"] {:keys [filehandler speakerKey]}
+  (println "***")
+  (println filehandler)
+  (println "***")
+  (println (type (filehandler :tempfile)))
+  (println "***")
+  (another-add-photo (str (decode-string speakerKey) "/photo") filehandler)
+  "Ops"
   )
 
 
