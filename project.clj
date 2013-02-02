@@ -4,6 +4,7 @@
   :dependencies [
   	[org.clojure/clojure "1.3.0"] 
   	[org.apache.commons/commons-email "1.2"]
+    [commons-io "2.4"]
     [commons-codec "1.7"]
   	[noir "1.3.0-alpha10"]
   	[ring-middleware-format "0.1.1"]

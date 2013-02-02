@@ -228,18 +228,25 @@
   (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
 )
 
-;(defn read-picture [address]
-;    (let [connection (.openConnection (new java.net.URL address))]
-;      (.setRequestMethod connection "GET")
-;      (.addRequestProperty connection "content-type" "image/jpeg")
-;      (.connect connection)
-;      (let [reader (.getInputStream connection)]
-;        (.write reader (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
-;        (.close writer)
-;        )
-;
-;    )    
-;  )
+(defn reader-to-arr [reader resarr]
+  (let [nextval (.read reader)]
+    (if (= nextval -1) resarr
+      (let [apparr (conj resarr byte nextval)]
+        (recur reader apparr)
+      )
+    )
+    )
+  )
+
+(defn read-picture [address]
+    (let [connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "GET")
+      (.addRequestProperty connection "content-type" "image/jpeg")
+      (.connect connection)
+      (let [reader (.getInputStream connection) bytearr (org.apache.commons.io.IOUtils/toByteArray reader)]
+          (.close reader)
+          (org.apache.commons.codec.binary.Base64/encodeBase64String bytearr)
+      )))
 
 
 (defn submit-speakers-to-talk [speakers postaddr]
@@ -415,6 +422,12 @@
   )
   
 
+(defn fetch-picture [aspeak]
+  (let [picsrc (read-picture (str (aspeak "href") "/photo"))]
+    (str "data:image/jpeg;base64," (.substring picsrc (.indexOf picsrc "/9j/")))
+  )
+  )
+
 (defpage [:get "/talkDetail"] {:as talkd}
   (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
     speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
@@ -447,7 +460,11 @@
         [:div [:legend "Speaker"] [:p (spval aspeak "name")] 
               [:legend "Email"] [:p (spval aspeak "email")] 
               [:legend "Speakers profile"] [:p (spval aspeak "bio")]
-              [:legend "Zip-code"] [:p (spval aspeak "zip-code")]]) speaker-vec))))
+              [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
+              [:legend "Image"] [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (fetch-picture aspeak)}]
+;              <img class="thumbnail" style="width: 180px; height: 260px;" src="<%= picture %>"/>
+
+        ]) speaker-vec))))
       
       [:legend "Update talk"]
       (link-to (str (read-setup :serverhostname) "/index.html?talkid=" (talkd :talkid)) "Update your talk")
