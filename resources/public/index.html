@@ -60,9 +60,30 @@
               </ul>
 
             <legend>Language</legend>
-            <div class="btn-group talkInput" data-toggle="buttons-radio" id="languageGrp">
-              <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
-              <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
+            <div class="row">
+              <div class="btn-group talkInput span4" data-toggle="buttons-radio" id="languageGrp">
+                <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
+                <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
+              </div>
+              <div class="well span6">
+                The talk can be given in English or Norwegian. Please indicate in what language you will present the talk.
+                <a href="#languageHelp" role="button" class="btn btn-info" data-toggle="modal">?</a>
+              </div>
+            </div>
+
+            <div id="languageHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="languageHelpLabel" aria-hidden="true">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                  <h2 id="languageHelpLabel">Language</h2>
+              </div>
+              <div class="modal-body">
+                <p>The talk can be given in Norwegian or English</p>
+                <p>The slides may be in English even if you present the talk in Norwegian.</p>
+                <p>We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>              
+              </div>
             </div>
 
             <legend>Level</legend>
@@ -82,7 +103,7 @@
             <div id="levelHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="levelHelpLabel" aria-hidden="true">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                  <h2 id="levelHelpLabel">Skill levels for talks</h3>
+                  <h2 id="levelHelpLabel">Skill levels for talks</h2>
               </div>
               <div class="modal-body">
                 <h3>Introductory</h3>
@@ -100,10 +121,25 @@
             </div>
 
             <legend>Outline</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput"><%= outline %></textarea>
+            <div class="row">
+              <div class="span8">
+              <textarea rows="8" required="required" class="span8 talkInput" id="outlineInput"><%= outline %></textarea>
+              </div>
+              <p class="well span4">
+                This information will be used by the program committee for reviewing the detailed contents. The outline should be a table of contents of the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.
+              </p>
+            </div>
 
             <legend>Highlight summary</legend>
-            <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"><%= highlight %></textarea>
+            <div class="row">
+              <div class="span8">
+              <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"><%= highlight %></textarea>
+              </div>
+              <p class="well span4">
+                Description of the contents of your talk in only a few sentences. The highlight summary can be used in teaser presentations on the web prior to the conference.
+              </p>
+            </div>          
+            
 
             <legend>Equipment</legend>
             <textarea rows="3" class="span8 talkInput" id="equipmentInput"><%= equipment %></textarea>
@@ -119,7 +155,7 @@
             <h2>Speakers</h2>
 
             <div id="speakerList"></div>
-            <button class="btn" id="addSpeaker">Add speaker</button>
+            <button class="btn" id="addSpeaker">Add another speaker</button>
 
             <hr/>
 
