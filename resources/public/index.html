@@ -38,10 +38,24 @@
 
             <legend>Title</legend>
             <div class="row">
-              <input type="text" required="required" class="span8 talkInput" id="titleInput" value="<%= title %>"/>
-
+              <div class="span7">
+                <input type="text" required="required" class="talkInput span6" id="titleInput" value="<%= title %>"/>
+              </div>
+            </div>
+            <div class="row">
+              <ul class="well span7">
+                <li>Select an expressive title that captures the contents of your talk well without being too long.</li>
+                <li>Remember that the title must be attractive and should make a reader curious.</li>
+              </ul>
+            </div>
             <legend>Abstract</legend>
+            <div class="span8">
             <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"><%= abstract %></textarea>
+            </div>
+            <ul class="well span5">
+                <li>Select an expressive title that captures the contents of your talk well without being too long.</li>
+                <li>Remember that the title must be attractive and should make a reader curious.</li>
+              </ul>
 
             <legend>Language</legend>
             <div class="btn-group talkInput" data-toggle="buttons-radio" id="languageGrp">
