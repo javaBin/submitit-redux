@@ -220,10 +220,8 @@
         (.write writer (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
         (.close writer)
         )
-;      (let [res
-;        (with-open [rdr (.getInputStream connection)]
-;        (reduce conj [] (line-seq rdr)))]
-;        (println res))
+      (println "Reponse code: '" (.getResponseCode connection) "'")
+      (println "Reponse: '" (.getResponseMessage connection) "'")
 
     )
 
@@ -384,7 +382,7 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-    (println "+++TALK+++" talk "+++")    
+;    (println "+++TALK+++" talk "+++")    
     (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
         (let [errme (generate-string {:captchaError true})]
           (println "CaptchError:" + errme)
@@ -430,7 +428,7 @@
       [:legend "Presentation format"]
       [:p (tval talk-map "format")]
       [:legend "Language"]
-      [:p (if (= (tval talk-map "locale") "no") "Norwegian" "English")]
+      [:p (if (= (tval talk-map "lang") "no") "Norwegian" "English")]
       [:legend "Level"]
       [:p (tval talk-map "level")]
       [:legend "Outline"]
@@ -510,7 +508,7 @@
       :presentationType  (tval talk-map "format"),
       :title (tval talk-map "title")
       :abstract (tval talk-map "body")
-      :language (tval talk-map "locale")
+      :language (tval talk-map "lang")
       :level (tval talk-map "level")
       :outline (tval talk-map "outline")
       :highlight (tval talk-map "summary")
