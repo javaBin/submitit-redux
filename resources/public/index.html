@@ -73,16 +73,16 @@
                 <button class="btn <% if (level === 'advanced') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
                 <button class="btn <% if (level === 'hardcore') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
               </div>
-              <ul class="well span6">
+              <div class="well span6">
                 The level of the presentation related to the expected audience. 
                 <a href="#levelHelp" role="button" class="btn btn-info" data-toggle="modal">?</a>
-              </ul>
+              </div>
             </div>
 
-            <div id="levelHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div id="levelHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="levelHelpLabel" aria-hidden="true">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                  <h2 id="myModalLabel">Skill levels for talks</h3>
+                  <h2 id="levelHelpLabel">Skill levels for talks</h3>
               </div>
               <div class="modal-body">
                 <h3>Introductory</h3>
