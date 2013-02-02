@@ -256,7 +256,7 @@
       (if (speak "givenId")
         (let [speaker-post (update-talk 
             json-data  
-            (decode-string (speak "givenId")) nil)]
+            (decode-string (speak "givenId")) (speak "lastModified"))]
           (println "Speakerpost: " speaker-post)        
           (if (speak "picture") 
             (add-photo (str (decode-string (speak "givenId")) "/photo") (speak "picture"))            
@@ -483,6 +483,7 @@
 
 (defn speakers-from-talk [decoded-talk-url]
   (vec (map (fn [anitem] 
+    (let [speaker-details (get-talk (anitem "href"))]
     {
       :speakerName (val-from-data-map anitem "name") 
       :email (val-from-data-map anitem "email") 
@@ -490,7 +491,8 @@
       :picture nil 
       :zipCode (val-from-data-map anitem "zip-code")
       :givenId (encode-string (anitem "href"))
-    }) 
+      :lastModified ((speaker-details :headers) "last-modified")
+    })) 
     (((parse-string ((client/get (str decoded-talk-url "/speakers") {
       :content-type "application/vnd.collection+json"
     }) :body)) "collection") "items")))
@@ -502,7 +504,7 @@
 
 (defpage [:get "/talkJson"] {:as talkd}
   (let [decoded-url (decode-string (talkd :talkid))] 
-  (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) speaker-list (speakers-from-talk decoded-url)]
+  (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) lastmod ((get-result :headers) "last-modified") speaker-list (speakers-from-talk decoded-url)]
     (generate-string
     {
       :presentationType  (tval talk-map "format"),
@@ -516,7 +518,7 @@
       :expectedAudience (tval talk-map "audience")
       :talkTags (tarrval talk-map "keywords")
       :addKey (talkd :talkid)
-      :lastModified ((get-result :headers) "last-modified")
+      :lastModified lastmod
       :speakers speaker-list
     })
   ))
