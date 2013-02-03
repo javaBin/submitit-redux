@@ -31,7 +31,8 @@ var SpeakerCollection = Backbone.Collection.extend({
 
 var SpeakerView = Backbone.View.extend({
 	events: {
-            "change .speakerInput" : "speakerInputChanged"
+            "change .speakerInput" : "speakerInputChanged",
+            "click #addPicBtn" : "addSpeakerPicture"
     },
 
 	initialize: function (attrs) {
@@ -51,6 +52,19 @@ var SpeakerView = Backbone.View.extend({
 			zipCode: self.$("#speakerZipCodeInput").val()
 		});
 	},
+
+	addSpeakerPicture: function() {
+		console.log("Submitting");
+
+		this.$('newAddPic').live('submit', function(){
+      		$.post($(this).attr('action'), $(this).serialize(), function(response){
+            // do something here on success
+	      },'json');
+    	  return false;
+   		});
+
+		return false;
+	}
 
 
 });

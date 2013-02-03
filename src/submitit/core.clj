@@ -609,14 +609,30 @@
 ;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
 )
 
+(defpage [:get "/uploadPicture"] {:as paras}
+  (println "Sppara: '" paras "'")
+  (html5 
+    [:body
+    [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
+      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
+      [:input {:type "hidden" :value (paras :speakerid) :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "submit" :value "Upload File"}]    
+    ]]
+  )
+  )
+
+;<input type="file" name="filehandler" id="filehandler"/>
+;          <input type="hidden" name="speakerKey" value="<%= givenId %>"/>     
+;          <input type="submit" value="Upload"/>
+;        </form>
 
 (defpage [:post "/addPic"] {:keys [filehandler speakerKey]}
   (println "***")
   (println filehandler)
   (println "***")
-  (println (type (filehandler :tempfile)))
-  (println "***")
-  (another-add-photo (str (decode-string speakerKey) "/photo") filehandler)
+;  (println (type (filehandler :tempfile)))
+;  (println "***")
+;  (another-add-photo (str (decode-string speakerKey) "/photo") filehandler)
   "Ops"
   )
 

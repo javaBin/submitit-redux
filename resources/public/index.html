@@ -179,12 +179,11 @@
         <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
 
         <legend>Picture<legend>
-        <form id="newAddPic" action="addPic" method="POST" enctype="multipart/form-data">
-          <input type="file" name="filehandler" id="filehandler"/>
-          <input type="hidden" name="speakerKey" value="<%= givenId %>"/>     
-          <input type="submit" value="Upload picture"/>
-        </form>
 
+        <div class="row">
+        <iframe seamless frameborder="0" src="uploadPicture?speakerid=<%= givenId %>" class="span8">        
+        </iframe>
+        </div>
 
         <legend>Postcode</legend>
         <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
