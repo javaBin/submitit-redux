@@ -19,6 +19,17 @@
 
 (def random-salt (noir.util.crypt/gen-salt))
 
+(def speaker-dummy-id (ref 0))
+
+(defpage [:get "/newSpeakerId"] {:as nothing}
+  (let [nid (dosync (let [res @speaker-dummy-id] 
+    (ref-set speaker-dummy-id (inc @speaker-dummy-id))
+    res))
+  ]
+  (generate-string {:dummyId (str "DSI" nid)})
+  )
+  )
+
 
 (defn encode-string [x] 
   (apply str (map char (b64/encode (.getBytes x))))
@@ -511,7 +522,7 @@
       :picture nil 
       :zipCode (val-from-data-map anitem "zip-code")
       :givenId (encode-string (anitem "href"))
-      
+      :dummyId "XX"      
     } 
     (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     ))) 

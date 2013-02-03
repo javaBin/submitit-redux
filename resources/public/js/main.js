@@ -142,6 +142,10 @@ var CaptchaView  = Backbone.View.extend({
 	}
 });
 
+var DummySpeakerIdModel = Backbone.Model.extend({
+	url: "newSpeakerId"
+});
+
 
 var SubmitFormView = Backbone.View.extend({
 	events: {
@@ -286,13 +290,21 @@ var SubmitFormView = Backbone.View.extend({
 	},
 
 	addSpeaker: function() {
+		var dummySpeakerIdModel=new DummySpeakerIdModel;
+		dummySpeakerIdModel.fetch({
+			async : false,
+			cache: false,
+		});
+
 		var newSpeaker = new SpeakerModel({
 				speakerName: "",
 				email: "",
 				bio: "",
 				picture: null,
 				zipCode: "",
-				givenId: null
+				givenId: null,
+				dummyId: dummySpeakerIdModel.get("dummyId")
+
 		});
 		this.model.get("speakers").add(newSpeaker);
 		var speakerDom = this.$("#speakerList");
@@ -318,6 +330,12 @@ $(function() {
 	var givenId = $.urlParam("talkid");
 	var submitFormModel;
 	if (givenId === 0) {
+		var dummySpeakerIdModel=new DummySpeakerIdModel;
+		dummySpeakerIdModel.fetch({
+			async : false,
+			cache: false,
+		});
+
 		submitFormModel = new SubmitFormModel({
 			presentationType : "",
 			title: "",
@@ -335,7 +353,8 @@ $(function() {
 				bio: "",
 				picture: null,
 				zipCode: "",
-				givenId: null
+				givenId: null,
+				dummyId: dummySpeakerIdModel.get("dummyId")
 			})
 		});
 	} else {
