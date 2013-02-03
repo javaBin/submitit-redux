@@ -291,7 +291,7 @@
                 (println "Found photo on speaker " (speak-photo :photo-filename))
                 (let [photo-address (str ((speaker-post :headers) "location") "/photo")]
                   (println "adding photo " (speak-photo :photo-filename) " to " photo-address)
-                  (add-another-photo photo-address (speak-photo :photo-byte-arr) (speak-photo :photo-content-type) (speak-photo :photo-filename))                
+                  (another-add-photo photo-address (speak-photo :photo-byte-arr) (speak-photo :photo-content-type) (speak-photo :photo-filename))                
                   (noir.session/remove! (speak "dummyId"))
                 ))
             )
