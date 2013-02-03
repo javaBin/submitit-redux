@@ -90,7 +90,7 @@ var TagModel = Backbone.Model.extend({
 var TagCollection = Backbone.Collection.extend({
 	model: TagModel,
 
-	url: "tagCollection"
+	url: "tagCollection",
 
 	setupChecked : function (talkTags) {
 		this.each(function(tagModel) {
