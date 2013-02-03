@@ -31,8 +31,7 @@ var SpeakerCollection = Backbone.Collection.extend({
 
 var SpeakerView = Backbone.View.extend({
 	events: {
-            "change .speakerInput" : "speakerInputChanged",
-            "change #speakerPicture" : "speakerPictureAdded"            
+            "change .speakerInput" : "speakerInputChanged"
     },
 
 	initialize: function (attrs) {
@@ -53,27 +52,6 @@ var SpeakerView = Backbone.View.extend({
 		});
 	},
 
-	speakerPictureAdded: function(eve) {
-
-		var givenFile = eve.target.files[0];
-
-		var reader = new FileReader();
-
-		var self = this;
-
-		reader.onload = (function(theFile) {
-			return function(e) {
-				console.log(e.target.result);
-				self.model.set({
-					picture: e.target.result
-				});
-				self.render();
-			}
-		})(givenFile);
-
-		reader.readAsDataURL(givenFile);
-
-	}
 
 });
 

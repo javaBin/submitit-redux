@@ -178,22 +178,17 @@
         <legend>Speaker bio</legend>
         <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
 
-        <legend>Picture</legend>
-        <input id="speakerPicture" type="file" />
-
-        <% if (picture !== null) { %>
-          <img class="thumbnail" style="width: 180px; height: 260px;" src="<%= picture %>"/>
-        <% } %>
-
-        <legend>Postcode</legend>
-        <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
-
-        <legend>New picture<legend>
+        <legend>Picture<legend>
         <form id="newAddPic" action="addPic" method="POST" enctype="multipart/form-data">
           <input type="file" name="filehandler" id="filehandler"/>
           <input type="hidden" name="speakerKey" value="<%= givenId %>"/>     
           <input type="submit" value="Upload picture"/>
         </form>
+
+
+        <legend>Postcode</legend>
+        <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
+
 
         <hr/>
 
