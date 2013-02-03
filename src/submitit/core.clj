@@ -21,6 +21,15 @@
 
 (def speaker-dummy-id (ref 0))
 
+
+(defn tag-list[]
+  (parse-string (slurp (clojure.java.io/resource "tagCollection.json")))
+  )
+
+(defpage [:get "/tagCollection"] {:as nothing}
+  (generate-string (tag-list))
+  )
+
 (defpage [:get "/newSpeakerId"] {:as nothing}
   (let [nid (dosync (let [res @speaker-dummy-id] 
     (ref-set speaker-dummy-id (inc @speaker-dummy-id))

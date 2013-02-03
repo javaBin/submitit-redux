@@ -90,6 +90,8 @@ var TagModel = Backbone.Model.extend({
 var TagCollection = Backbone.Collection.extend({
 	model: TagModel,
 
+	url: "tagCollection"
+
 	setupChecked : function (talkTags) {
 		this.each(function(tagModel) {
 			var toCheck = (talkTags.indexOf(tagModel.get("value")) !== -1);
@@ -371,23 +373,12 @@ $(function() {
 		}, {silent: true});
 	}
 
-	var tagCollection = new TagCollection([
-		 {value : "Alternative languages"},
-		 {value : "Architecture in practise"},
-		 {value : "Big Data and NoSQL"},
-		 {value : "Continous delivery"},
-		 {value : "Core Java"},
-		 {value : "Distributed systems and cloud"},
-		 {value : "Enterprise"},
-		 {value : "Experience report"},
-		 {value : "Frontend"},
-		 {value : "Functional Programming"},
-		 {value : "Innovation and Startups"},
-		 {value : "Mobile"},
-		 {value : "Research and Trends"},
-		 {value : "Security"},
-		 {value : "Craftsmanship and Tools"}
-		]);
+	
+	var tagCollection = new TagCollection;
+	tagCollection.fetch({
+		async: false,
+		cache: false
+	});
 	
 	tagCollection.setupChecked(submitFormModel.get("talkTags"));
 
