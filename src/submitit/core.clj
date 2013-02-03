@@ -31,6 +31,7 @@
   )
 
 
+
 (defn encode-string [x] 
   (apply str (map char (b64/encode (.getBytes x))))
   )
@@ -240,6 +241,29 @@
 
   (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
 )
+
+(defn another-add-photo [address photo-byte-arr photo-content-type photo-filename]
+  (println "Adding photo to " address)  
+;  (try 
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "POST")
+      (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
+      (.addRequestProperty connection "content-type" photo-content-type)
+      (.setDoOutput connection true)
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      (let [writer (.getOutputStream connection)]
+        (.write writer photo-byte-arr)
+        (.close writer)
+        )
+      (println "Reponse code: '" (.getResponseCode connection) "'")
+      (println "Reponse: '" (.getResponseMessage connection) "'")
+
+    )
+
+;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+)
+
 
 (defn reader-to-arr [reader resarr]
   (let [nextval (.read reader)]
@@ -598,27 +622,6 @@
     (clojure.java.io/copy input buffer)
     (.toByteArray buffer)))
 
-(defn another-add-photo [address photo-map]
-  (println "Adding photo to " address)  
-;  (try 
-    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
-      (.setRequestMethod connection "POST")
-      (.addRequestProperty connection "content-disposition" (str "inline; filename=" (photo-map :filename)))
-      (.addRequestProperty connection "content-type" (photo-map :content-type))
-      (.setDoOutput connection true)
-      (if author (.addRequestProperty connection "Authorization" author))
-      (.connect connection)
-      (let [writer (.getOutputStream connection)]
-        (.write writer (to-byte-array (photo-map :tempfile)))
-        (.close writer)
-        )
-      (println "Reponse code: '" (.getResponseCode connection) "'")
-      (println "Reponse: '" (.getResponseMessage connection) "'")
-
-    )
-
-;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
-)
 
 (defn upload-form [message speaker-key dummy-key]
   (html5 
@@ -648,9 +651,23 @@
   (println "***")
 ;  (println (type (filehandler :tempfile)))
 ;  (println "***")
-;  (another-add-photo (str (decode-string speakerKey) "/photo") filehandler)
-  (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
+;  (another-add-photo (str (decode-string speakerKey) "/photo") (to-byte-array (photo-map :tempfile)) filehandler)
+
+  (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
+    (cond 
+      (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey)
+      (not= "XX" dummyKey) (do 
+          (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
+          (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
+        )
+      :else (do 
+        (another-add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)        
+        (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey))
+    )
+
+  
   )
+)
 
 
 
