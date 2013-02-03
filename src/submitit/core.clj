@@ -609,31 +609,36 @@
 ;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
 )
 
-(defpage [:get "/uploadPicture"] {:as paras}
-  (println "Sppara: '" paras "'")
+(defn upload-form [message speaker-key dummy-key]
   (html5 
     [:body
+    (if message [:p message])
     [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
       [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
-      [:input {:type "hidden" :value (paras :speakerid) :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
       [:input {:type "submit" :value "Upload File"}]    
     ]]
   )
+
   )
 
-;<input type="file" name="filehandler" id="filehandler"/>
-;          <input type="hidden" name="speakerKey" value="<%= givenId %>"/>     
-;          <input type="submit" value="Upload"/>
-;        </form>
 
-(defpage [:post "/addPic"] {:keys [filehandler speakerKey]}
+(defpage [:get "/uploadPicture"] {:as paras}
+  (println "Sppara: '" paras "'")
+  (upload-form nil (paras :speakerid) (paras :dummyKey))
+  )
+
+(defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
   (println "***")
   (println filehandler)
+  (println speakerKey)
+  (println dummyKey)
   (println "***")
 ;  (println (type (filehandler :tempfile)))
 ;  (println "***")
 ;  (another-add-photo (str (decode-string speakerKey) "/photo") filehandler)
-  "Ops"
+  (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
   )
 
 
