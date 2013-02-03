@@ -377,8 +377,7 @@
     (let [speaker (first speakers) errormsg (cond 
       (para-error? (speaker "speakerName")) "Speaker name is required"
       (para-error? (speaker "email")) "Email is required"
-      (para-error? (speaker "bio")) "Speaker bio"
-      (and (speaker "picture") (> (count (speaker "picture")) 500000)) (str "Picture is too large (" (count (speaker "picture")) " bytes)")
+      (para-error? (speaker "bio")) "Speaker bio"      
       :else nil)
       ]
       (if errormsg errormsg (validate-speaker-input (rest speakers)))
@@ -389,7 +388,14 @@
 (defn validate-input [talk]
   (let [error-msg 
     (cond 
-    (para-error? (talk "abstract")) (str "Abstract is required (" talk ")")
+    (para-error? (talk "abstract")) "Abstract is required"
+    (para-error? (talk "presentationType")) "Presentationtype is required"
+    (para-error? (talk "language")) "language is required"
+    (para-error? (talk "level")) "level is required"
+    (para-error? (talk "outline")) "outline is required"
+    (para-error? (talk "title")) "Title is required"
+    (para-error? (talk "highlight")) "highlight is required"
+    (para-error? (talk "expectedAudience")) "Expected audience is required"
     (< (count (talk "speakers")) 1) "One speaker must be added"  
     (> (count (talk "speakers")) 5) "Max 5 speakers is allowed"  
     :else (validate-speaker-input (talk "speakers"))
@@ -623,7 +629,6 @@
 
 
 (defpage [:get "/uploadPicture"] {:as paras}
-  (println "Sppara: '" paras "'")
   (upload-form nil (paras :speakerid) (paras :dummyKey))
   )
 
