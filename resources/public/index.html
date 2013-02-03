@@ -22,11 +22,14 @@
       <div class="alert alert-info">Version: 201302012333</div>
 
       <script type="text/template" id="submitFormTemplate">
-        
+        <legend>Introduction</legend>
+        <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission</p>
+        <p>All fields must be filled in, except those marked as <span class="label label-info">Optional</span></p>
+        <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers</p>
         <form id="submitForm">
           <fieldset>            
             
-            <legend>Presentation format</legend>
+            <legend>Presentation format  <span class="label label-important">Public</span></legend>
             <div class="row">
               <div class="btn-group talkInput span4" data-toggle="buttons-radio" id="presentationTypeGrp">
                 <button class="btn active" type="button" name="presFormat" value="presentation">Presentation</button>
@@ -38,7 +41,7 @@
               </ul>
             </div>
 
-            <legend>Title</legend>
+            <legend>Title  <span class="label label-important">Public</span></legend>
             <div class="row">
               <div class="span7">
                 <input type="text" required="required" class="talkInput span6" id="titleInput" value="<%= title %>"/>
@@ -50,7 +53,7 @@
                 <li>Remember that the title must be attractive and should make a reader curious.</li>
               </ul>
             </div>
-            <legend>Abstract</legend>
+            <legend>Abstract  <span class="label label-important">Public</span></legend>
             <div class="span8">
               <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"><%= abstract %></textarea>
             </div>
@@ -60,7 +63,7 @@
               <li>It should not be longer than 300 words.</li>
             </ul>
 
-            <legend>Language</legend>
+            <legend>Language  <span class="label label-important">Public</span></legend>
             <div class="row">
               <div class="btn-group talkInput span4" data-toggle="buttons-radio" id="languageGrp">
                 <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
@@ -87,7 +90,7 @@
               </div>
             </div>
 
-            <legend>Level</legend>
+            <legend>Level  <span class="label label-important">Public</span></legend>
             <div class="row">
               <div class="btn-group talkInput span6" data-toggle="buttons-radio" id="levelGrp">
                 <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="beginner">Beginner</button>
@@ -131,7 +134,7 @@
               </p>
             </div>
 
-            <legend>Highlight summary</legend>
+            <legend>Highlight summary  <span class="label label-important">Public</span></legend>
             <div class="row">
               <div class="span8">
               <textarea rows="3" required="required" class="span8 talkInput" id="highlightInput"><%= highlight %></textarea>
@@ -142,17 +145,18 @@
             </div>          
             
 
-            <legend>Equipment</legend>
+            <legend>Equipment  <span class="label label-info">Optional</span></legend>
             <div class="row">
               <div class="span8">
                 <textarea rows="3" class="span8 talkInput" id="equipmentInput"><%= equipment %></textarea>                
                 </div>
                 <p class="well span4">
                   Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.
-                </p>              
-            <div>
+                </p>
+              </div>              
+            </div>
 
-            <legend>Expected audience</legend>
+            <legend>Expected audience  <span class="label label-important">Public</span></legend>
             <div class="span8">
               <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"><%= expectedAudience %></textarea>  
             </div>
@@ -163,7 +167,7 @@
             </ul>
             
 
-            <legend>Tags</legend>
+            <legend>Tags  <span class="label label-important">Public</span></legend>
             <p><b>Please check topics which relate to your presentation</b></p>
             <div class="row-fluid" id="tagBoxes"></div>
 
@@ -186,32 +190,37 @@
     </script>
 
     <script type="text/template" id="speakerTemplate">
-        <legend>Name</legend>
+        <legend>Name  <span class="label label-important">Public</span></legend>
         <input class="speakerInput" type="text" id="speakerNameInput" required="required" value="<%= speakerName %>"/>
 
         <legend>E-mail</legend>
         <input class="speakerInput" type="email" id="emailInput" required="required" value="<%= email %>"/>
 
-        <legend>Speaker bio</legend>
-        <div class="span8">
-          <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+        <legend>Speaker bio  <span class="label label-important">Public</span></legend>
+        <div class="row">
+          <div class="span8">
+            <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+          </div>
+          <ul class="well span5">
+            <li>Describe your affiliation, interests and experience.</li>
+            <li>It should be clear from this text that you are the right person to give this talk.</li>
+            <li>The profile should not be more than a couple of paragraphs long.</li>
+          </ul>
         </div>
-        <ul class="well span5">
-          <li>Describe your affiliation, interests and experience.</li>
-          <li>It should be clear from this text that you are the right person to give this talk.</li>
-          <li>The profile should not be more than a couple of paragraphs long.</li>
-        </ul>
         
 
-        <legend>Picture<legend>
+        <legend>Picture  <span class="label label-important">Public</span><legend>
 
         <div class="row">
         <iframe seamless frameborder="0" src="uploadPicture?speakerid=<%= givenId %>&dummyKey=<%= dummyId %>" class="span8">        
         </iframe>
         </div>
 
-        <legend>Postcode</legend>
-        <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
+        <legend>Postcode <span class="label label-info">Optional</span></legend>        
+        <div class="row">
+          <input class="speakerInput span4" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
+           <span class="help-block">Please type your postcode if you live in Norway.</span>
+        </div>
 
     
     </script>
