@@ -189,11 +189,15 @@
         <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
 
         <legend>New picture<legend>
-        <form action="addPic" method="POST" enctype="multipart/form-data">
+        <form id="newAddPic" action="addPic" method="POST" enctype="multipart/form-data">
           <input type="file" name="filehandler" id="filehandler"/>
           <input type="hidden" name="speakerKey" value="<%= givenId %>"/>     
           <input type="submit" value="Upload picture"/>
         </form>
+
+        <hr/>
+
+
         <hr/>
             
     </script>

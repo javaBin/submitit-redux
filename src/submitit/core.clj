@@ -13,6 +13,8 @@
   (:require [clojure.data.codec.base64 :as b64])
 )
 
+(def ems-lang-id "locale")
+
 (def setupenv (ref {}))
 
 (def random-salt (noir.util.crypt/gen-salt))
@@ -130,7 +132,7 @@
       {:name "audience" :value (talk "expectedAudience")}
       {:name "outline" :value (talk "outline")}
       {:name "equipment" :value (talk "equipment")}
-      {:name "lang" :value (talk "language")}
+      {:name ems-lang-id :value (talk "language")}
       {:name "keywords" :array (talk "talkTags")}
     ]
     }})
@@ -441,7 +443,7 @@
       [:legend "Presentation format"]
       [:p (tval talk-map "format")]
       [:legend "Language"]
-      [:p (if (= (tval talk-map "lang") "no") "Norwegian" "English")]
+      [:p (if (= (tval talk-map ems-lang-id) "no") "Norwegian" "English")]
       [:legend "Level"]
       [:p (tval talk-map "level")]
       [:legend "Outline"]
@@ -500,7 +502,8 @@
 
 (defn speakers-from-talk [decoded-talk-url]
   (vec (map (fn [anitem] 
-    (let [speaker-details (get-talk (anitem "href"))]
+    (let [speaker-details (get-talk (anitem "href")) last-mod ((speaker-details :headers) "last-modified")]
+    (merge 
     {
       :speakerName (val-from-data-map anitem "name") 
       :email (val-from-data-map anitem "email") 
@@ -508,8 +511,10 @@
       :picture nil 
       :zipCode (val-from-data-map anitem "zip-code")
       :givenId (encode-string (anitem "href"))
-      :lastModified ((speaker-details :headers) "last-modified")
-    })) 
+      
+    } 
+    (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
+    ))) 
     (((parse-string ((client/get (str decoded-talk-url "/speakers") {
       :content-type "application/vnd.collection+json"
     }) :body)) "collection") "items")))
@@ -527,7 +532,7 @@
       :presentationType  (tval talk-map "format"),
       :title (tval talk-map "title")
       :abstract (tval talk-map "body")
-      :language (tval talk-map "lang")
+      :language (tval talk-map ems-lang-id)
       :level (tval talk-map "level")
       :outline (tval talk-map "outline")
       :highlight (tval talk-map "summary")
