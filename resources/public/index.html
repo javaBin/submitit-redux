@@ -34,7 +34,7 @@
               </div>
               <ul class="well span8">
                 <li>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q and A.</li>
-                <li>The length of the presentation will be maximum 10 minutes including Q & A.</li>
+                <li>The length of a lightning talk will be maximum 10 minutes including Q & A.</li>
               </ul>
             </div>
 
@@ -52,12 +52,13 @@
             </div>
             <legend>Abstract</legend>
             <div class="span8">
-            <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"><%= abstract %></textarea>
+              <textarea rows="8" required="required" class="span8 talkInput" id="abstractInput"><%= abstract %></textarea>
             </div>
             <ul class="well span5">
-                <li>Select an expressive title that captures the contents of your talk well without being too long.</li>
-                <li>Remember that the title must be attractive and should make a reader curious.</li>
-              </ul>
+              <li>Give a concise description of the contents and goals of your talk.</li>
+              <li>The abstract will be published in the conference programme.</li>
+              <li>It should not be longer than 300 words.</li>
+            </ul>
 
             <legend>Language</legend>
             <div class="row">
@@ -142,12 +143,28 @@
             
 
             <legend>Equipment</legend>
-            <textarea rows="3" class="span8 talkInput" id="equipmentInput"><%= equipment %></textarea>
+            <div class="row">
+              <div class="span8">
+                <textarea rows="3" class="span8 talkInput" id="equipmentInput"><%= equipment %></textarea>                
+                </div>
+                <p class="well span4">
+                  Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.
+                </p>              
+            <div>
 
             <legend>Expected audience</legend>
-            <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"><%= expectedAudience %></textarea>
+            <div class="span8">
+              <textarea rows="8" required="required" class="span8 talkInput" id="expectedAudienceInput"><%= expectedAudience %></textarea>  
+            </div>
+            <ul class="well span5">
+              <li>Who should attend this session?</li>
+              <li>How will the participants benefit from attending?</li>
+              <li>Clearly state what knowledge you expect from your participants.</li>
+            </ul>
+            
 
             <legend>Tags</legend>
+            <p><b>Please check topics which relate to your presentation</b></p>
             <div class="row-fluid" id="tagBoxes"></div>
 
             <hr/>
@@ -176,7 +193,15 @@
         <input class="speakerInput" type="email" id="emailInput" required="required" value="<%= email %>"/>
 
         <legend>Speaker bio</legend>
-        <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+        <div class="span8">
+          <textarea rows="4" required="required" class="span8 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+        </div>
+        <ul class="well span5">
+          <li>Describe your affiliation, interests and experience.</li>
+          <li>It should be clear from this text that you are the right person to give this talk.</li>
+          <li>The profile should not be more than a couple of paragraphs long.</li>
+        </ul>
+        
 
         <legend>Picture<legend>
 
@@ -188,12 +213,7 @@
         <legend>Postcode</legend>
         <input class="speakerInput" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/> 
 
-
-        <hr/>
-
-
-        <hr/>
-            
+    
     </script>
 
     <script type="text/template" id="tagTemplate">
