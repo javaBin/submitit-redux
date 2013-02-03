@@ -221,7 +221,7 @@
 
 (defn another-add-photo [address photo-byte-arr photo-content-type photo-filename]
   (println "Adding photo to " address)  
-;  (try 
+  (try 
     (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
       (.setRequestMethod connection "POST")
       (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
@@ -238,7 +238,7 @@
 
     )
 
-;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
 )
 
 
@@ -285,7 +285,18 @@
             json-data  
             postaddr)]
           (println "Speakerpost: " speaker-post)
-          
+          (let [speak-photo (noir.session/get (speak "dummyId"))]
+            (if speak-photo
+              (do 
+                (println "Found photo on speaker " (speak-photo :photo-filename))
+                (let [photo-address (str ((speaker-post :headers) "location") "/photo")]
+                  (println "adding photo " (speak-photo :photo-filename) " to " photo-address)
+                  (add-another-photo photo-address (speak-photo :photo-byte-arr) (speak-photo :photo-content-type) (speak-photo :photo-filename))                
+                  (noir.session/remove! (speak "dummyId"))
+                ))
+            )
+
+            )
         )
       )
     )
