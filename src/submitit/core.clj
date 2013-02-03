@@ -218,29 +218,6 @@
   nil
   ))
 
-(defn add-photo [address photo]
-  (println "Adding photo to " address)
-  
-  (try 
-    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
-      (println author)
-      (.setRequestMethod connection "POST")
-      (.addRequestProperty connection "content-disposition" "inline; filename=picture.jpeg")
-      (.addRequestProperty connection "content-type" "image/jpeg")
-      (.setDoOutput connection true)
-      (if author (.addRequestProperty connection "Authorization" author))
-      (.connect connection)
-      (let [writer (.getOutputStream connection)]
-        (.write writer (org.apache.commons.codec.binary.Base64/decodeBase64 photo))
-        (.close writer)
-        )
-      (println "Reponse code: '" (.getResponseCode connection) "'")
-      (println "Reponse: '" (.getResponseMessage connection) "'")
-
-    )
-
-  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
-)
 
 (defn another-add-photo [address photo-byte-arr photo-content-type photo-filename]
   (println "Adding photo to " address)  
@@ -302,17 +279,13 @@
             json-data  
             (decode-string (speak "givenId")) (speak "lastModified"))]
           (println "Speakerpost: " speaker-post)        
-          (if (speak "picture") 
-            (add-photo (str (decode-string (speak "givenId")) "/photo") (speak "picture"))            
-          )        
+          
           )  
         (let [speaker-post (post-talk 
             json-data  
             postaddr)]
           (println "Speakerpost: " speaker-post)
-          (if (speak "picture") 
-            (add-photo (str ((speaker-post :headers) "location") "/photo") (speak "picture"))            
-          )        
+          
         )
       )
     )
