@@ -155,7 +155,8 @@ var SubmitFormView = Backbone.View.extend({
             "change .talkInput" : "inputChanged",
             "click .talkInput" : "inputChanged",
             "click .tagCheckbox" : "tagCheckboxChanged",
-            "click #addSpeaker" : "addSpeaker"
+            "click #addSpeaker" : "addSpeaker",
+            "click #reloadCaptchaButton" : "reloadCaptchaButton"
     },
 
 	initialize: function (attrs) {
@@ -167,6 +168,18 @@ var SubmitFormView = Backbone.View.extend({
 		this.errorPageTemplate = attrs.errorPageTemplate;
 		this.captchaTemplate = attrs.captchaTemplate;
 		this.captchaModel = attrs.captchaModel;
+	},
+
+	renderCaptcha: function() {
+		var captchaView = new CaptchaView({
+			template: this.captchaTemplate,
+			model: this.captchaModel
+		});
+
+		captchaView.render();
+
+		this.$("#captchaPart").html(captchaView.el);
+
 	},
 
 	render: function() {
@@ -194,16 +207,14 @@ var SubmitFormView = Backbone.View.extend({
 			tagView.render();
 		});
 
-		var captchaView = new CaptchaView({
-			template: this.captchaTemplate,
-			model: this.captchaModel
-		});
+		this.renderCaptcha();
 
-		captchaView.render();
+	},
+	
 
-		this.$("#captchaPart").html(captchaView.el);
-
-
+	reloadCaptchaButton: function() {
+		this.captchaModel.fetch({async: false, cache: false});
+		this.renderCaptcha();
 	},
 
 	submitClicked: function() {

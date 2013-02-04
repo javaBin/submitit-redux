@@ -181,7 +181,13 @@
 
             <hr/>
 
+            <legend>Captcha</legend>
+            <div class="row">
+              <button class="btn" id="reloadCaptchaButton">Load new Captcha</button>
+            </div>
+            <br/>
             <div id="captchaPart"></div>
+
 
             <section class="span10 offset4">
               <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk</button>
@@ -247,8 +253,7 @@
       <%= errormessage %>
     </script>
 
-    <script type="text/template" id="captchaTemplate">
-      <legend>Captcha</legend>
+    <script type="text/template" id="captchaTemplate">      
       <img src="captcha"/><br/>
       <input type="text" required="required" class="span3" id="captchaInput" placeholder="Type the letters in the image"/>
       <div class="row hideit" id="captchaError">
