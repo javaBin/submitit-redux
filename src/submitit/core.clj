@@ -13,7 +13,7 @@
   (:require [clojure.data.codec.base64 :as b64])
 )
 
-(def ems-lang-id "locale")
+(def ems-lang-id "lang")
 
 (def setupenv (ref {}))
 
