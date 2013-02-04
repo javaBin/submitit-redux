@@ -593,9 +593,7 @@
 (defn build-captcha []  
   (-> (new jj.play.ns.nl.captcha.Captcha$Builder 200 50)
     (.addText)
-    (.addNoise)
-    (.addNoise)
-    (.addBackground)
+    (.addNoise)    
     (.build)    
     )
   )
