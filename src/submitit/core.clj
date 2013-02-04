@@ -225,7 +225,8 @@
 
 (defn create-encoded-auth []
   (if (read-setup :emsUser)
-  (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64 (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)))))
+  (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64String 
+    (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)) (java.nio.charset.Charset/forName "UTF-8"))))
   nil
   ))
 
