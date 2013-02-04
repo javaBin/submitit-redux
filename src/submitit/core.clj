@@ -178,9 +178,11 @@
 
 
 (defn get-talk [decoded-url]
-  (let [res (client/get decoded-url {
+  (let [res (client/get decoded-url (merge {
       :content-type "application/vnd.collection+json"
-    })]
+    }
+    (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
+    ))]
     (println res)
     res)
   )
@@ -549,9 +551,7 @@
     } 
     (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     ))) 
-    (((parse-string ((client/get (str decoded-talk-url "/speakers") {
-      :content-type "application/vnd.collection+json"
-    }) :body)) "collection") "items")))
+    (((parse-string ((get-talk (str decoded-talk-url "/speakers")) :body)) "collection") "items")))
 )
   
 
