@@ -155,8 +155,7 @@ var SubmitFormView = Backbone.View.extend({
             "change .talkInput" : "inputChanged",
             "click .talkInput" : "inputChanged",
             "click .tagCheckbox" : "tagCheckboxChanged",
-            "click #addSpeaker" : "addSpeaker",
-            "click #reloadCaptchaButton" : "reloadCaptchaButton"
+            "click #addSpeaker" : "addSpeaker"
     },
 
 	initialize: function (attrs) {
@@ -224,6 +223,7 @@ var SubmitFormView = Backbone.View.extend({
 		var myForm = this.$('#submitForm');
 		var valid = myForm[0].checkValidity();
 		if (!valid) {
+			submitBtn.button('reset');
 			return true;
 		}
 
