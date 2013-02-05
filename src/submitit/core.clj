@@ -452,9 +452,12 @@
       )
   )))
 
+(defn encode-html [val]
+  (.replaceAll (.replaceAll (.replaceAll val "&" "&amp;") "<" "&lt;") ">" "&gt;")
+  )
 
 (defn tval [tm akey]
-  ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
+  (encode-html ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value"))
 )
 
 (defn tarrval [tm akey]
