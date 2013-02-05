@@ -278,12 +278,13 @@
     </script>
 
     <script type="text/template" id="resultTemplate">
-      <div class="hurra">Hurray! Your talk has been submitted</div>
+      <div class="hurra">Oh yeah! Your talk has been submitted!</div>
       <% if (retError) { %>
-	<p>There was a problem in our system so your talk is not availible. We will send you an email shortly with a link to your talk.</p>
+	       <p>Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</p>
       <% } else { %>
-	<p>You can review your talk at any time by going <a href="<%= address %>">to this address</a>. We'll also send you this link by email.</p>
+	     <p>You can review your talk at any time by going <a href="<%= address %>">to this address</a>. We'll also send you this link by email.</p>
       <% } %>
+      <p class="whatsnext">Now that you have submitted your presentation, you can start looking forward to the conference. Read more about <a href="http://jz13.java.no/journeyzone.html">JourneyZone</a> and <a href="http://jz13.java.no/awezone.html">AweZone</a>, two things that make JavaZone unique. More information about the conference are availiable at our <a href="http://jz13.java.no/">web pages</a>. And again, thanks for submitting your talk – JavaZone would be nothing without our great speakers!</p>
     </script>
 
     <script type="text/template" id="errorPageTemplate">

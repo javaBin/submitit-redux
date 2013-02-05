@@ -122,7 +122,13 @@ li {
 }
 
 .hurra {
-    font-size: 25px;
+    font-size: 30px;
+    margin: 50px 0;
+    color: #4F8A10;
+}
+.whatsnext {
+    /* 500px er en hack for å få footeren til å ligge langt nede. Må finne en bedre løsning. Good enough for now though :P */
+    margin: 0 0 500px 0;
 }
 
 
