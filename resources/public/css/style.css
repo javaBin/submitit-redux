@@ -61,6 +61,25 @@ li {
     margin-bottom: 10px;
 }
 
+.jzHeader {
+    text-indent: -999em;
+    display: block;
+    width:400px;
+    height:70px;
+    background:url("../img/javazone.png") top left no-repeat;
+    background-size:100% 100%;
+    margin:50px 0 2em 0;
+    border:none;
+}
+.headerText {
+    font-size: 32px;
+    color: #394549;
+}
+.headerText strong{
+    font-weight: normal;
+    color: black;
+}
+
 
 
 
