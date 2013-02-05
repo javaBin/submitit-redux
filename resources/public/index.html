@@ -14,10 +14,10 @@
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700' rel='stylesheet' type='text/css'>
   </head>
   <body>
+      <!--<div class="tjafs"></div>-->
+      <div class="tjafs2"></div>
       <div class="wrapper">
-        <div class="jzHeader">
-
-        </div>
+        <div class="jzHeader"></div>
         <div class="headerText">
           <strong>Got something to say? Then you should talk!</strong>
           <br>
@@ -84,8 +84,11 @@
                 <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
               </div>
               <div class="well span6">
-                The talk can be given in English or Norwegian. Please indicate in what language you will present the talk.
-                <a href="#languageHelp" role="button" class="btn btn-info" data-toggle="modal">?</a>
+                <li>The talk can be given in Norwegian or English</li>
+
+                <li>The slides may be in English even if you present the talk in Norwegian.</li>
+
+                <li>We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</li>
               </div>
             </div>
 
@@ -113,8 +116,7 @@
                 <button class="btn <% if (level === 'hardcore') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
               </div>
               <div class="well span6">
-                The level of the presentation related to the expected audience.
-                <a href="#levelHelp" role="button" class="btn btn-info" data-toggle="modal">?</a>
+                More information about how we classify the talks <a href="http://jz13.java.no/speakers.html" target="_blank">can be found here</a>.
               </div>
             </div>
 

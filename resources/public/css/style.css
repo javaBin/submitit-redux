@@ -61,6 +61,31 @@ li {
     margin-bottom: 20px;
 }
 
+.tjafs {
+    text-indent: -999em;
+    display: block;
+    width:250px;
+    height:500px;
+    background:url("../img/bg2-small.png") top left no-repeat;
+    background-size:100% 100%;
+    border:none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.tjafs2 {
+    text-indent: -999em;
+    display: block;
+    width:350px;
+    height:400px;
+    background:url("../img/bg5-small.png") top left no-repeat;
+    background-size:100% 100%;
+    border:none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .jzHeader {
     text-indent: -999em;
     display: block;
@@ -68,7 +93,7 @@ li {
     height:70px;
     background:url("../img/javazone.png") top left no-repeat;
     background-size:100% 100%;
-    margin:50px 0 2em 0;
+    margin:150px 0 2em 0;
     border:none;
 }
 .headerText {
