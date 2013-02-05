@@ -238,23 +238,23 @@
 
 (defn another-add-photo [address photo-byte-arr photo-content-type photo-filename]
   (println "Adding photo to " address)  
-;  (try 
-;    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
-;      (.setRequestMethod connection "POST")
-;      (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
-;      (.addRequestProperty connection "content-type" photo-content-type)
-;      (.setDoOutput connection true)
-;      (if author (.addRequestProperty connection "Authorization" author))
-;      (.connect connection)
-;      (let [writer (.getOutputStream connection)]
-;        (.write writer photo-byte-arr)
-;        (.close writer)
-;        )
-;      (println "Reponse code: '" (.getResponseCode connection) "'")
-;      (println "Reponse: '" (.getResponseMessage connection) "'")
-;
-;    )    
-;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+  (try 
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "POST")
+      (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
+      (.addRequestProperty connection "content-type" photo-content-type)
+      (.setDoOutput connection true)
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      (let [writer (.getOutputStream connection)]
+        (.write writer photo-byte-arr)
+        (.close writer)
+        )
+      (println "Reponse code: '" (.getResponseCode connection) "'")
+      (println "Reponse: '" (.getResponseMessage connection) "'")
+
+    )    
+  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
   (if (read-setup :photo-copy-dir) (save-file-copy address photo-byte-arr))
 )
 
