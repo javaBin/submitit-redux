@@ -21,20 +21,24 @@
         <div class="headerText">
           <strong>Got something to say? Then you should talk!</strong>
           <br>
-          Submit your presentation here right now!
+          Submit your presentation for JavaZone 2013 now!
         </div>
 
         <div id="main"></div>
       </div>
-
-
-      <center class="alert alert-info span7 offset7"><small>Made by javaBin. Powered by Clojure, Backbone and Bootstrap. Version: 201302050154</small></center>
+      <div class="credit">
+        Made by <a href="http://java.no">javaBin</a>. Powered by Clojure, Backbone and Bootstrap.
+      </div>
 
       <script type="text/template" id="submitFormTemplate">
-        <legend>Introduction</legend>
-        <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission</p>
-        <p>All fields must be filled in, except those marked as <span class="label label-info">Optional</span></p>
-        <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers</p>
+
+        <div class="introText">
+
+          <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission</p>
+          <p>All fields must be filled in, except those marked as <span class="label label-info">Optional</span></p>
+          <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers</p>
+
+        </div>
         <form id="submitForm">
           <fieldset>
 
@@ -189,20 +193,26 @@
 
             <legend>Captcha</legend>
             <div class="row">
+              <div class="span0">
+                <p>Even though our theme for this year's conference is awesome robots, we don't really want those nasty spam robots to come present at the conference.</p>
+              </div>
+            </div>
+            <div class="row">
               <div class="span4">
                 <div id="captchaPart"></div>
               </div>
+            </div>
 
-              <div class="span6">
-                <button class="btn" id="reloadCaptchaButton">Load new Captcha</button>
+            <legend>That's all! Are you ready to rock JavaZone 2013?</legend>
+            <div class="row">
+              <div class="span0">
+                <p>You will receive a copy of this information by E-Mail. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
               </div>
             </div>
 
-
-
-            <section class="span2">
-              <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk</button>
-            </section>
+            <div class="submitWrapper">
+              <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk now</button>
+            </div>
           </fieldset>
         </form>
 

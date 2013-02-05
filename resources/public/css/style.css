@@ -57,8 +57,8 @@ li {
     font-size: 16px;
 }
 
-#captchaPart {
-    margin-bottom: 10px;
+#captchaPart img {
+    margin-bottom: 20px;
 }
 
 .jzHeader {
@@ -80,8 +80,21 @@ li {
     color: black;
 }
 
+.introText {
+    margin: 30px 0;
+}
 
+.credit {
+    width: 100%;
+    background: #222;
+    color: #ddd;
+    text-align: center;
+    padding: 10px 0;
+}
 
+.submitWrapper {
+    margin: 30px 0 50px 0;
+}
 
 
 
