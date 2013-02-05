@@ -231,26 +231,31 @@
   ))
 
 
+(defn save-file-copy[address photo-byte-arr]
+  (clojure.java.io/copy photo-byte-arr (clojure.java.io/file (str (read-setup :photo-copy-dir) (encode-string address))))
+  )
+
+
 (defn another-add-photo [address photo-byte-arr photo-content-type photo-filename]
   (println "Adding photo to " address)  
-  (try 
-    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
-      (.setRequestMethod connection "POST")
-      (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
-      (.addRequestProperty connection "content-type" photo-content-type)
-      (.setDoOutput connection true)
-      (if author (.addRequestProperty connection "Authorization" author))
-      (.connect connection)
-      (let [writer (.getOutputStream connection)]
-        (.write writer photo-byte-arr)
-        (.close writer)
-        )
-      (println "Reponse code: '" (.getResponseCode connection) "'")
-      (println "Reponse: '" (.getResponseMessage connection) "'")
-
-    )
-
-  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+;  (try 
+;    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL address))]
+;      (.setRequestMethod connection "POST")
+;      (.addRequestProperty connection "content-disposition" (str "inline; filename=" photo-filename))
+;      (.addRequestProperty connection "content-type" photo-content-type)
+;      (.setDoOutput connection true)
+;      (if author (.addRequestProperty connection "Authorization" author))
+;      (.connect connection)
+;      (let [writer (.getOutputStream connection)]
+;        (.write writer photo-byte-arr)
+;        (.close writer)
+;        )
+;      (println "Reponse code: '" (.getResponseCode connection) "'")
+;      (println "Reponse: '" (.getResponseMessage connection) "'")
+;
+;    )    
+;  (catch Exception e (println "caught exception: " (.getMessage e) "->" e)))
+  (if (read-setup :photo-copy-dir) (save-file-copy address photo-byte-arr))
 )
 
 
@@ -467,6 +472,7 @@
   )
   )
 
+
 (defpage [:get "/talkDetail"] {:as talkd}
   (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
     speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
@@ -496,10 +502,18 @@
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
       (vec (cons :div (reduce conj [] (map (fn[aspeak] 
+        (println "Speaker---" aspeak)
         [:div [:legend "Speaker"] [:p (spval aspeak "name")] 
               [:legend "Email"] [:p (spval aspeak "email")] 
               [:legend "Speakers profile"] [:p (spval aspeak "bio")]
               [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
+              [:legend "Photo"]
+              (let [picture-filename
+                (if (not (read-setup :photo-copy-dir)) nil (let [fi (str (read-setup :photo-copy-dir) (encode-string (str (aspeak "href") "/photo")))]
+                  (if (.exists (new java.io.File fi)) fi nil)))]
+                (if picture-filename [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (str "savedpic?picid=" (encode-string picture-filename))}]]
+                  [:p "No picture uploaded"]))
+              
 ;              [:legend "Image"] [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (fetch-picture aspeak)}]
 ;              <img class="thumbnail" style="width: 180px; height: 260px;" src="<%= picture %>"/>
 
@@ -510,6 +524,11 @@
       ]]
     )
   ))
+
+(defpage [:get "/savedpic"] {:as param}
+  (noir.response/content-type "image/jpeg"
+  (new java.io.FileInputStream (new java.io.File (decode-string (param :picid)))))
+)
 
 (defn setup-str [setup]
   (clojure.string/join "\n" (map #(if (.startsWith % "emsPassword") "emsPassword=XXX" %) (clojure.string/split setup #"\n")))
