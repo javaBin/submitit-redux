@@ -34,10 +34,11 @@
 
         <div class="introText">
 
-          <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission</p>
+	  <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission.</p>
           <p>All fields must be filled in, except those marked as <span class="label label-info">Optional</span></p>
-          <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers</p>
-          <p>Deadline for submissions are <strong>15. April 2013</strong>.</p>
+	  <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers.</p>
+	  <p>Please fill in this form in the language you are giving your talk. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
+	  <p>Deadline for submissions are <strong>15. April 2013</strong>.</p
         </div>
         <form id="submitForm">
           <fieldset>
@@ -215,6 +216,12 @@
             <div class="submitWrapper">
               <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk now</button>
             </div>
+
+	    <div class="row">
+	      <div class="span0">
+		<p>If you have any problem submitting your presentation, please contact us on <a href="mailto:program@java.no">program@java.no</a>.</p>
+	      </div>
+	    </div>
           </fieldset>
         </form>
 
@@ -271,11 +278,11 @@
     </script>
 
     <script type="text/template" id="resultTemplate">
-      <h1>Your talk has been submitted</h1>
+      <div class="hurra">Hurray! Your talk has been submitted</div>
       <% if (retError) { %>
-      There was a problem in our system so your talk is not availible. We will send you an email shortly with a link to your talk
+	<p>There was a problem in our system so your talk is not availible. We will send you an email shortly with a link to your talk.</p>
       <% } else { %>
-      You can review your talk at <a href="<%= address %>"><%= address %></a>
+	<p>You can review your talk at any time by going <a href="<%= address %>">to this address</a>. We'll also send you this link by email.</p>
       <% } %>
     </script>
 
