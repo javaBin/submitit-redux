@@ -245,7 +245,9 @@
       (.addRequestProperty connection "content-type" photo-content-type)
       (.setDoOutput connection true)
       (if author (.addRequestProperty connection "Authorization" author))
+      (println "Connecting")
       (.connect connection)
+      (println "Writing")
       (let [writer (.getOutputStream connection)]
         (.write writer photo-byte-arr)
         (.close writer)
@@ -273,6 +275,9 @@
     (let [connection (.openConnection (new java.net.URL address))]
       (.setRequestMethod connection "GET")
       (.addRequestProperty connection "content-type" "image/jpeg")
+      (let [author (create-encoded-auth) ]
+        (if author (.addRequestProperty connection "Authorization" author))
+        )
       (.connect connection)
       (let [reader (.getInputStream connection) bytearr (org.apache.commons.io.IOUtils/toByteArray reader)]
           (.close reader)
@@ -510,15 +515,10 @@
               [:legend "Email"] [:p (spval aspeak "email")] 
               [:legend "Speakers profile"] [:p (spval aspeak "bio")]
               [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
-              [:legend "Photo"]
-              (let [picture-filename
-                (if (not (read-setup :photo-copy-dir)) nil (let [fi (str (read-setup :photo-copy-dir) (encode-string (str (aspeak "href") "/photo")))]
-                  (if (.exists (new java.io.File fi)) fi nil)))]
-                (if picture-filename [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (str "savedpic?picid=" (encode-string picture-filename))}]]
-                  [:p "No picture uploaded"]))
-              
-;              [:legend "Image"] [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (fetch-picture aspeak)}]
-;              <img class="thumbnail" style="width: 180px; height: 260px;" src="<%= picture %>"/>
+              [:legend "Photo"]              
+                (let [photoloc (first (filter #(= "photo" (% "rel")) (aspeak "links")))]
+                  (if photoloc [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (photoloc "href")}]] [:p "No picture uploaded"])
+                  )              
 
         ]) speaker-vec))))
       
