@@ -466,7 +466,10 @@
 )
 
 (defn tarrval [tm akey]
-  ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "array")
+  (let [pick-val (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))]
+    (if (empty? pick-val) [] ((first pick-val) "array"))
+  )
+
 )
 
 (defn spval [tm akey]
@@ -507,7 +510,7 @@
       [:p (tval talk-map "equipment")]
       [:legend "Tags"]
       [:p
-        (reduce (fn [a b] (str a ", " b)) (tarrval talk-map "keywords"))
+        (let [taglist (tarrval talk-map "keywords")] (if (empty? taglist) "None" (reduce (fn [a b] (str a ", " b)) (tarrval talk-map "keywords"))))
       ]
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
