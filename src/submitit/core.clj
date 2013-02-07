@@ -481,6 +481,8 @@
   )
 
 
+
+
 (defpage [:get "/talkDetail"] {:as talkd}
   (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
     speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
@@ -517,7 +519,9 @@
               [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
               [:legend "Photo"]              
                 (let [photoloc (first (filter #(= "photo" (% "rel")) (aspeak "links")))]
-                  (if photoloc [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (photoloc "href")}]] [:p "No picture uploaded"])
+                  (if photoloc 
+                    [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (str "speakerPhoto?photoid=" (encode-string (photoloc "href")))}]] 
+                    [:p "No picture uploaded"])
                   )              
 
         ]) speaker-vec))))
@@ -531,6 +535,16 @@
 (defpage [:get "/savedpic"] {:as param}
   (noir.response/content-type "image/jpeg"
   (new java.io.FileInputStream (new java.io.File (decode-string (param :picid)))))
+)
+
+(defpage [:get "/speakerPhoto"] {:as param}    
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
+      (.setRequestMethod connection "GET")
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      (noir.response/content-type (.getContentType connection)
+      (.getInputStream connection))
+    )
 )
 
 (defn setup-str [setup]
