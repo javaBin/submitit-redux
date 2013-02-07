@@ -153,7 +153,7 @@ var SubmitFormView = Backbone.View.extend({
 	events: {
             "click #submitButton": "submitClicked",
             "change .talkInput" : "inputChanged",
-            "click .talkInput" : "inputChanged",
+            "click .btnGroupInput" : "btnGroupChanged",
             "click .tagCheckbox" : "tagCheckboxChanged",
             "click #addSpeaker" : "addSpeaker"
     },
@@ -273,20 +273,33 @@ var SubmitFormView = Backbone.View.extend({
 		return false;
 	},
 
-	inputChanged: function() {
+	inputChanged: function(e) {
 		var self = this;
 
+
 		this.model.set({
-			presentationType : self.$("#presentationTypeGrp button.active").val(),
 			title: self.$("#titleInput").val(),
 			abstract: self.$("#abstractInput").val(),
-			language: self.$("#languageGrp button.active").val(),
-			level: self.$("#levelGrp button.active").val(),
 			outline: self.$("#outlineInput").val(),
 			highlight: self.$("#highlightInput").val(),
 			equipment: self.$("#equipmentInput").val(),
 			expectedAudience: self.$("#expectedAudienceInput").val()			
 		});
+	},
+
+	btnGroupChanged: function(e) {
+		var grp =  e.target.parentElement.id;
+		var val = $(e.target).val();
+
+		if (grp === "presentationTypeGrp") {
+			this.model.set({presentationType : val});
+		} else 
+		if (grp === "languageGrp") {
+			this.model.set({language : val});
+		} else 
+		if (grp === "levelGrp") {
+			this.model.set({level : val});
+		}
 	},
 
 	tagCheckboxChanged: function(e) {
