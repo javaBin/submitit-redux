@@ -363,7 +363,7 @@ $(function() {
 		});
 
 		submitFormModel = new SubmitFormModel({
-			presentationType : "",
+			presentationType : "presentation",
 			title: "",
 			abstract: "",
 			language: "no",
