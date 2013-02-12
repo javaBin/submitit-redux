@@ -448,7 +448,7 @@
         (if error-response error-response
           (let [talk-result (communicate-talk-to-ems talk)]
             (println "TALKRES:" talk-result)
-            (send-mail (speaker-mail-list talk) (str "Confirmation " (if (talk "addKey") "on updating" "of") " your JavaZone 2012 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
+            (send-mail (speaker-mail-list talk) (str "Confirmation " (if (talk "addKey") "on updating" "of") " your JavaZone 2013 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
               (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
             (generate-string (merge talk-result 
               (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
