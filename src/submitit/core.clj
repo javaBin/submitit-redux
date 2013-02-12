@@ -86,14 +86,14 @@
   )
   )
 
-(defn create-mail-sender [message]
+(defn create-mail-sender [subject message]
   (if (= "true" (read-setup :mailSsl))
   (doto (org.apache.commons.mail.SimpleEmail.)
       (.setHostName (read-setup :hostname))
       (.setSslSmtpPort (read-setup :smtpport))
       (.setSSL true)
       (.setFrom (read-setup :mailFrom) "Javazone program commitee")
-      (.setSubject "Confirmation of your JavaZone submission")
+      (.setSubject subject)
       (.setAuthentication (read-setup :user) (read-setup :password))
       (.setMsg message)
       )  
@@ -101,15 +101,15 @@
       (.setHostName (read-setup :hostname))
       (.setSmtpPort (java.lang.Integer/parseInt (read-setup :smtpport)))
       (.setFrom (read-setup :mailFrom) "Javazone program commitee")
-      (.setSubject "Confirmation of your JavaZone submission")
+      (.setSubject subject)
       (.setMsg message)
       )  
 
   ))
 
 
-(defn send-mail [send-to message]
-  (let [sender (create-mail-sender message)]
+(defn send-mail [send-to subject message]
+  (let [sender (create-mail-sender subject message)]
     (doseq [sto send-to] (.addTo sender sto))
     (.addCc sender (read-setup :mailFrom))
     (.send sender)    
@@ -448,7 +448,7 @@
         (if error-response error-response
           (let [talk-result (communicate-talk-to-ems talk)]
             (println "TALKRES:" talk-result)
-            (send-mail (speaker-mail-list talk) (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
+            (send-mail (speaker-mail-list talk) (str "Confirmation of your JavaZone 2012 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
               (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
             (generate-string (merge talk-result 
               (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
@@ -712,6 +712,5 @@
 ;  (println (read-setup :serverhostname))
   ;(java.lang.System/set) "SUBMITIT_SETUP_FILE" nil)]
   ;(dosync (ref-set setupenv (read-enviroment-variables (first m))))
-;  (send-mail @setupenv ["a@a.com" "b@.com"] "Mew dfgjdløjgf")
   (startup)
 		)
