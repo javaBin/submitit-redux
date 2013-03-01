@@ -3,7 +3,20 @@ $.urlParam = function(name){
     return results ? results[1] || 0 : 0;
 }
 
-function TalkDetailCtrl($scope) {
+function TalkDetailCtrl($scope,$http) {
 	var givenId = $.urlParam("talkid");
-	$scope.talkid=givenId;
+	var jsonurl = "talkJson?talkid=" + givenId;
+
+	$scope.talkData = {}
+
+	$http({method: 'GET', url: jsonurl}).
+  		success(function(data, status, headers, config) {
+  			$scope.talkData = data;
+  		}).
+  		error(function(data, status, headers, config) {
+		    console.log("some error occured");
+	  	});
+
+	
+	
 }
