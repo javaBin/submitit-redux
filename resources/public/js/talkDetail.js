@@ -18,5 +18,23 @@ function TalkDetailCtrl($scope,$http) {
 	  	});
 
 	
-	
+	$scope.formatLanguage = function() {
+		if ($scope.talkData.language === "no") {
+			return "Norwegian";
+		} else {
+			return "English";
+		}
+	};
+
+	$scope.formatTags = function() {
+		var res;
+		if ($scope.talkData.talkTags && $scope.talkData.talkTags.length > 0) {
+			res = $scope.talkData.talkTags.reduce(function(previousValue, currentValue, index, array){
+				return previousValue + ", " + currentValue;
+			});
+		} else {
+			res = "No tags";
+		}
+		return res;
+	};
 }

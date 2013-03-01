@@ -2,14 +2,38 @@
 <html ng-app>
 <head>
 	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/talkDetail.js"></script>
+	
+  	<link href="css/bootstrap.min.css" rel="stylesheet"></link>
 </head>	
 <body>
 	<div ng-controller="TalkDetailCtrl">
-		<h1>Howdy</h1>
-		Something {{talkData.title}}
+		<div class="offset1 span10">
+			<h1>Talk: "{{talkData.title}}"</h1>
+			<legend>Abstract</legend>
+			<p>{{talkData.abstract}}</p>
+			<legend>Presentation format</legend>
+			<p>{{talkData.presentationType}}</p>
+			<legend>Language</legend>
+			<p>{{formatLanguage()}}</p>
+			<legend>Level</legend>
+			<p>{{talkData.level}}</p>
+			<legend>Outline</legend>
+			<p>{{talkData.outline}}</p>
+			<legend>Highligh summary</legend>
+			<p>{{talkData.highlight}}</p>
+			<legend>Equipment</legend>
+			<p>{{talkData.equipment}}</p>
+			<legend>Tags</legend>
+			<p>{{formatTags()}}</p>
+			<legend>Expected audience</legend>
+			<p>{{talkData.expectedAudience}}</p>
+			<legend>Update talk</legend>
+			<a href="index.html?talkid={{talkData.addKey}}">Update your talk</a>
+		</div>
 	</div>
 </body>
 </html>
