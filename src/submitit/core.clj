@@ -515,7 +515,6 @@
       [:legend "Expected audience"]
       [:p (tval talk-map "audience")]
       (vec (cons :div (reduce conj [] (map (fn[aspeak] 
-        (println "Speaker---" aspeak)
         [:div [:legend "Speaker"] [:p (spval aspeak "name")] 
               [:legend "Email"] [:p (spval aspeak "email")] 
               [:legend "Speakers profile"] [:p (spval aspeak "bio")]
@@ -578,13 +577,17 @@
 
 (defn speakers-from-talk [decoded-talk-url]
   (vec (map (fn [anitem] 
+
     (let [speaker-details (get-talk (anitem "href")) last-mod ((speaker-details :headers) "last-modified")]
     (merge 
     {
       :speakerName (val-from-data-map anitem "name") 
       :email (val-from-data-map anitem "email") 
       :bio (val-from-data-map anitem "bio") 
-      :picture nil 
+      :picture (let [photoloc (first (filter #(= "photo" (% "rel")) ((first (((parse-string (speaker-details :body)) "collection") "items")) "links")))]
+                  (if photoloc 
+                    (encode-string (photoloc "href")) 
+                    nil))
       :zipCode (val-from-data-map anitem "zip-code")
       :givenId (encode-string (anitem "href"))
       :dummyId "XX"      

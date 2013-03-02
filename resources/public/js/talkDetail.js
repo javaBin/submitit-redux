@@ -37,4 +37,5 @@ function TalkDetailCtrl($scope,$http) {
 		}
 		return res;
 	};
+
 }
