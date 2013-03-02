@@ -31,6 +31,17 @@
 			<p>{{formatTags()}}</p>
 			<legend>Expected audience</legend>
 			<p>{{talkData.expectedAudience}}</p>
+			<div ng-repeat="speaker in talkData.speakers">
+				<legend>Speaker</legend>
+				<p>{{speaker.speakerName}}</p>
+				<legend>Email</legend>
+				<p>{{speaker.email}}</p>
+				<legend>Profile</legend>
+				<p>{{speaker.bio}}</p>
+				<legend>Post code</legend>
+				<p>{{speaker.zipCode}}</p>
+				<legend>Photo</legend>
+			</div>
 			<legend>Update talk</legend>
 			<a href="index.html?talkid={{talkData.addKey}}">Update your talk</a>
 		</div>
