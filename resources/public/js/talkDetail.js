@@ -38,4 +38,11 @@ function TalkDetailCtrl($scope,$http) {
 		return res;
 	};
 
+	$scope.readpic = function(picsource) {
+		if (picsource) {
+			return "speakerPhoto?photoid=" + picsource;
+		}
+		
+	};
+
 }

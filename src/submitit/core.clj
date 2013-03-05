@@ -584,14 +584,14 @@
       :speakerName (val-from-data-map anitem "name") 
       :email (val-from-data-map anitem "email") 
       :bio (val-from-data-map anitem "bio") 
-      :picture (let [photoloc (first (filter #(= "photo" (% "rel")) ((first (((parse-string (speaker-details :body)) "collection") "items")) "links")))]
-                  (if photoloc 
-                    (encode-string (photoloc "href")) 
-                    nil))
       :zipCode (val-from-data-map anitem "zip-code")
       :givenId (encode-string (anitem "href"))
       :dummyId "XX"      
-    } 
+    }
+    (let [photoloc (first (filter #(= "photo" (% "rel")) ((first (((parse-string (speaker-details :body)) "collection") "items")) "links")))]
+                  (if photoloc 
+                    {:picture (encode-string (photoloc "href"))} 
+                    {})) 
     (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     ))) 
     (((parse-string ((get-talk (str decoded-talk-url "/speakers")) :body)) "collection") "items")))
