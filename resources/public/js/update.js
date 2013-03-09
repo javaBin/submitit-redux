@@ -7,35 +7,7 @@ $.urlParam = function(name){
 
 
 function UpdateCtrl($scope,$http) {
-	$scope.tagList = [{value: "dgfsdgf s"}];
-
-	$http({method: 'GET', url: "tagCollection"}).
-	  		success(function(data, status, headers, config) {
-	  			$scope.tagList = data;
-	  			var talkid = $.urlParam("talkid");
-
-				if (talkid != 0) {
-					var jsonurl = "talkJson?talkid=" + talkid;
-
-
-					$http({method: 'GET', url: jsonurl}).
-				  		success(function(data, status, headers, config) {
-				  			$scope.talk = data;
-				  		}).
-				  		error(function(data, status, headers, config) {
-						    console.log("some error occured");
-					  	});
-				  	
-				}
-
-
-
-	  		}).
-	  		error(function(data, status, headers, config) {
-			    console.log("some error occured");
-		  	});
-
-
+	$scope.tagList = [];
 	$scope.talk = {
 		presentationType : "presentation",
 		title: "",
@@ -57,6 +29,43 @@ function UpdateCtrl($scope,$http) {
 			dummyId: null
 		}]
 	};
+
+	$http({method: 'GET', url: "tagCollection"}).
+	  		success(function(data, status, headers, config) {
+	  			$scope.tagList = data;
+	  			var talkid = $.urlParam("talkid");
+
+				if (talkid != 0) {
+					var jsonurl = "talkJson?talkid=" + talkid;
+
+
+					$http({method: 'GET', url: jsonurl}).
+				  		success(function(data, status, headers, config) {
+				  			$scope.talk = data;
+				  			$scope.talk.talkTags.forEach(function (tagname) {
+				  				$scope.tagList.forEach(function(atag) {
+				  					if (tagname == atag.value) {
+				  						atag.checked=true;
+				  					}
+				  				});
+				  			});
+
+				  		}).
+				  		error(function(data, status, headers, config) {
+						    console.log("some error occured");
+					  	});
+				  	
+				}
+
+
+
+	  		}).
+	  		error(function(data, status, headers, config) {
+			    console.log("some error occured");
+		  	});
+
+
+	
 
 	$scope.activeClass = function(model,value) { 
 		return (value == model) ? "active" : "";
