@@ -129,6 +129,7 @@ function UpdateCtrl($scope,$http) {
 
 	
 	$scope.talkSubmit = function(value) {
+		$scope.showCapthcaError = false;
 		var submitBtn = $("#submitButton");		
 		submitBtn.button('loading');
 
@@ -149,15 +150,16 @@ function UpdateCtrl($scope,$http) {
 		});
 		$scope.talk.talkTags = talkTags;
 
-		console.log("Submitting talk");
-		console.log($scope.talk);
 
 		$http({method: 'POST', url: "addTalk", data: $scope.talk}).
 				  		success(function(data, status, headers, config) {
-				  			console.log("Success posting")
-				  			console.log(data);
+				  			submitBtn.button('reset');
 				  			if (data.captchaError) {
 								$scope.showCapthcaError = true;								
+							} else if (data.errormessage) {
+								$scope.showMain = false;
+								$scope.showFailure = true;
+								$scope.failureError = data.errormessage;
 							} else {
 								$scope.showMain = false;
 								$scope.showResult = true;
@@ -170,7 +172,7 @@ function UpdateCtrl($scope,$http) {
 									$scope.showResutFailure = false;
 								}
 							}
-							submitBtn.button('reset');
+							
 				  		}).
 				  		error(function(data, status, headers, config) {
 						    console.log("some error occured");
