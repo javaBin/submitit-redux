@@ -438,7 +438,7 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-;    (println "+++TALK+++" talk "+++")    
+    (println "+++TALK+++" talk "+++")    
     (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
         (let [errme (generate-string {:captchaError true})]
           (println "CaptchError:" + errme)
@@ -457,12 +457,9 @@
       )
   )))
 
-(defn encode-html [val]
-  (.replaceAll (.replaceAll (.replaceAll val "&" "&amp;") "<" "&lt;") ">" "&gt;")
-  )
 
 (defn tval [tm akey]
-  (encode-html ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value"))
+  ((first (filter #(= akey (% "name")) ((first ((tm "collection") "items")) "data"))) "value")
 )
 
 (defn tarrval [tm akey]
@@ -486,53 +483,9 @@
 
 
 
-(defpage [:get "/talkDetail"] {:as talkd}
-  (let [talk-map (parse-string ((get-talk (decode-string (talkd :talkid))) :body))
-    speaker-vec (((parse-string ((get-talk (str (decode-string (talkd :talkid)) "/speakers")) :body)) "collection") "items")]    
-  (html5
-      (page-header)
-      [:body 
-      [:div {:class "offset1 span10"}
-      [:h1 (str "Talk: \""(tval talk-map "title") "\"")]
-      [:legend "Abstract"]
-      [:p (tval talk-map "body")]
-      [:legend "Presentation format"]
-      [:p (tval talk-map "format")]
-      [:legend "Language"]
-      [:p (if (= (tval talk-map ems-lang-id) "no") "Norwegian" "English")]
-      [:legend "Level"]
-      [:p (tval talk-map "level")]
-      [:legend "Outline"]
-      [:p (tval talk-map "outline")]
-      [:legend "Highligh summary"]
-      [:p (tval talk-map "summary")]
-      [:legend "Equipment"]
-      [:p (tval talk-map "equipment")]
-      [:legend "Tags"]
-      [:p
-        (let [taglist (tarrval talk-map "keywords")] (if (empty? taglist) "None" (reduce (fn [a b] (str a ", " b)) (tarrval talk-map "keywords"))))
-      ]
-      [:legend "Expected audience"]
-      [:p (tval talk-map "audience")]
-      (vec (cons :div (reduce conj [] (map (fn[aspeak] 
-        [:div [:legend "Speaker"] [:p (spval aspeak "name")] 
-              [:legend "Email"] [:p (spval aspeak "email")] 
-              [:legend "Speakers profile"] [:p (spval aspeak "bio")]
-              [:legend "Zip-code"] [:p (spval aspeak "zip-code")]
-              [:legend "Photo"]              
-                (let [photoloc (first (filter #(= "photo" (% "rel")) (aspeak "links")))]
-                  (if photoloc 
-                    [:p [:img {:class "thumbnail" :style "width: 180px; height: 260px;" :src (str "speakerPhoto?photoid=" (encode-string (photoloc "href")))}]] 
-                    [:p "No picture uploaded"])
-                  )              
-
-        ]) speaker-vec))))
-      
-      [:legend "Update talk"]
-      (link-to (str (read-setup :serverhostname) "/index.html?talkid=" (talkd :talkid)) "Update your talk")
-      ]]
-    )
-  ))
+(defpage [:get "/talkDetail"] {:as attrs}
+  (redirect (if (attrs :talkid) (str "talkDetail.html?talkid=" (attrs :talkid)) "index.html"))  
+  )
 
 (defpage [:get "/savedpic"] {:as param}
   (noir.response/content-type "image/jpeg"
