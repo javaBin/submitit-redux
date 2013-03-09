@@ -37,10 +37,11 @@
 
           <legend>Presentation format  <span class="label label-important">Public</span></legend>
           <div class="row">
-            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="presentationTypeGrp">
-              <button class="btn <% if (presentationType === 'presentation') { %> active<% } %>" type="button" name="presFormat" value="presentation">Presentation</button>
-              <button class="btn <% if (presentationType === 'lightning-talk') { %> active<% } %>" type="button" name="presFormat" value="lightning-talk">Lightning talk</button>
+            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="presentationTypeGrp">              
+                <button class="btn {{activePresentationClass('presentation')}}">Presentation</button>
+                <button class="btn {{activePresentationClass('lightning-talk')}}">Lightning talk</button>
             </div>
+           
             <ul class="well span6">
               <li>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q and A.</li>
               <li>The length of a lightning talk will be maximum 10 minutes including Q & A.</li>

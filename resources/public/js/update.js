@@ -29,6 +29,11 @@ function UpdateCtrl($scope,$http) {
 		}]
 	};
 
+	$scope.activePresentationClass = function(value) { 
+		console.log($scope.talk.presentationType + "->" + value);
+		return (value == $scope.talk.presentationType) ? "active" : "";
+	};
+
 	var talkid = $.urlParam("talkid");
 
 	if (talkid != 0) {
@@ -44,5 +49,7 @@ function UpdateCtrl($scope,$http) {
 		  	});
 	  	
 	}
+
+
 
 }
