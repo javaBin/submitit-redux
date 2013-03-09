@@ -103,11 +103,11 @@
 
           <legend>Level  <span class="label label-important">Public</span></legend>
           <div class="row">
-            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="levelGrp">
-              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="beginner">Beginner</button>
-              <button class="btn <% if (level === 'intermediate') { %>active<% } %>" type="button" name="level" value="intermediate">Intermediate</button>
-              <button class="btn <% if (level === 'advanced') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
-              <button class="btn <% if (level === 'hardcore') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
+            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="levelGrp">              
+              <button class="btn {{activeClass(talk.level,'beginner')}}" ng-click="setLevel'beginner')">Beginner</button>
+              <button class="btn {{activeClass(talk.level,'intermediate')}}" ng-click="setLevel'intermediate')">Intermediate</button>
+              <button class="btn {{activeClass(talk.level,'advanced')}}" ng-click="setLevel'advanced')">Advanced</button>
+              <button class="btn {{activeClass(talk.level,'hardcore')}}" ng-click="setLevel'hardcore')">Hardcore</button>
             </div>
             <div class="well span6">
               More information about how we classify the talks <a href="http://jz13.java.no/speakers.html" target="_blank">can be found here</a>.
