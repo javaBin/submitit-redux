@@ -189,19 +189,19 @@
         <legend>Speakers</legend>
         <p>Please add relevant information about yourself. If you are multiple people presenting, add all the people by clicking "add another speaker" below</p>
         <div id="speakerList">
-          <div class="speakerBox">
+          <div class="speakerBox" ng-repeat="speaker in talk.speakers">
             <div class="speakerHeader">Speaker</div>
             <div class="speakerBoxInner">
               <legend>Name  <span class="label label-important">Public</span></legend>
-              <input class="speakerInput span6" type="text" id="speakerNameInput" required="required" value="<%= speakerName %>"/>
+              <input class="speakerInput span6" type="text" id="speakerNameInput" required="required" ng-model="speaker.speakerName"/>
 
               <legend>Email</legend>
-              <input class="speakerInput span6" type="email" id="emailInput" required="required" value="<%= email %>"/>
+              <input class="speakerInput span6" type="email" id="emailInput" required="required" ng-model="speaker.email"/>
 
               <legend>Speaker bio  <span class="label label-important">Public</span></legend>
               <div class="row">
                 <div class="span6">
-                  <textarea rows="4" required="required" class="span6 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+                  <textarea rows="4" required="required" class="span6 speakerInput" id="speakerBioInput" ng-model="speaker.bio"></textarea>
                 </div>
                 <ul class="well span5">
                   <li>Describe your affiliation, interests and experience.</li>
@@ -214,14 +214,14 @@
               <legend>Picture  <span class="label label-important">Public</span></legend>
 
               <div class="row span6">
-                <iframe seamless frameborder="0" src="uploadPicture?speakerid=<%= givenId %>&dummyKey=<%= dummyId %>" class="span8">
+                <iframe seamless frameborder="0" src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
                 </iframe>
               </div>
 
               <legend>Postcode <span class="label label-info">Optional</span></legend>
               <div class="row">
                 <div class="span6">
-                  <input class="speakerInput span6" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/>
+                  <input class="speakerInput span6" type="text" id="speakerZipCodeInput" ng-model="speaker.zipCode"/>
                 </div>
                 <ul class="well span5">
                   <li>Please type your postcode if you live in Norway.</li>

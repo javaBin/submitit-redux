@@ -5,8 +5,22 @@ $.urlParam = function(name){
     return results ? results[1] || 0 : 0;
 }
 
+function getDummySpeakerId() {
+	var dummySpeakerId;
+	$.ajax({
+		url: "newSpeakerId",
+		async: false,
+		cache: false,
+		success: function(data) {
+			dummySpeakerId=$.parseJSON(data);
+		}
+	});
+	return dummySpeakerId.dummyId;
+}
+
 
 function UpdateCtrl($scope,$http) {
+	
 	$scope.tagList = [];
 	$scope.talk = {
 		presentationType : "presentation",
@@ -26,7 +40,7 @@ function UpdateCtrl($scope,$http) {
 			picture: null,
 			zipCode: "",
 			givenId: null,
-			dummyId: null
+			dummyId: getDummySpeakerId()
 		}]
 	};
 
