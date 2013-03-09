@@ -74,8 +74,8 @@
           <legend>Language  <span class="label label-important">Public</span></legend>
           <div class="row">
             <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="languageGrp">
-              <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
-              <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
+              <button class="btn {{activeClass(talk.language,'en')}}" ng-click="setLanguage('en')">English</button>
+              <button class="btn {{activeClass(talk.language,'no')}}" ng-click="setLanguage('no')">Norwegian</button>
             </div>
             <div class="well span6">
               <li>The talk can be given in Norwegian or English</li>

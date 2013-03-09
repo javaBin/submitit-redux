@@ -37,6 +37,10 @@ function UpdateCtrl($scope,$http) {
 		$scope.talk.presentationType = value;
 	}
 
+	$scope.setLanguage = function(value) {
+		$scope.talk.language = value;
+	}
+
 	var talkid = $.urlParam("talkid");
 
 	if (talkid != 0) {
