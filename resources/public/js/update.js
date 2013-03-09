@@ -38,6 +38,9 @@ function UpdateCtrl($scope,$http) {
 	$scope.showResultSuccess = false;
 	$scope.showResutFailure = false;
 	$scope.showCapthcaError = false;
+	$scope.showFailure = false;
+	$scope.failureError = false;
+	$scope.talkAddress = false;
 	
 	$scope.tagList = [];
 
@@ -155,6 +158,17 @@ function UpdateCtrl($scope,$http) {
 				  			console.log(data);
 				  			if (data.captchaError) {
 								$scope.showCapthcaError = true;								
+							} else {
+								$scope.showMain = false;
+								$scope.showResult = true;
+								$scope.talkAddress = data.addr;
+								if (data.retError) {
+								  $scope.showResultSuccess = false;
+								  $scope.showResutFailure = true;
+								} else {
+									$scope.showResultSuccess = true;
+									$scope.showResutFailure = false;
+								}
 							}
 							submitBtn.button('reset');
 				  		}).
