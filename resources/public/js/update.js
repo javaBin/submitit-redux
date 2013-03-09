@@ -127,6 +127,18 @@ function UpdateCtrl($scope,$http) {
 		console.log($scope.tagList);
 	}
 
+	$scope.addASpeaker = function() {
+		$scope.talk.speakers.push({
+				speakerName: "",
+				email: "",
+				bio: "",
+				picture: null,
+				zipCode: "",
+				givenId: null,
+				dummyId: getDummySpeakerId()
+			});
+	}
+
 	
 	$scope.talkSubmit = function(value) {
 		$scope.showCapthcaError = false;
