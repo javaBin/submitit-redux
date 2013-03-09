@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <title>Submitit </title>
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/jquery-1.7.2.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/update.js"></script>
+</head>
+<body ng-controller="UpdateCtrl">
+  <!--<div class="tjafs"></div>-->
+  <div class="tjafs2"></div>
+  <div class="wrapper">
+    <div class="jzHeader"></div>
+    <div class="headerText">
+      <strong>Got something to say? Then you should talk!</strong>
+      <br>
+      Submit your presentation for JavaZone 2013 now!
+    </div>
+
+    <div class="introText">
+
+      <p>Fill out the following form to submit your Javazone talk. When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission.</p>
+      <p>All fields must be filled in, except those marked as <span class="label label-info">Optional</span></p>
+      <p>Fields marked as <span class="label label-important">Public</span> will be visible in the public programme if your talk is accepted. All other fields are only visible to the organizers.</p>
+      <p>Please fill in this form in the language you are giving your talk. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
+      <p>Deadline for submissions are <strong>15. April 2013</strong>.</p
+      </div>
+      <form id="submitForm">
+        <fieldset>
+
+          <legend>Presentation format  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="presentationTypeGrp">
+              <button class="btn <% if (presentationType === 'presentation') { %> active<% } %>" type="button" name="presFormat" value="presentation">Presentation</button>
+              <button class="btn <% if (presentationType === 'lightning-talk') { %> active<% } %>" type="button" name="presFormat" value="lightning-talk">Lightning talk</button>
+            </div>
+            <ul class="well span6">
+              <li>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q and A.</li>
+              <li>The length of a lightning talk will be maximum 10 minutes including Q & A.</li>
+            </ul>
+          </div>
+
+          <legend>Title  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="span6">
+              <input type="text" required="required" class="talkInput span6" ng-model="talk.title" id="titleInput"/>
+            </div>
+            <ul class="well span6">
+              <li>Select an expressive title that captures the contents of your talk well without being too long.</li>
+              <li>Remember that the title must be attractive and should make a reader curious.</li>
+            </ul>
+          </div>
+
+          <legend>Abstract  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="span6">
+              <textarea rows="8" required="required" class="span6 talkInput" id="abstractInput" ng-model="talk.abstract"></textarea>
+            </div>
+            <ul class="well span6">
+              <li>Give a concise description of the contents and goals of your talk.</li>
+              <li>The abstract will be published in the conference programme.</li>
+              <li>It should not be longer than 300 words.</li>
+            </ul>
+          </div>
+
+          <legend>Language  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="languageGrp">
+              <button class="btn <% if (language === 'en') { %> active<% } %>" type="button" name="language" value="en">English</button>
+              <button class="btn <% if (language === 'no') { %> active<% } %>" type="button" name="language" value="no">Norwegian</button>
+            </div>
+            <div class="well span6">
+              <li>The talk can be given in Norwegian or English</li>
+
+              <li>The slides may be in English even if you present the talk in Norwegian.</li>
+
+              <li>We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</li>
+            </div>
+          </div>
+
+          <div id="languageHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="languageHelpLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h2 id="languageHelpLabel">Language</h2>
+            </div>
+            <div class="modal-body">
+              <p>The talk can be given in Norwegian or English</p>
+              <p>The slides may be in English even if you present the talk in Norwegian.</p>
+              <p>We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+          </div>
+
+          <legend>Level  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="levelGrp">
+              <button class="btn <% if (level === 'beginner') { %>active<% } %>" type="button" name="level" value="beginner">Beginner</button>
+              <button class="btn <% if (level === 'intermediate') { %>active<% } %>" type="button" name="level" value="intermediate">Intermediate</button>
+              <button class="btn <% if (level === 'advanced') { %>active<% } %>" type="button" name="level" value="advanced">Advanced</button>
+              <button class="btn <% if (level === 'hardcore') { %>active<% } %>" type="button" name="level" value="hardcore">Hardcore</button>
+            </div>
+            <div class="well span6">
+              More information about how we classify the talks <a href="http://jz13.java.no/speakers.html" target="_blank">can be found here</a>.
+            </div>
+          </div>
+
+          <div id="levelHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="levelHelpLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h2 id="levelHelpLabel">Skill levels for talks</h2>
+            </div>
+            <div class="modal-body">
+              <h3>Introductory</h3>
+              <p>A basic introduction to a subject. Assume no knowledge of the subject.</p>
+              <h3>Intermediate</h3>
+              <p>Expecting more than basic knowledge of a subject, but not yet advanced.</p>
+              <h3>Advanced</h3>
+              <p>Good knowledge of the subject.</p>
+              <h3>Hardcore</h3>
+              <p>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. Should ideally focus on a single subject, for instance "classloaders", "debugging", "bytecode generation", "the monoid"... The deeper and more hardcore, the better.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+          </div>
+
+          <legend>Outline</legend>
+          <div class="row">
+            <div class="span6">
+              <textarea rows="8" required="required" class="span6 talkInput" id="outlineInput" ng-model="talk.outline"></textarea>
+            </div>
+            <div class="well span6">
+              This information will be used by the program committee for reviewing the detailed contents. The outline should be a table of contents of the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.
+            </div>
+          </div>
+
+          <legend>Highlight summary  <span class="label label-important">Public</span></legend>
+          <div class="row">
+            <div class="span6">
+              <textarea rows="3" required="required" class="span6 talkInput" id="highlightInput" ng-model="talk.highlight"></textarea>
+            </div>
+            <p class="well span6">
+              Description of the contents of your talk in only a few sentences. The highlight summary can be used in teaser presentations on the web prior to the conference.
+            </p>
+          </div>
+
+
+          <legend>Equipment  <span class="label label-info">Optional</span></legend>
+          <div class="row">
+            <div class="span6">
+              <textarea rows="3" class="span6 talkInput" id="equipmentInput" ng-model="talk.equipment"></textarea>
+            </div>
+            <p class="well span6">
+              Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.
+            </p>
+          </div>
+        </div>
+
+        <legend>Expected audience  <span class="label label-important">Public</span></legend>
+        <div class="row">
+          <div class="span6">
+            <textarea rows="8" required="required" class="span6 talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience"></textarea>
+          </div>
+          <ul class="well span6">
+            <li>Who should attend this session?</li>
+            <li>How will the participants benefit from attending?</li>
+            <li>Clearly state what knowledge you expect from your participants.</li>
+          </ul>
+        </div>
+
+        <legend>Tags  <span class="label label-important">Public</span></legend>
+        <p>Please check topics which relate to your presentation</p>
+        <div class="row-fluid" id="tagBoxes"></div>
+
+        <legend>Speakers</legend>
+        <p>Please add relevant information about yourself. If you are multiple people presenting, add all the people by clicking "add another speaker" below</p>
+        <div id="speakerList">
+          <div class="speakerBox">
+            <div class="speakerHeader">Speaker</div>
+            <div class="speakerBoxInner">
+              <legend>Name  <span class="label label-important">Public</span></legend>
+              <input class="speakerInput span6" type="text" id="speakerNameInput" required="required" value="<%= speakerName %>"/>
+
+              <legend>Email</legend>
+              <input class="speakerInput span6" type="email" id="emailInput" required="required" value="<%= email %>"/>
+
+              <legend>Speaker bio  <span class="label label-important">Public</span></legend>
+              <div class="row">
+                <div class="span6">
+                  <textarea rows="4" required="required" class="span6 speakerInput" id="speakerBioInput"><%= bio %></textarea>
+                </div>
+                <ul class="well span5">
+                  <li>Describe your affiliation, interests and experience.</li>
+                  <li>It should be clear from this text that you are the right person to give this talk.</li>
+                  <li>The profile should not be more than a couple of paragraphs long.</li>
+                </ul>
+              </div>
+
+
+              <legend>Picture  <span class="label label-important">Public</span></legend>
+
+              <div class="row span6">
+                <iframe seamless frameborder="0" src="uploadPicture?speakerid=<%= givenId %>&dummyKey=<%= dummyId %>" class="span8">
+                </iframe>
+              </div>
+
+              <legend>Postcode <span class="label label-info">Optional</span></legend>
+              <div class="row">
+                <div class="span6">
+                  <input class="speakerInput span6" type="text" id="speakerZipCodeInput" value="<%= zipCode %>"/>
+                </div>
+                <ul class="well span5">
+                  <li>Please type your postcode if you live in Norway.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="btn" id="addSpeaker">Add another speaker</button>
+
+        <legend>Captcha</legend>
+        <div class="row">
+          <div class="span0">
+            <p>Even though our theme for this year's conference is awesome robots, we don't really want those nasty spam robots to come present at the conference.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span4">
+          </div>
+        </div>
+
+        <legend>That's all! Are you ready to rock JavaZone 2013?</legend>
+        <div class="row">
+          <div class="span0">
+            <p>You will receive a copy of this information by email. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
+          </div>
+        </div>
+
+        <div class="submitWrapper">
+          <button type="submit" id="submitButton" class="btn btn-large btn-primary btn-block" data-loading-text="Submitting talk. Please wait...">Submit talk now</button>
+        </div>
+
+        <div class="row">
+          <div class="span0">
+            <p>If you have any problem submitting your presentation, please contact us on <a href="mailto:program@java.no">program@java.no</a>.</p>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="credit">
+    Made by <a href="http://java.no">javaBin</a>. Powered by Clojure, Backbone and Bootstrap.
+  </div>
+
+
+  <script type="text/template" id="tagTemplate">
+  <label class="checkbox inline">
+  <input type="checkbox" class="tagCheckbox" value="<%= value %>" <% if (checked) { %>checked<% } %> ><%= value %></input>
+  </label>
+  </script>
+
+  <script type="text/template" id="resultTemplate">
+  <div class="hurra">Oh yeah! Your talk has been submitted!</div>
+  <% if (retError) { %>
+    <p>Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</p>
+    <% } else { %>
+      <p>You can review your talk at any time by going <a href="<%= address %>">to this address</a>. We'll also send you this link by email.</p>
+      <% } %>
+      <p class="whatsnext">Now that you have submitted your presentation, you can start looking forward to the conference. Read more about <a href="http://jz13.java.no/journeyzone.html">JourneyZone</a> and <a href="http://jz13.java.no/awezone.html">AweZone</a>, two things that make JavaZone unique. More information about the conference are availiable at our <a href="http://jz13.java.no/">web pages</a>. And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</p>
+      </script>
+
+      <script type="text/template" id="errorPageTemplate">
+      <h1>Sorry this did not work</h1>
+      <%= errormessage %>
+      </script>
+
+      <script type="text/template" id="captchaTemplate">
+      <img src="captcha"/><br/>
+      <input type="text" required="required" class="span3" id="captchaInput" placeholder="Type the letters in the image"/>
+      <div class="row hideit" id="captchaError">
+      <div class="alert alert-error span4">
+      Captcha was wrong. Try again.
+      </div>
+      </div>
+      </script>
+
+
+    </body>
+    </html>
