@@ -18,36 +18,55 @@ function getDummySpeakerId() {
 	return dummySpeakerId.dummyId;
 }
 
+function readCaptchaFact() {
+	var captchaFact;
+	$.ajax({
+		url: "loadCaptcha",
+		async: false,
+		cache: false,
+		success: function(data) {
+			captchaFact=$.parseJSON(data);
+		}
+	});
+	return captchaFact
+}
+
 
 function UpdateCtrl($scope,$http) {
 	
 	$scope.tagList = [];
-	$scope.talk = {
-		presentationType : "presentation",
-		title: "",
-		abstract: "",
-		language: "no",
-		level: "beginner",
-		outline: "",
-		highlight: "",
-		equipment: "",
-		talkTags: [],
-		expectedAudience: "",
-		speakers: [{
-			speakerName: "",
-			email: "",
-			bio: "",
-			picture: null,
-			zipCode: "",
-			givenId: null,
-			dummyId: getDummySpeakerId()
-		}]
-	};
+
+	var talkid = $.urlParam("talkid");
+	var captchaFact = readCaptchaFact();
+	if (talkid === 0) {
+		$scope.talk = {
+			presentationType : "presentation",
+			title: "",
+			abstract: "",
+			language: "no",
+			level: "beginner",
+			outline: "",
+			highlight: "",
+			equipment: "",
+			talkTags: [],
+			expectedAudience: "",
+			captchaFact: captchaFact,
+			captchaAnswer: "",
+			speakers: [{
+				speakerName: "",
+				email: "",
+				bio: "",
+				picture: null,
+				zipCode: "",
+				givenId: null,
+				dummyId: getDummySpeakerId()
+			}]
+		};
+	}
 
 	$http({method: 'GET', url: "tagCollection"}).
 	  		success(function(data, status, headers, config) {
 	  			$scope.tagList = data;
-	  			var talkid = $.urlParam("talkid");
 
 				if (talkid != 0) {
 					var jsonurl = "talkJson?talkid=" + talkid;
@@ -56,6 +75,8 @@ function UpdateCtrl($scope,$http) {
 					$http({method: 'GET', url: jsonurl}).
 				  		success(function(data, status, headers, config) {
 				  			$scope.talk = data;
+				  			$scope.talk.captchaFact = captchaFact;
+				  			$scope.talk.captchaAnswer = "";
 				  			$scope.talk.talkTags.forEach(function (tagname) {
 				  				$scope.tagList.forEach(function(atag) {
 				  					if (tagname == atag.value) {
