@@ -28,11 +28,16 @@ function readCaptchaFact() {
 			captchaFact=$.parseJSON(data);
 		}
 	});
-	return captchaFact
+	return captchaFact.fact;
 }
 
 
 function UpdateCtrl($scope,$http) {
+	$scope.showMain = true;
+	$scope.showResult = false;
+	$scope.showResultSuccess = false;
+	$scope.showResutFailure = false;
+	$scope.showCapthcaError = false;
 	
 	$scope.tagList = [];
 
@@ -120,6 +125,43 @@ function UpdateCtrl($scope,$http) {
 	}
 
 	
+	$scope.talkSubmit = function(value) {
+		var submitBtn = $("#submitButton");		
+		submitBtn.button('loading');
 
+		var myForm = $('#submitForm');
+		var valid = myForm[0].checkValidity();
+		if (!valid) {
+			submitBtn.button('reset');
+			return true;
+		}
+		
+
+		var talkTags = [];
+
+		$scope.tagList.forEach(function(atag) {
+			if (atag.checked) {
+				talkTags.push(atag.value);
+			}
+		});
+		$scope.talk.talkTags = talkTags;
+
+		console.log("Submitting talk");
+		console.log($scope.talk);
+
+		$http({method: 'POST', url: "addTalk", data: $scope.talk}).
+				  		success(function(data, status, headers, config) {
+				  			console.log("Success posting")
+				  			console.log(data);
+				  			if (data.captchaError) {
+								$scope.showCapthcaError = true;								
+							}
+							submitBtn.button('reset');
+				  		}).
+				  		error(function(data, status, headers, config) {
+						    console.log("some error occured");
+					  	});
+		return false;
+	}
 
 }
