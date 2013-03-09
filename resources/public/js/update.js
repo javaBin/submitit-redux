@@ -29,10 +29,13 @@ function UpdateCtrl($scope,$http) {
 		}]
 	};
 
-	$scope.activePresentationClass = function(value) { 
-		console.log($scope.talk.presentationType + "->" + value);
-		return (value == $scope.talk.presentationType) ? "active" : "";
+	$scope.activeClass = function(model,value) { 
+		return (value == model) ? "active" : "";
 	};
+
+	$scope.setPresentationType = function(value) {
+		$scope.talk.presentationType = value;
+	}
 
 	var talkid = $.urlParam("talkid");
 

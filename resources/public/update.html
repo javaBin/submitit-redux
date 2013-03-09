@@ -38,8 +38,8 @@
           <legend>Presentation format  <span class="label label-important">Public</span></legend>
           <div class="row">
             <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="presentationTypeGrp">              
-                <button class="btn {{activePresentationClass('presentation')}}">Presentation</button>
-                <button class="btn {{activePresentationClass('lightning-talk')}}">Lightning talk</button>
+                <button class="btn {{activeClass(talk.presentationType,'presentation')}}" ng-click="setPresentationType('presentation')">Presentation</button>
+                <button class="btn {{activeClass(talk.presentationType,'lightning-talk')}}" ng-click="setPresentationType('lightning-talk')">Lightning talk</button>
             </div>
            
             <ul class="well span6">
