@@ -570,14 +570,14 @@
   (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) lastmod ((get-result :headers) "last-modified") speaker-list (speakers-from-talk decoded-url)]
     (generate-string
     {
-      :presentationType (encode-spec-char (tval talk-map "format"))
-      :title (encode-spec-char(tval talk-map "title"))
-      :abstract (encode-spec-char(tval talk-map "body"))
-      :language (encode-spec-char(tval talk-map ems-lang-id))
-      :level (encode-spec-char(tval talk-map "level"))
-      :outline (encode-spec-char(tval talk-map "outline"))
-      :highlight (encode-spec-char(tval talk-map "summary"))
-      :equipment (encode-spec-char(tval talk-map "equipment"))
+      :presentationType (encode-spes-char (tval talk-map "format"))
+      :title (encode-spes-char(tval talk-map "title"))
+      :abstract (encode-spes-char(tval talk-map "body"))
+      :language (encode-spes-char(tval talk-map ems-lang-id))
+      :level (encode-spes-char(tval talk-map "level"))
+      :outline (encode-spes-char(tval talk-map "outline"))
+      :highlight (encode-spes-char(tval talk-map "summary"))
+      :equipment (encode-spes-char(tval talk-map "equipment"))
       :expectedAudience (encode-spes-char (tval talk-map "audience"))
       :talkTags (tarrval talk-map "keywords")
       :addKey (talkd :talkid)
