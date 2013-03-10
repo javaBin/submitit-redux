@@ -546,10 +546,10 @@
     (let [speaker-details (get-talk (anitem "href")) last-mod ((speaker-details :headers) "last-modified")]
     (merge 
     {
-      :speakerName (encode-spec-char (val-from-data-map anitem "name"))
-      :email (encode-spec-char (val-from-data-map anitem "email"))
-      :bio (encode-spec-char (val-from-data-map anitem "bio"))
-      :zipCode (encode-spec-char (val-from-data-map anitem "zip-code"))
+      :speakerName (encode-spes-char (val-from-data-map anitem "name"))
+      :email (encode-spes-char (val-from-data-map anitem "email"))
+      :bio (encode-spes-char (val-from-data-map anitem "bio"))
+      :zipCode (encode-spes-char (val-from-data-map anitem "zip-code"))
       :givenId (encode-string (anitem "href"))
       :dummyId "XX"      
     }
