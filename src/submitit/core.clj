@@ -528,16 +528,28 @@
   ((first (filter #(= (% "name") dkey) (anitem "data"))) "value")
   )
 
+
+(defn encode-spes-char [value]
+  (-> value
+    (.replaceAll "&aelig;" "æ")
+    (.replaceAll "&Aelig;" "Æ")
+    (.replaceAll "&oslash;" "ø")
+    (.replaceAll "&Oslash;" "Ø")
+    (.replaceAll "&aring;" "å")
+    (.replaceAll "&Aring;" "Å")
+    )
+  )
+
 (defn speakers-from-talk [decoded-talk-url]
   (vec (map (fn [anitem] 
 
     (let [speaker-details (get-talk (anitem "href")) last-mod ((speaker-details :headers) "last-modified")]
     (merge 
     {
-      :speakerName (val-from-data-map anitem "name") 
-      :email (val-from-data-map anitem "email") 
-      :bio (val-from-data-map anitem "bio") 
-      :zipCode (val-from-data-map anitem "zip-code")
+      :speakerName (encode-spec-char (val-from-data-map anitem "name"))
+      :email (encode-spec-char (val-from-data-map anitem "email"))
+      :bio (encode-spec-char (val-from-data-map anitem "bio"))
+      :zipCode (encode-spec-char (val-from-data-map anitem "zip-code"))
       :givenId (encode-string (anitem "href"))
       :dummyId "XX"      
     }
@@ -553,21 +565,20 @@
 
 
 
-
 (defpage [:get "/talkJson"] {:as talkd}
   (let [decoded-url (decode-string (talkd :talkid))] 
   (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) lastmod ((get-result :headers) "last-modified") speaker-list (speakers-from-talk decoded-url)]
     (generate-string
     {
-      :presentationType  (tval talk-map "format"),
-      :title (tval talk-map "title")
-      :abstract (tval talk-map "body")
-      :language (tval talk-map ems-lang-id)
-      :level (tval talk-map "level")
-      :outline (tval talk-map "outline")
-      :highlight (tval talk-map "summary")
-      :equipment (tval talk-map "equipment")
-      :expectedAudience (tval talk-map "audience")
+      :presentationType (encode-spec-char (tval talk-map "format"))
+      :title (encode-spec-char(tval talk-map "title"))
+      :abstract (encode-spec-char(tval talk-map "body"))
+      :language (encode-spec-char(tval talk-map ems-lang-id))
+      :level (encode-spec-char(tval talk-map "level"))
+      :outline (encode-spec-char(tval talk-map "outline"))
+      :highlight (encode-spec-char(tval talk-map "summary"))
+      :equipment (encode-spec-char(tval talk-map "equipment"))
+      :expectedAudience (encode-spes-char (tval talk-map "audience"))
       :talkTags (tarrval talk-map "keywords")
       :addKey (talkd :talkid)
       :lastModified lastmod
