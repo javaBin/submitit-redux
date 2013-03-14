@@ -14,7 +14,11 @@
 )
 
 (defn do-to-map [amap do-func]
-  (reduce merge (map (fn [[akey aval]] {akey (do-func aval)}) amap))
+  (reduce merge (map (fn [[akey aval]] {akey 
+    (cond (vector? aval) (vec (map do-func aval))
+      :else (do-func aval)
+    )}) amap))
+
   )
 
 (def ems-lang-id "lang")
