@@ -12,6 +12,7 @@
     [clj-http "0.6.3"]
     [org.clojure/data.codec "0.1.0"]
     [com.google.code.maven-play-plugin.org.playframework/jj-simplecaptcha "1.1"]
+    [org.jsoup/jsoup "1.7.2"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
   :ring {:handler submitit.core/handler}  

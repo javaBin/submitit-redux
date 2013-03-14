@@ -13,6 +13,10 @@
   (:require [clojure.data.codec.base64 :as b64])
 )
 
+(defn do-to-map [amap do-func]
+  (reduce merge (map (fn [[akey aval]] {akey (do-func aval)}) amap))
+  )
+
 (def ems-lang-id "lang")
 
 (def setupenv (ref {}))
