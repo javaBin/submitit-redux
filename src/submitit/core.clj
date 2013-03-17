@@ -22,6 +22,14 @@
   )
   )
 
+(defn clean-html [x]
+  (org.jsoup.Jsoup/clean x (org.jsoup.safety.Whitelist/none))
+  )
+
+(defn clean-input-map [input-map]
+  (do-to-map input-map clean-html)
+  )
+
 (def ems-lang-id "lang")
 
 (def setupenv (ref {}))
