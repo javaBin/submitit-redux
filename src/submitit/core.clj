@@ -13,6 +13,18 @@
   (:require [clojure.data.codec.base64 :as b64])
 )
 
+(defn encode-spes-char [value]
+  (-> value
+    (.replaceAll "&aelig;" "æ")
+    (.replaceAll "&Aelig;" "Æ")
+    (.replaceAll "&oslash;" "ø")
+    (.replaceAll "&Oslash;" "Ø")
+    (.replaceAll "&aring;" "å")
+    (.replaceAll "&Aring;" "Å")
+    )
+  )
+
+
 (defn do-to-map [amap do-func]
   (cond 
     (map? amap)
@@ -23,7 +35,7 @@
   )
 
 (defn clean-html [x]
-  (org.jsoup.Jsoup/clean x (org.jsoup.safety.Whitelist/none))
+  (encode-spes-char (org.jsoup.Jsoup/clean x (org.jsoup.safety.Whitelist/none)))
   )
 
 (defn clean-input-map [input-map]

@@ -12,7 +12,8 @@
 
 (deftest input-cleaning 
 	(is (= "Noe" (clean-html "Noe")) "Plain text")
-	(is (= "This remains Heading" (clean-html "<script src='fhf'>The script</script>This remains <h1>Heading</h1>")) "Tar vekk html-tags")
+	(is (= "Noe æøå noe" (clean-html "Noe æøå noe")) "Norwegian letters")
+	(is (= "This remains Heading" (clean-html "<script src='fhf'>The script</script>This remains <h1>Heading</h1>")) "Removes html-tags")
 	)
 
 (deftest clean-all-input
