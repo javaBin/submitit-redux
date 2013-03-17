@@ -17,7 +17,7 @@
   (cond 
     (map? amap)
       (reduce merge (map (fn [[akey aval]] {akey (do-to-map aval do-func)}) amap))
-    (vector? amap) (vec (map (fn[item] (do-to-map item do-func))))
+    (vector? amap) (vec (map (fn[item] (do-to-map item do-func)) amap))
     :else (do-func amap)
   )
   )
