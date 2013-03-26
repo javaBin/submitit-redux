@@ -26,7 +26,7 @@
 	(with-redefs [read-setup (fn [keyval] nil)]
 		(is (submit-open? {}) "Open if closing date not set"))
 
-	(with-redefs [read-setup (fn [keyval] (if (= keyval :closing-time) "20130315200000" nil))
+	(with-redefs [read-setup (fn [keyval] (cond (= keyval :closing-time) "20130315200000" (= keyval :close-password) "secret" :else nil))
 				  time-now (fn [] "20130316101523")]
 		(is (not (submit-open? {})) "We are closed")
 				)
@@ -35,4 +35,23 @@
 		(is (submit-open? {}) "We are open")
 				)
 
+	(with-redefs [read-setup (fn [keyval] (cond (= keyval :closing-time) "20130315200000" (= keyval :close-password) "secret" :else nil))
+				  time-now (fn [] "20130316101523")]
+		(is (not (submit-open? {"password" "dummy"})) "We are closed wrong password"))
+
+	(with-redefs [read-setup (fn [keyval] (cond (= keyval :closing-time) "20130315200000" (= keyval :close-password) "secret" :else nil))
+				  time-now (fn [] "20130316101523")]
+		(is (submit-open? {"password" "secret"}) "We are closed correct password"))
+
+	(with-redefs [read-setup (fn [keyval] (cond (= keyval :closing-time) "20130315200000" (= keyval :close-password) "secret" :else nil))
+				  time-now (fn [] "20130316101523")]
+		(is (need-submit-password?) "Password needed"))
+
+	(with-redefs [read-setup (fn [keyval] nil)
+				  time-now (fn [] "20130316101523")]
+		(is (not (need-submit-password?)) "Password not needed no config"))
+
+	(with-redefs [read-setup (fn [keyval] (cond (= keyval :closing-time) "20130315200000" (= keyval :close-password) "secret" :else nil))
+				  time-now (fn [] "20130116101523")]
+		(is (not (need-submit-password?)) "Password not needed not closed"))
 )

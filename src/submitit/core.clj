@@ -453,14 +453,22 @@
     (let [close-time (read-setup :closing-time)]
       (or (nil? close-time)
       (> 0 (.compareTo (time-now) close-time))
-      )) 
-    
+      ))
+    (= (read-setup :close-password) (talk "password"))     
   )
 )
+
+(defn need-submit-password? []
+  (let [close-time (read-setup :closing-time)]
+    (and (not (nil? close-time)) (< 0 (.compareTo (time-now) close-time)))
+  )
+)
+
 
 (defn validate-input [talk]
   (let [error-msg 
     (cond 
+    (not (submit-open? talk)) "You need to provide correct password since submit is closed"
     (para-error? (talk "abstract")) "Abstract is required"
     (para-error? (talk "presentationType")) "Presentationtype is required"
     (para-error? (talk "language")) "language is required"
@@ -575,6 +583,7 @@
     )
   ))
 
+
 (defn val-from-data-map [anitem dkey]
   ((first (filter #(= (% "name") dkey) (anitem "data"))) "value")
   )
@@ -614,6 +623,9 @@
 )
   
 
+(defpage [:get "/needPassword"] {:as nothing}
+  (generate-string {:needPassword (need-submit-password?)})
+  )
 
 
 (defpage [:get "/talkJson"] {:as talkd}
