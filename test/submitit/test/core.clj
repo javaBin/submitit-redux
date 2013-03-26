@@ -23,5 +23,6 @@
 
 (deftest closing-submit-test
 	(is (submit-open? {"addKey" "34534"}) "Always allowed to update talks")
-;	(is (submit-open {"addKey" "34534"}) "Open if not set to anything")
+	(with-redefs [read-setup (fn [keyval] nil)]
+		(is (submit-open? {}) "Open if closing date not set"))
 )

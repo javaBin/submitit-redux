@@ -437,8 +437,11 @@
   )
 
 (defn submit-open? [talk]
-  (talk "addKey")
+  (or 
+    (talk "addKey") 
+    (nil? (read-setup :closing-time))
   )
+)
 
 (defn validate-input [talk]
   (let [error-msg 
