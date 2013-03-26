@@ -41,6 +41,7 @@ function UpdateCtrl($scope,$http) {
 	$scope.showFailure = false;
 	$scope.failureError = false;
 	$scope.talkAddress = false;
+	$scope.needPassword = false;
 	
 	$scope.tagList = [];
 
@@ -107,6 +108,13 @@ function UpdateCtrl($scope,$http) {
 			    console.log("some error occured");
 		  	});
 
+	$http({method: 'GET', url: "needPassword"}).
+	  		success(function(data, status, headers, config) {
+	  			$scope.needPassword = data.needPassword;
+	  		}).
+	  		error(function(data, status, headers, config) {
+			    console.log("Error fetching password neeeded");
+		  	});	
 
 	
 
