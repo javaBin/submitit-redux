@@ -20,3 +20,8 @@
 
  (is (= {:abstract "Abstract"} (clean-input-map {:abstract "<h1>Abstract</h1>"})))
  )
+
+(deftest closing-submit-test
+	(is (submit-open? {"addKey" "34534"}) "Always allowed to update talks")
+;	(is (submit-open {"addKey" "34534"}) "Open if not set to anything")
+)

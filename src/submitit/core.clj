@@ -436,6 +436,10 @@
     )
   )
 
+(defn submit-open? [talk]
+  (talk "addKey")
+  )
+
 (defn validate-input [talk]
   (let [error-msg 
     (cond 
