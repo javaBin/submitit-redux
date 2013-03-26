@@ -11,7 +11,12 @@
   (:require [ring.middleware.format-params :as format-params])
   (:require [clj-http.client :as client])
   (:require [clojure.data.codec.base64 :as b64])
+  (:require [clj-time.core :only [now] :as cljtime])
+  (:require [clj-time.format :only [formatter parse unparse] :as format-time])
+
 )
+
+
 
 (defn encode-spes-char [value]
   (-> value
@@ -436,10 +441,20 @@
     )
   )
 
+(def time-formatter (format-time/formatter "yyyyMMddHHmmss"))
+
+(defn time-now []
+  (format-time/unparse time-formatter (cljtime/now))
+  )
+
 (defn submit-open? [talk]
   (or 
-    (talk "addKey") 
-    (nil? (read-setup :closing-time))
+    (talk "addKey")
+    (let [close-time (read-setup :closing-time)]
+      (or (nil? close-time)
+      (> 0 (.compareTo (time-now) close-time))
+      )) 
+    
   )
 )
 

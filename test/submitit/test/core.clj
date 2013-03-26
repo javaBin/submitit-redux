@@ -25,4 +25,14 @@
 	(is (submit-open? {"addKey" "34534"}) "Always allowed to update talks")
 	(with-redefs [read-setup (fn [keyval] nil)]
 		(is (submit-open? {}) "Open if closing date not set"))
+
+	(with-redefs [read-setup (fn [keyval] (if (= keyval :closing-time) "20130315200000" nil))
+				  time-now (fn [] "20130316101523")]
+		(is (not (submit-open? {})) "We are closed")
+				)
+	(with-redefs [read-setup (fn [keyval] (if (= keyval :closing-time) "20130315200000" nil))
+				  time-now (fn [] "20130216101523")]
+		(is (submit-open? {}) "We are open")
+				)
+
 )
