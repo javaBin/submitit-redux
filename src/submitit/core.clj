@@ -562,7 +562,12 @@
 )
 
 (defn setup-str [setup]
-  (clojure.string/join "\n" (map #(if (.startsWith % "emsPassword") "emsPassword=XXX" %) (clojure.string/split setup #"\n")))
+  (clojure.string/join "\n" (map 
+    #(cond 
+      (.startsWith % "emsPassword") "emsPassword=XXX" 
+      (.startsWith % "close-password") "close-password=XXX"
+      :else %) 
+    (clojure.string/split setup #"\n")))
   )
 
 

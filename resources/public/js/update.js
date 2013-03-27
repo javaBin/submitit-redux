@@ -42,7 +42,7 @@ function UpdateCtrl($scope,$http) {
     $scope.failureError = false;
     $scope.talkAddress = false;
     $scope.needPassword = false;
-    
+
     $scope.tagList = [];
 
     var talkid = $.urlParam("talkid");
@@ -106,7 +106,10 @@ function UpdateCtrl($scope,$http) {
 
                         }).
                         error(function(data, status, headers, config) {
-                            console.log("some error occured");
+                            console.log("Could not load talk");
+                            $scope.showMain = false;
+                            $scope.failureError = "Could not find a talk with this id"
+                            $scope.showFailure = true;
                         });
                     
                 }

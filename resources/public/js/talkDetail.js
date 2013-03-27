@@ -4,6 +4,8 @@ $.urlParam = function(name){
 }
 
 function TalkDetailCtrl($scope,$http) {
+	$scope.showMain = true;
+	$scope.showError = false;
 	var givenId = $.urlParam("talkid");
 	var jsonurl = "talkJson?talkid=" + givenId;
 
@@ -13,8 +15,9 @@ function TalkDetailCtrl($scope,$http) {
   		success(function(data, status, headers, config) {
   			$scope.talkData = data;
   		}).
-  		error(function(data, status, headers, config) {
-		    console.log("some error occured");
+  		error(function(data, status, headers, config) {		    
+  			$scope.showMain = false;
+			$scope.showError = true;
 	  	});
 
 	
