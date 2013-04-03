@@ -389,7 +389,7 @@
   )
 
 (defn replace-me [s text replace-with]
-  (let [index (.indexOf s text)]
+  (let [index (if (or (nil? s) (nil? text)) -1 (.indexOf s text))]
   (if (= -1 index) s (replace-me (str (.substring s 0 index) replace-with (.substring s (+ index (count text)))) text replace-with)
   ))
   )
