@@ -388,6 +388,12 @@
     )
   )
 
+(defn replace-me [s text replace-with]
+  (let [index (.indexOf s text)]
+  (if (= -1 index) s (replace-me (str (.substring s 0 index) replace-with (.substring s (+ index (count text)))) text replace-with)
+  ))
+  )
+
 (defn replace-vector [generate-mail-text template value-vector result]
   (if (empty? value-vector)
     result
@@ -414,7 +420,7 @@
        (handle-arr 
         (handle-template generate-mail-text template tkey tvalue) 
         tkey tvalue) 
-       (re-pattern (str "%" tkey "%")) tvalue)
+       (re-pattern (str "%" tkey "%")) (replace-me (replace-me tvalue "$" "&#36;") "&#36;" "\\$"))
       (dissoc value-map tkey))
     )
   )
