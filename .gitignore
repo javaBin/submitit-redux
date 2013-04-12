@@ -7,3 +7,9 @@
 /checkouts
 /.lein-deps-sum
 target/
+/.lib
+.idea
+.idea_modules
+*.iml
+*.ipr
+config
