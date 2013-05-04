@@ -58,5 +58,6 @@
 
 (deftest validate-speaker-test
 	(is (= "Speaker name is required" (validate-speaker-input [{"speakerName" "a" "email" "a@a.com" "bio" "bioa"} {"speakerName" "" "email" "b@a.com" "bio" "biob"}])))
+    (is (= "Speakers must have different email" (validate-speaker-input [{"speakerName" "a" "email" "a@a.com" "bio" "bioa"} {"speakerName" "b" "email" "a@a.com" "bio" "biob"}])))
 	(is (nil? (validate-speaker-input [{"speakerName" "a" "email" "a@a.com" "bio" "bioa"} {"speakerName" "a" "email" "b@a.com" "bio" "biob"}])))	
 )

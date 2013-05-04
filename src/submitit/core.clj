@@ -434,7 +434,7 @@
   (or (not para) (= "" para))
   )
 
-(defn validate-speaker-input [speakers]
+(defn validate-speaker-fields [speakers]
   (if (empty? speakers) nil
     (let [speaker (first speakers) errormsg (cond 
       (para-error? (speaker "speakerName")) "Speaker name is required"
@@ -442,8 +442,20 @@
       (para-error? (speaker "bio")) "Speaker bio"      
       :else nil)
       ]
-      (if errormsg errormsg (validate-speaker-input (rest speakers)))
+      (if errormsg errormsg (validate-speaker-fields (rest speakers)))
       )
+    )
+  )
+
+(defn validate-unique-email [speakers]
+  (let [all-mails (map #(% "email") speakers)]
+    (if (= (count all-mails) (count (set all-mails))) nil "Speakers must have different email")
+  )
+  )
+
+(defn validate-speaker-input [speakers]
+  (let [speak-field-error (validate-speaker-fields speakers)]
+    (if (nil? speak-field-error) (validate-unique-email speakers) speak-field-error)
     )
   )
 
@@ -469,6 +481,7 @@
     (and (not (nil? close-time)) (< 0 (.compareTo (time-now) close-time)))
   )
 )
+
 
 
 (defn validate-input [talk]
