@@ -55,3 +55,8 @@
 				  time-now (fn [] "20130116101523")]
 		(is (not (need-submit-password?)) "Password not needed not closed"))
 )
+
+(deftest validate-speaker-test
+	(is (= "Speaker name is required" (validate-speaker-input [{"speakerName" "a" "email" "a@a.com" "bio" "bioa"} {"speakerName" "" "email" "b@a.com" "bio" "biob"}])))
+	(is (nil? (validate-speaker-input [{"speakerName" "a" "email" "a@a.com" "bio" "bioa"} {"speakerName" "a" "email" "b@a.com" "bio" "biob"}])))	
+)
