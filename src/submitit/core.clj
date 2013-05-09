@@ -87,11 +87,25 @@
   (let [pair (split x #"=")] [(keyword (first pair)) (second pair)])
   )
 
-(defn get-setup-filename []
-  (let [filen (java.lang.System/getenv "SUBMITIT_SETUP_FILE")]
+(defn read-system-enviroment-val [valkey]
+  (let [filen (java.lang.System/getenv valkey)]
   (if (and filen (not= filen "")) filen
-    (java.lang.System/getProperty "SUBMITIT_SETUP_FILE")
-  )))
+    (java.lang.System/getProperty valkey)
+  ))
+  )
+
+(defn get-setup-filename []
+  (read-system-enviroment-val "SUBMITIT_SETUP_FILE")
+)
+
+(defn frontend-develop-mode? [] 
+  (if (= (java.lang.System/getenv "SUBMITIT_FRONTEND_MODE") "true")
+    (do 
+      (println "WARNING! Running in frontend development mode")
+      true)
+    false
+  ))
+
 
 (defn read-enviroment-variables []
   (let [filename (get-setup-filename)]
@@ -105,6 +119,7 @@
   )
 
 (defn read-setup [keyval]
+  (if (frontend-develop-mode?) nil
   (if (empty? @setupenv) 
     (let [setup-map (read-enviroment-variables)]
       (if setup-map
@@ -118,7 +133,7 @@
     )
     (@setupenv keyval)
   )
-  )
+  ))
 
 (defn create-mail-sender [subject message]
   (if (= "true" (read-setup :mailSsl))
@@ -653,6 +668,7 @@
 
 
 (defpage [:get "/talkJson"] {:as talkd}
+  (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
   (let [decoded-url (decode-string (talkd :talkid))] 
   (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) lastmod ((get-result :headers) "last-modified") speaker-list (speakers-from-talk decoded-url)]
     (generate-string
@@ -671,7 +687,7 @@
       :lastModified lastmod
       :speakers speaker-list
     })
-  ))
+  )))
   )
 
 

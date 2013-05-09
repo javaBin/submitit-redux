@@ -32,6 +32,18 @@ emsUser: User to use ems
 emsPassword: Password to ems
 photoCopyDir: If present a copy of all photos will be copied here
 
+## Frontend developer mode
+Frontend developer mode can be used to debug frontend pages. The server will only return dummy data.
+
+Setup:
+1. Install leiningen (https://github.com/technomancy/leiningen)
+2. Set system variable SUBMITIT_FRONTEND_MODE to true (export SUBMITIT_FRONTEND_MODE=true)
+3. lein run
+
+You will no have the following pages availible:
+http://localhost:8080/index.html
+http://localhost:8080/talkDetail.html
+
 ## License
 
 Copyright (C) 2013 javaBin

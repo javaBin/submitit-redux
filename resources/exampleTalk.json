@@ -1,0 +1,39 @@
+{
+    "abstract": "Dette er abstractet", 
+    "addKey": "dfgdf", 
+    "equipment": "", 
+    "expectedAudience": "Developers\nArchitects\nSystem Responsibles", 
+    "highlight": "Highlight om noe", 
+    "language": "no", 
+    "lastModified": "Fri, 12 Apr 2013 09:55:54 GMT", 
+    "level": "intermediate", 
+    "outline": "Here is the outline", 
+    "presentationType": "presentation", 
+    "speakers": [
+        {
+            "bio": "Jobber hos noen", 
+            "dummyId": "XX", 
+            "email": "a@a.com", 
+            "givenId": "fdghdfg", 
+            "lastModified": "Fri, 12 Apr 2013 09:55:54 GMT", 
+            "speakerName": "Speaker One", 
+            "zipCode": "1088"
+        }, 
+        {
+            "bio": "Jobber hos noen jeg og", 
+            "dummyId": "XX", 
+            "email": "b@a.com", 
+            "givenId": "fgdfg", 
+            "lastModified": "Fri, 12 Apr 2013 09:55:54 GMT", 
+            "speakerName": "Speaker two", 
+            "zipCode": "1475"
+        }
+    ], 
+    "talkTags": [
+        "Architecture in practice", 
+        "Enterprise", 
+        "Experience report", 
+        "Craftsmanship and Tools"
+    ], 
+    "title": "Dummy foredrag"
+}
