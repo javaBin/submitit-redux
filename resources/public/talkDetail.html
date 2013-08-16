@@ -4,6 +4,7 @@
 	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/talkDetail.js"></script>
 	
   	<link href="css/bootstrap.min.css" rel="stylesheet"></link>
@@ -40,8 +41,9 @@
 				<legend>Post code</legend>
 				<p>{{speaker.zipCode}}</p>
 				<legend>Photo</legend>
-				<p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{readpic(speaker.picture)}}"/>				
-                </p>   
+				<p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{picurl(speaker.email)}}"/>				
+                </p>
+                <p>Photo is fetched from gravatar.com based on email ({{speaker.email}})</p>   
 			</div>
 			<legend>Update talk</legend>
 			<a href="index.html?talkid={{talkData.addKey}}">Update your talk</a>

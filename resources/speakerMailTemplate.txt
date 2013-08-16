@@ -2,7 +2,6 @@ Thank you for submitting your presentation titled "%title%".
 
 %talkmess%
 
-(If you have uploaded a picture you can review this at the given page)
 
 Best regards,
 

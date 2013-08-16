@@ -206,4 +206,13 @@ function UpdateCtrl($scope,$http) {
         return false;
     }
 
+    $scope.picurl = function(email) {
+        if (email) {
+            var res =  get_gravatar(email);
+            return res;
+        }
+        
+    };  
+
+
 }

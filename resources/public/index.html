@@ -11,6 +11,7 @@
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700' rel='stylesheet' type='text/css'>
 
   <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/update.js"></script>
 </head>
 <body ng-controller="UpdateCtrl">
@@ -224,8 +225,8 @@
               <legend>Picture  <span class="label label-important">Public</span></legend>
 
               <div class="row span6">
-                <iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
-                </iframe>
+                <p><img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{picurl(speaker.email)}}"/><p>
+                <p>Photo is fetched from gravatar.com based on email ({{speaker.email}})</p> 
               </div>
 
               <legend>Postcode <span class="label label-info">Optional</span></legend>
