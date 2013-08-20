@@ -3,8 +3,6 @@ $.urlParam = function(name){
     return results ? results[1] || 0 : 0;
 }
 
-
-
 function TalkDetailCtrl($scope,$http) {
 	$scope.showMain = true;
 	$scope.showError = false;
@@ -43,12 +41,11 @@ function TalkDetailCtrl($scope,$http) {
 		return res;
 	};
 
-	$scope.picurl = function(email) {
-		if (email) {
-			var res =  get_gravatar(email);
-			return res;
+	$scope.readpic = function(picsource) {
+		if (picsource) {
+			return "speakerPhoto?photoid=" + picsource;
 		}
 		
-	};	
+	};
 
 }

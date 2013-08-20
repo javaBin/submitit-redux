@@ -320,6 +320,19 @@
     )
   )
 
+(defn read-picture [address]
+    (let [connection (.openConnection (new java.net.URL address))]
+      (.setRequestMethod connection "GET")
+      (.addRequestProperty connection "content-type" "image/jpeg")
+      (let [author (create-encoded-auth) ]
+        (if author (.addRequestProperty connection "Authorization" author))
+        )
+      (.connect connection)
+      (let [reader (.getInputStream connection) bytearr (org.apache.commons.io.IOUtils/toByteArray reader)]
+          (.close reader)
+          (org.apache.commons.codec.binary.Base64/encodeBase64String bytearr)
+      )))
+
 
 (defn submit-speakers-to-talk [speakers postaddr]
   (doseq [speak speakers]
@@ -554,6 +567,11 @@
   )
   
 
+(defn fetch-picture [aspeak]
+  (let [picsrc (read-picture (str (aspeak "href") "/photo"))]
+    (str "data:image/jpeg;base64," (.substring picsrc (.indexOf picsrc "/9j/")))
+  )
+  )
 
 
 
@@ -562,6 +580,20 @@
   (redirect (if (attrs :talkid) (str "talkDetail.html?talkid=" (attrs :talkid)) "index.html"))  
   )
 
+(defpage [:get "/savedpic"] {:as param}
+  (noir.response/content-type "image/jpeg"
+  (new java.io.FileInputStream (new java.io.File (decode-string (param :picid)))))
+)
+
+(defpage [:get "/speakerPhoto"] {:as param}    
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
+      (.setRequestMethod connection "GET")
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      (noir.response/content-type (.getContentType connection)
+      (.getInputStream connection))
+    )
+)
 
 (defn setup-str [setup]
   (clojure.string/join "\n" (map 
@@ -619,7 +651,11 @@
       :zipCode (encode-spes-char (val-from-data-map anitem "zip-code"))
       :givenId (encode-string (anitem "href"))
       :dummyId "XX"      
-    }    
+    }
+    (let [photoloc (first (filter #(= "photo" (% "rel")) ((first (((parse-string (speaker-details :body)) "collection") "items")) "links")))]
+                  (if photoloc 
+                    {:picture (encode-string (photoloc "href"))} 
+                    {})) 
     (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     ))) 
     (((parse-string ((get-talk (str decoded-talk-url "/speakers")) :body)) "collection") "items")))
@@ -686,6 +722,59 @@
       (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out))))  
   )
+
+(defn to-byte-array [f] 
+  (with-open [input (new java.io.FileInputStream f)
+              buffer (new java.io.ByteArrayOutputStream)]
+    (clojure.java.io/copy input buffer)
+    (.toByteArray buffer)))
+
+
+(defn upload-form [message speaker-key dummy-key]
+  (html5 
+    [:body
+    (if message [:p message])
+    [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
+      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
+      [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
+      [:input {:type "submit" :value "Upload File"}]    
+    ]]
+  )
+
+  )
+
+
+(defpage [:get "/uploadPicture"] {:as paras}
+  (upload-form nil (paras :speakerid) (paras :dummyKey))
+  )
+
+(defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
+  (println "***")
+  (println filehandler)
+  (println speakerKey)
+  (println dummyKey)
+  (println "***")
+;  (println (type (filehandler :tempfile)))
+;  (println "***")
+;  (another-add-photo (str (decode-string speakerKey) "/photo") (to-byte-array (photo-map :tempfile)) filehandler)
+
+  (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
+    (cond 
+      (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey)
+      (not= "XX" dummyKey) (do 
+          (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
+          (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
+        )
+      :else (do 
+        (another-add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)        
+        (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey))
+    )
+
+  
+  )
+)
+
 
 
 (defn -main [& m]
