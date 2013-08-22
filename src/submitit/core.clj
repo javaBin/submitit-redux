@@ -190,10 +190,11 @@
   )
 
 
-(defn submit-talk-json [talk]
+(defn submit-talk-json 
+  ([talk state]
   (generate-string
   {:template {
-    :data [
+    :data (vec (remove nil? [
       {:name "title" :value (talk "title")}
       {:name "level" :value (talk "level")}
       {:name "format" :value (talk "presentationType")}
@@ -204,9 +205,15 @@
       {:name "equipment" :value (talk "equipment")}
       {:name ems-lang-id :value (talk "language")}
       {:name "keywords" :array (talk "talkTags")}
-    ]
+      (if state {:name "state" :value state})
+    ]))
     }})
   )
+  ([talk] (submit-talk-json talk nil))
+  )
+
+
+
 
 
 
@@ -374,10 +381,15 @@
    
   ))
 
+(defn read-state [talk-address]
+  ((first (filter (fn [value] (= "state" (value "name"))) ((first (get-in (parse-string ((get-talk talk-address) :body)) ["collection" "items"])) "data"))) "value")
+   )
+
+
 (defn communicate-talk-to-ems [talk]
   (try 
   (if (talk "addKey")
-    (let [put-result (update-talk (submit-talk-json talk) (decode-string (talk "addKey")) (talk "lastModified"))]
+    (let [put-result (update-talk (submit-talk-json talk (read-state (decode-string (talk "addKey")))) (decode-string (talk "addKey")) (talk "lastModified"))]
       (println "Update-res: " put-result)
       (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
