@@ -12,6 +12,8 @@
 	<div ng-controller="TalkDetailCtrl">
 		<div class="offset1 span10" ng-show="showMain">
 			<h1>Talk: "{{talkData.title}}"</h1>
+			<a href="index.html?talkid={{talkData.addKey}}" class="btn btn-large btn-primary btn-block">Update your talk</a>
+			<div style="clear: both; height: 50px">&nbsp;</div>
 			<legend>Abstract</legend>
 			<p>{{talkData.abstract}}</p>
 			<legend>Presentation format</legend>
@@ -44,8 +46,10 @@
                 </p>   
 			</div>
 			<legend>Update talk</legend>
-			<a href="index.html?talkid={{talkData.addKey}}">Update your talk</a>
+			<p>You can update your talk at any time. Please note that it might take some time (roughly 5 minutes) before your changes appear on the program, as there is a bit of caching involved. Changes to pictures will take up to an hour.</p>
+			<a href="index.html?talkid={{talkData.addKey}}" class="btn btn-large btn-primary btn-block">Update your talk</a>
 		</div>
+		<div style="clear: both; height: 50px">&nbsp;</div>
 		<div ng-show="showError">
 			<h1>Sorry this did not work</h1>
 			Could not find the talk with this id.

@@ -70,15 +70,27 @@
           </ul>
         </div>
 
-        <legend>Abstract  <span class="label label-important">Public</span></legend>
+        <legend>Summary  <span class="label label-important">Public</span></legend>
+        <div class="row">
+          <div class="span6">
+            <textarea rows="3" required="required" class="span6 talkInput" id="highlightInput" ng-model="talk.highlight"></textarea>
+          </div>
+          <ul class="well span6">
+            <li>Describe the content of your talk in a few sentences.</li>
+            <li>The summary will be used as an introduction to your talk in the program.</li>
+            <li>It might also be used in printed material, on Twitter, at Vimeo etc.</li>
+          </ul>
+        </div>
+
+        <legend> Full Abstract  <span class="label label-important">Public</span></legend>
         <div class="row">
           <div class="span6">
             <textarea rows="8" required="required" class="span6 talkInput" id="abstractInput" ng-model="talk.abstract"></textarea>
           </div>
           <ul class="well span6">
             <li>Give a concise description of the contents and goals of your talk.</li>
-            <li>The abstract will be published in the conference programme.</li>
-            <li>It should not be longer than 300 words.</li>
+            <li>Don't repeat the summary here, as the summary will be shown above this abstract in the program.</li>
+            <li>It should preferably not be longer than 300 words.</li>
           </ul>
         </div>
 
@@ -97,21 +109,6 @@
           </div>
         </div>
 
-        <div id="languageHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="languageHelpLabel" aria-hidden="true">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h2 id="languageHelpLabel">Language</h2>
-          </div>
-          <div class="modal-body">
-            <p>The talk can be given in Norwegian or English</p>
-            <p>The slides may be in English even if you present the talk in Norwegian.</p>
-            <p>We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          </div>
-        </div>
-
         <legend>Level  <span class="label label-important">Public</span></legend>
         <div class="row">
           <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="levelGrp">              
@@ -120,29 +117,12 @@
             <button class="btn {{activeClass(talk.level,'advanced')}}" ng-click="setLevel('advanced')">Advanced</button>
             <button class="btn {{activeClass(talk.level,'hardcore')}}" ng-click="setLevel('hardcore')">Hardcore</button>
           </div>
-          <div class="well span6">
-            More information about how we classify the talks <a href="http://jz13.java.no/speakers.html" target="_blank">can be found here</a>.
-          </div>
-        </div>
-
-        <div id="levelHelp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="levelHelpLabel" aria-hidden="true">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h2 id="levelHelpLabel">Skill levels for talks</h2>
-          </div>
-          <div class="modal-body">
-            <h3>Introductory</h3>
-            <p>A basic introduction to a subject. Assume no knowledge of the subject.</p>
-            <h3>Intermediate</h3>
-            <p>Expecting more than basic knowledge of a subject, but not yet advanced.</p>
-            <h3>Advanced</h3>
-            <p>Good knowledge of the subject.</p>
-            <h3>Hardcore</h3>
-            <p>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. Should ideally focus on a single subject, for instance "classloaders", "debugging", "bytecode generation", "the monoid"... The deeper and more hardcore, the better.</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          </div>
+          <ul class="well span6">
+            <li><strong>Introductory: </strong>A basic introduction to a subject. Assume no knowledge of the subject.</li>
+            <li><strong>Intermediate: </strong>Expecting more than basic knowledge of a subject, but not yet advanced.</li>
+            <li><strong>Advanced: </strong>Good knowledge of the subject.</li>
+            <li><strong>Hardcore: </strong>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</li>
+          </ul>
         </div>
 
         <legend>Outline</legend>
@@ -150,30 +130,20 @@
           <div class="span6">
             <textarea rows="8" required="required" class="span6 talkInput" id="outlineInput" ng-model="talk.outline"></textarea>
           </div>
-          <div class="well span6">
-            This information will be used by the program committee for reviewing the detailed contents. The outline should be a table of contents of the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.
-          </div>
+          <ul class="well span6">
+            <li>This information will be used by the program committee for reviewing the detailed contents.</li>
+            <li>The outline should be a table of contents of the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</li>
+          </ul>
         </div>
-
-        <legend>Highlight summary  <span class="label label-important">Public</span></legend>
-        <div class="row">
-          <div class="span6">
-            <textarea rows="3" required="required" class="span6 talkInput" id="highlightInput" ng-model="talk.highlight"></textarea>
-          </div>
-          <p class="well span6">
-            Description of the contents of your talk in only a few sentences. The highlight summary can be used in teaser presentations on the web prior to the conference.
-          </p>
-        </div>
-
 
         <legend>Equipment  <span class="label label-info">Optional</span></legend>
         <div class="row">
           <div class="span6">
             <textarea rows="3" class="span6 talkInput" id="equipmentInput" ng-model="talk.equipment"></textarea>
           </div>
-          <p class="well span6">
-            Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.
-          </p>
+          <ul class="well span6">
+            <li>Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.</li>
+          </ul>
         </div>
 
         <legend>Expected audience  <span class="label label-important">Public</span></legend>
