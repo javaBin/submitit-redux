@@ -16,9 +16,8 @@
     [clj-time "0.4.5"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
-  :ring {:handler submitit.core/handler}  
-  :main ^{:skip-aot true} submitit.core
+  :ring {:handler submitit.pages/handler}  
+  :main ^{:skip-aot true} submitit.pages
   :plugins [[lein-ring "0.8.2"]]
   )
 
-            
