@@ -1,19 +1,13 @@
-(ns submitit.pages (:use 
-  [submitit.core]
-  [clojure.java.io]
-	[clojure.string :only (split)]
-  [noir.core]
-  [noir.request]
-  [noir.response :only [redirect]]
-  [cheshire.core :only [generate-string parse-string]]
-  [hiccup.page-helpers :only [html5 link-to  include-js]]
+(ns submitit.pages 
+  (:use 
+    [submitit.core]
+    [noir.core]
+    [noir.request]
+    [noir.response :only [redirect]]
+    [cheshire.core :only [generate-string parse-string]]
+    [hiccup.page-helpers :only [html5]]
   )
   (:require [noir.server :as server])
-  (:require [ring.middleware.format-params :as format-params])
-  (:require [clj-http.client :as client])
-  (:require [clojure.data.codec.base64 :as b64])
-  (:require [clj-time.core :only [now] :as cljtime])
-  (:require [clj-time.format :only [formatter parse unparse] :as format-time])
 
 )
 

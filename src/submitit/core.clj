@@ -5,15 +5,15 @@
   [noir.request]
   [noir.response :only [redirect]]
   [cheshire.core :only [generate-string parse-string]]
-  [hiccup.page-helpers :only [html5 link-to  include-js]]
+  [hiccup.page-helpers :only [html5]]
   )
-  (:require [noir.server :as server])
   (:require [ring.middleware.format-params :as format-params])
   (:require [clj-http.client :as client])
   (:require [clojure.data.codec.base64 :as b64])
   (:require [clj-time.core :only [now] :as cljtime])
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
-
+  (:require noir.util.crypt)
+  (:require noir.session)
 )
 
 
@@ -59,7 +59,6 @@
 (defn tag-list[]
   (parse-string (slurp (clojure.java.io/resource "tagCollection.json")))
   )
-
 
 
 (defn encode-string [x] 
@@ -175,10 +174,6 @@
   )
   ([talk] (submit-talk-json talk nil))
   )
-
-
-
-
 
 
 (defn post-talk [json-talk address]
@@ -610,9 +605,6 @@
     ]]
   )
 
-  )
-
-
-
+)
 
 
