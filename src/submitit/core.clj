@@ -14,6 +14,7 @@
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
   (:require noir.util.crypt)
   (:require noir.session)
+  (:require [collection-json.core :as cj])
 )
 
 
@@ -62,11 +63,11 @@
 
 
 (defn encode-string [x] 
-  (apply str (map char (b64/encode (.getBytes x))))
+  (apply str (map char (b64/encode (.getBytes x "utf-8"))))
   )
 
 (defn decode-string [x]
-  (apply str (map char (b64/decode (.getBytes x))))
+  (apply str (map char (b64/decode (.getBytes x "utf"))))
   )
 
 (defn keyval [x]
@@ -151,6 +152,16 @@
     )
 	)
 
+(defn submit-talk-json2 [talk state]
+  (cj/create-template 
+    (clojure.set/rename-keys (if state (assoc talk :state state) talk) 
+      {
+        "presentationType" "format", 
+        "abstract" "body", 
+        "highlight" "summary", 
+        "expectedAudience" "audience", 
+        "language" ems-lang-id, 
+        "talkTags" "keywords"})))
 
 
 (defn submit-talk-json 
@@ -174,6 +185,21 @@
   )
   ([talk] (submit-talk-json talk nil))
   )
+
+(defn post-template [template address]
+  (println "Posting to " address " : " template)
+
+  (client/post address  
+    (merge 
+      {    
+      :body (str template)
+      :body-encoding "UTF-8"
+      :content-type "application/vnd.collection+json"
+      } (if (read-setup :emsUser) {:basic-auth [(read-setup :emsUser) (read-setup :emsPassword)]} {})
+    )
+  )
+)
+
 
 
 (defn post-talk [json-talk address]
@@ -353,7 +379,7 @@
       (submit-speakers-to-talk (talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
     )
-    (let [post-result (post-talk (submit-talk-json talk) (read-setup :emsSubmitTalk))]
+    (let [post-result (post-template (submit-talk-json2 talk nil) (read-setup :emsSubmitTalk))]
       (println "Post-res: " post-result)
       (submit-speakers-to-talk (talk "speakers") (speaker-post-addr post-result))
       {:resultid (encode-string ((post-result :headers) "location"))}
@@ -571,7 +597,39 @@
     ))) 
     (((parse-string ((get-talk (str decoded-talk-url "/speakers")) :body)) "collection") "items")))
 )
+
+(defn- to-speaker [item]
+  (let [data (cj/data item)] (merge 
+  {
+    :speakerName (encode-spes-char (:name data))
+    :email (encode-spes-char (:email data))
+    :bio (encode-spes-char (:bio data))
+    :zipCode (encode-spes-char (:zip-code data))
+    :givenId (encode-string (str (:href item)))
+    :dummyId "XX"
+  }
+  (let [photoloc (:href (cj/link-by-rel "photo"))]
+    (if photoloc 
+      {:picture (encode-string (str photoloc))} 
+      {}))   
+  ))
+)
+
+(defn fetch-item [href]
+  (let [collection (get-talk (str href)) last-mod ((collection :headers) "last-modified")]
+    (merge 
+      (cj/head-item (cj/parse-collection (:body collection)))
+      (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
+    )))
+
   
+(defn speakers-from-talk2 [decoded-talk-url]
+  (let [talk (fetch-item decoded-talk-url) 
+        links (:href (cj/links-by-rel talk "speaker item"))
+        speakers (map (fn [href] (fetch-item href)) links)] 
+    (map to-speaker speakers)))
+
+
 
 (defn gen-captcha-text []
   (->> #(rand-int 26) (repeatedly 6) (map (partial + 97)) (map char) (apply str)))
