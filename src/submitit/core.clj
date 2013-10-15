@@ -67,7 +67,7 @@
   )
 
 (defn decode-string [x]
-  (apply str (map char (b64/decode (.getBytes x "utf"))))
+  (apply str (map char (b64/decode (.getBytes x "utf-8"))))
   )
 
 (defn keyval [x]
@@ -628,8 +628,6 @@
         links (:href (cj/links-by-rel talk "speaker item"))
         speakers (map (fn [href] (fetch-item href)) links)] 
     (map to-speaker speakers)))
-
-
 
 (defn gen-captcha-text []
   (->> #(rand-int 26) (repeatedly 6) (map (partial + 97)) (map char) (apply str)))
