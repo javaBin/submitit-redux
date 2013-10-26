@@ -1,6 +1,9 @@
 (ns submitit.pages 
   (:use 
+    [submitit.base]    
+    [submitit.cj]
     [submitit.core]
+    [submitit.email]
     [noir.core]
     [noir.request]
     [noir.response :only [redirect]]
@@ -70,7 +73,7 @@
         (if error-response error-response
           (let [talk-result (communicate-talk-to-ems talk)]
             (println "TALKRES:" talk-result)
-            (send-mail (speaker-mail-list talk) (str "Confirmation " (if (talk "addKey") "on updating" "of") " your JavaZone 2013 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
+            (send-mail (speaker-mail-list talk) (str "Confirmation " (if (talk "add ") "on updating" "of") " your JavaZone 2013 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
               (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
             (generate-string (merge talk-result 
               (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
@@ -90,9 +93,8 @@
 )
 
 (defpage [:get "/speakerPhoto"] {:as param}    
-    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
-      (.setRequestMethod connection "GET")
-      (if author (.addRequestProperty connection "Authorization" author))
+    (let [connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
+      (.setRequestMethod connection "GET")      
       (.connect connection)
       (noir.response/content-type (.getContentType connection)
       (.getInputStream connection))
@@ -125,25 +127,24 @@
 (defpage [:get "/talkJson"] {:as talkd}
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
   (let [decoded-url (decode-string (talkd :talkid))] 
-  (let [get-result (get-talk decoded-url) talk-map (parse-string (get-result :body)) lastmod ((get-result :headers) "last-modified") speaker-list (speakers-from-talk decoded-url)]
+  (let [item (fetch-item decoded-url) speaker-list (speakers-from-item item)]
     (generate-string
-    {
-      :presentationType (encode-spes-char (tval talk-map "format"))
-      :title (encode-spes-char(tval talk-map "title"))
-      :abstract (encode-spes-char(tval talk-map "body"))
-      :language (encode-spes-char(tval talk-map ems-lang-id))
-      :level (encode-spes-char(tval talk-map "level"))
-      :outline (encode-spes-char(tval talk-map "outline"))
-      :highlight (encode-spes-char(tval talk-map "summary"))
-      :equipment (encode-spes-char(tval talk-map "equipment"))
-      :expectedAudience (encode-spes-char (tval talk-map "audience"))
-      :talkTags (tarrval talk-map "keywords")
-      :addKey (talkd :talkid)
-      :lastModified lastmod
-      :speakers speaker-list
-    })
-  )))
-  )
+      {
+        :presentationType (item "format"),
+        :title (item "title"),
+        :abstract (item "body"),
+        :language (item "lang"),
+        :level (item "level"),
+        :outline (item "outline"),
+        :highlight (item "summary"),
+        :equipment (item "equipment")
+        :expectedAudience (item "audience")
+        :talkTags (item "keywords")
+        :addKey (talkd :talkid)
+        :lastModified (item :lastModified)
+        :speakers speaker-list
+      }      
+  )))))
 
 (defpage [:get "/loadCaptcha"] {:as noting}
   (let [gen-cap (build-captcha)]
@@ -159,6 +160,20 @@
       (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out))))  
   )
+
+(defn upload-form [message speaker-key dummy-key]
+  (html5 
+    [:body
+    (if message [:p message])
+    [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
+      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
+      [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
+      [:input {:type "submit" :value "Upload File"}]    
+    ]]
+  )
+
+)
 
 (defpage [:get "/uploadPicture"] {:as paras}
   (upload-form nil (paras :speakerid) (paras :dummyKey))
@@ -182,7 +197,7 @@
           (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
         )
       :else (do 
-        (another-add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)        
+        (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)        
         (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey))
     )
 
