@@ -1,11 +1,12 @@
 (ns submitit.base
-  (:use [clojure.string :only (split)]))
+  (:use [clojure.string :only (split)])
+  (:require [clojure.java.io :as io]))
 
 (def setupenv (ref {}))
 
-(defn keyval [x]
-  (let [pair (split x #"=")] [(keyword (first pair)) (second pair)]))
-
+(defn setup-str []
+  (let [m (for [x (assoc @setupenv :emsPassword "XXX" )] (str (name (first x)) "=" (second x)))]
+    (clojure.string/join "\n" m)))
 
 (defn frontend-develop-mode? [] 
   (if (= (java.lang.System/getenv "SUBMITIT_FRONTEND_MODE") "true")
@@ -25,12 +26,15 @@
 
 
 (defn read-enviroment-variables []
-  (let [filename (get-setup-filename)]
-  (if (and filename (.exists (new java.io.File filename)))
-    (apply hash-map (flatten (map keyval (filter #(not (.startsWith % "#")) (clojure.string/split-lines (slurp filename))))))
-    (let [res nil]
-    (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE.")
-    res))))
+  (let [filename (get-setup-filename) file (io/file filename)]
+  (if (and filename (.exists file))    
+    (let [props (new java.util.Properties)] 
+      (.load props (io/reader file))
+      (into {}
+        (for [[k v] props]
+          [(keyword k) v]))) 
+      ;;(hash-map (map (fn [kv] [(keyword (key kv)) (val kv)]) props)))
+    (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE."))))
 
 (defn read-setup [keyval]
   (if (frontend-develop-mode?) nil

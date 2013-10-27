@@ -1,6 +1,14 @@
 (ns submitit.email
   (:use [submitit.base]))
 
+(defn generate-mail-talk-mess [talk-result]
+  (if (talk-result :submitError)
+    (str "Due to an error you can not review your talk at this time. We will send you another email when we have fixed this. Error " (talk-result :submitError))
+    (str "You can access the submitted presentation at " (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))))
+
+
+(defn speaker-mail-list [talk]
+  (map #(% "email") (talk "speakers")))
 
 (defn handle-arr [template tkey tvalue]
   (if (re-find (re-pattern (str "%a" tkey "%")) template)
@@ -23,7 +31,7 @@
       )  
   (doto (org.apache.commons.mail.SimpleEmail.)
       (.setHostName (read-setup :hostname))
-      (.setSmtpPort (java.lang.Integer/parseInt (read-setup :smtpport)))
+      (.setSmtpPort (Integer/parseInt (read-setup :smtpport)))
       (.setFrom (read-setup :mailFrom) "Javazone program commitee")
       (.setSubject subject)
       (.setMsg message)

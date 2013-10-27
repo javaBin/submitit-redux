@@ -4,7 +4,7 @@
   (:require [collection-json.core :as cj]))
 
 (defn talk-to-template [talk state]
-  (cj/create-template (merge {
+  (let [t (cj/create-template (merge {
     "title" (talk "title")
     "level" (talk "level")
     "format" (talk "presentationType")
@@ -14,7 +14,7 @@
     "equipment" (talk "equipment")
     "lang" (talk "language")
     "keywords" (talk "talkTags")      
-  } (if state {"state" state} {}))))
+  } (if state {"state" state} {})))] (println t) t))
 
 (defn speaker-to-template [speaker]
   (cj/create-template 
@@ -26,8 +26,8 @@
       }))
 
 
-(defn setup-login [] (if (contains? :username @setupenv)  
-  { :basic-auth [(:username @setupenv) (:password @setupenv)] } {}))
+(defn setup-login [] (if (contains? @setupenv :emsUser)  
+  { :basic-auth [(:emsUser @setupenv) (:emsPassword @setupenv)] } {}))
 
 (defn get-collection [uri]
   (let [res (client/get uri (merge {
@@ -38,8 +38,9 @@
     res))
 
 (defn- setup-write-request [template lm]
+  (println template)
   (merge {
-      :body template,
+      :body (str template),
       :body-encoding "UTF-8",
       :content-type "application/vnd.collection+json"
     } 

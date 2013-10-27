@@ -28,28 +28,12 @@
     (.replaceAll "&aring;" "å")
     (.replaceAll "&Aring;" "Å")))
 
-
-(defn do-to-map [amap do-func]
-  (cond 
-    (map? amap)
-      (reduce merge (map (fn [[akey aval]] {akey (do-to-map aval do-func)}) amap))
-    (vector? amap) (vec (map (fn[item] (do-to-map item do-func)) amap))
-    :else (do-func amap)))
-
-(defn clean-html [x]
-  (encode-spes-char (org.jsoup.Jsoup/clean x (org.jsoup.safety.Whitelist/none))))
-
-(defn clean-input-map [input-map]
-  (do-to-map input-map clean-html))
-
 (def random-salt (noir.util.crypt/gen-salt))
 
 (def speaker-dummy-id (ref 0))
 
-
 (defn tag-list[]
   (parse-string (slurp (clojure.java.io/resource "tagCollection.json"))))
-
 
 (defn encode-string [x] 
   (apply str (map char (b64/encode (.getBytes x "utf-8")))))
@@ -121,29 +105,34 @@
   (speakers-from-item (fetch-item uri)))
 
 
-(defn read-state [talk-address]
-  ((first (filter (fn [value] (= "state" (value "name"))) ((first (get-in (parse-string ((get-collection talk-address) :body)) ["collection" "items"])) "data"))) "value"))
-
+(defn read-state [uri]
+  (let [data (cj/data (fetch-item uri))]
+    (:state data)))
 
 (defn communicate-talk-to-ems [talk]
-  (try 
+  ;(try 
   (if (talk "addKey")
-    (let [put-result (put-template (talk-to-template talk (read-state (decode-string (talk "addKey")))) (decode-string (talk "addKey")) (talk "lastModified"))]
+    (let [
+      href (decode-string (talk "addKey"))
+      template (talk-to-template talk (read-state href))
+      put-result (put-template href template (talk "lastModified")) ]
+      
       (println "Update-res: " put-result)
       (add-speakers talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
       {:resultid (talk "addKey")}
     )
-    (let [post-result (post-template (talk-to-template talk nil) (read-setup :emsSubmitTalk))]
+    (let [
+      href (read-setup :emsSubmitTalk)
+      template (talk-to-template talk nil)
+      post-result (post-template href template) ]
       (println "Post-res: " post-result)
       (add-speakers (talk "speakers") (:location post-result))
-      {:resultid (encode-string ((post-result :headers) "location"))}
-    )  
-  (catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
-    (println errormsg)
-    {:submitError errormsg}))))
+      {:resultid (encode-string (:location post-result))}
+    ))  
+  ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
+  ;  (println errormsg)
+  ;  {:submitError errormsg}))))
 
-(defn speaker-mail-list [talk]
-  (map #(% "email") (talk "speakers")))
 
 (defn para-error? [para]
   (or (not para) (= "" para)))
@@ -202,11 +191,6 @@
   )]
   (if error-msg (generate-string {:errormessage error-msg}) nil)))
 
-(defn generate-mail-talk-mess [talk-result]
-  (if (talk-result :submitError)
-    (str "Due to an error you can not review your talk at this time. We will send you another email when we have fixed this. Error " (talk-result :submitError))
-    (str "You can access the submitted presentation at " (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))))
-
 (defn captcha-error? [answer fact]
   (not= (noir.util.crypt/encrypt random-salt answer) fact))
 
@@ -214,13 +198,6 @@
   (let [picsrc (read-picture (str (aspeak "href") "/photo"))]
     (str "data:image/jpeg;base64," (.substring picsrc (.indexOf picsrc "/9j/")))))
 
-(defn setup-str [setup]
-  (clojure.string/join "\n" (map 
-    #(cond 
-      (.startsWith % "emsPassword") "emsPassword=XXX" 
-      (.startsWith % "close-password") "close-password=XXX"
-      :else %) 
-    (clojure.string/split setup #"\n"))))
 
 (defn gen-captcha-text []
   (->> #(rand-int 26) (repeatedly 6) (map (partial + 97)) (map char) (apply str)))
