@@ -11,7 +11,8 @@
     [hiccup.page-helpers :only [html5]]
   )
   (:require [noir.server :as server])
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io])
+  (:require [collection-json.core :as cj]))
 
 (def handler (server/gen-handler {:mode :dev
                                   :ns 'submitit.core}))
@@ -48,7 +49,7 @@
 (defpartial page-header[] 
   [:head 
   [:link {:href "css/bootstrap.min.css" :rel "stylesheet"}]
-  [:script {:src "js/jquery-1.7.2.js"}]
+  [:script {:src "js/jquery-¸.7.2.js"}]
   [:script {:src "js/bootstrap.min.js"}]
     ])
 
@@ -117,7 +118,7 @@
         :expectedAudience (item "audience")
         :talkTags (item "keywords")
         :addKey (talkd :talkid)
-        :addSpeakers (encode-string (str (:href (link-by-rel item "speaker collection"))))
+        :addSpeakers (encode-string (str (:href (cj/link-by-rel item "speaker collection"))))
         :lastModified (item :lastModified)
         :speakers speaker-list
       }      

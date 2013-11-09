@@ -15,7 +15,7 @@
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
   (:require noir.util.crypt)
   (:require noir.session)
-  (:require [clojure.contrib.io :only [to-byte-array]])
+  (:require [clojure.contrib.io :as cio])
   (:require [collection-json.core :as cj]))
 
 (defn encode-spes-char [value]
@@ -58,7 +58,7 @@
   (let [res (client/get href (merge {
     :accept "image/*"
     } setup-login))]
-    (to-byte-array (:body res))))
+    (cio/to-byte-array (:body res))))
 
 (defn upload-photo-to-session [speak item]
   (let [speak-photo (noir.session/get (speak "dummyId")) photo-url (:href (cj/link-by-rel "photo"))]
