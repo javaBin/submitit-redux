@@ -126,7 +126,7 @@
       post-result (post-template href template) ]
       (println "Post-res: " post-result)
       (add-speakers (talk "speakers") (:location post-result))
-      {:resultid (encode-string (:location post-result))}
+      {:resultid (encode-string (str (:location post-result) "/speakers")}
     ))  
   ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
   ;  (println errormsg)
