@@ -8,7 +8,7 @@
     [commons-codec "1.7"]
   	[noir "1.3.0-alpha10"]
   	[ring-middleware-format "0.1.1"]
-    [cheshire "4.0.3"]
+    [cheshire "5.2.0"]
     [clj-http "0.6.3"]
     [org.clojure/data.codec "0.1.0"]
     [com.google.code.maven-play-plugin.org.playframework/jj-simplecaptcha "1.1"]

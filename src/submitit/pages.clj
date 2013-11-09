@@ -77,13 +77,9 @@
   (noir.response/content-type "image/jpeg"
     (io/input-stream (io/file (decode-string (param :picid))))))
 
-(defpage [:get "/speakerPhoto"] {:as param}    
-    (let [connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
-      (.setRequestMethod connection "GET")      
-      (.connect connection)
-      (noir.response/content-type (.getContentType connection)
-      (.getInputStream connection))))
-
+(defpage [:get "/speakerPhoto"] {:as param} 
+    (let [bytes (read-picture (decode-string (param :photoid)))] 
+      (io/input-stream bytes)))
 
 (defpage [:get "/status"] {:as nothing}
   (let [setupfile (get-setup-filename)]
@@ -92,7 +88,7 @@
       [:h1 "Status"]
       [:p (str "EnvFile: '" setupfile "'")]
       [:hr]
-      (if (and setupfile (.exists (clojure.java.io/file setupfile)))
+      (if (and setupfile (.exists (io/file setupfile)))
       [:pre (setup-str )]
       [:p "Could not find setupfile"])
       [:hr]
@@ -121,6 +117,7 @@
         :expectedAudience (item "audience")
         :talkTags (item "keywords")
         :addKey (talkd :talkid)
+        :addSpeakers (encode-string (str (:href (link-by-rel item "speaker collection"))))
         :lastModified (item :lastModified)
         :speakers speaker-list
       }      

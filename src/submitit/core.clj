@@ -7,8 +7,7 @@
   [submitit.email]
   [submitit.cj]
   [noir.response :only [redirect]]
-  [cheshire.core :only [generate-string parse-string]]
-  [hiccup.page-helpers :only [html5]])
+  [cheshire.core :only [generate-string parse-string]])
   (:require [ring.middleware.format-params :as format-params])
   (:require [clj-http.client :as client])
   (:require [clojure.data.codec.base64 :as b64])
@@ -16,7 +15,7 @@
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
   (:require noir.util.crypt)
   (:require noir.session)
-  (:require [clojure.contrib.io :as cio])
+  (:require [clojure.contrib.io :only [to-byte-array]])
   (:require [collection-json.core :as cj]))
 
 (defn encode-spes-char [value]
@@ -59,7 +58,7 @@
   (let [res (client/get href (merge {
     :accept "image/*"
     } setup-login))]
-    (cio/to-byte-array (:body res))))
+    (to-byte-array (:body res))))
 
 (defn upload-photo-to-session [speak item]
   (let [speak-photo (noir.session/get (speak "dummyId")) photo-url (:href (cj/link-by-rel "photo"))]
@@ -74,9 +73,9 @@
   (doseq [speaker speakers]
     (let [template (speaker-to-template speaker)]
       (if (speaker "givenId") ;; rename that
-        (let [res (put-template template (decode-string (speaker "givenId")) (speaker "lastModified")) item (fetch-item (:location res))]
+        (let [res (put-template (decode-string (speaker "givenId")) template (speaker "lastModified")) item (fetch-item (:location res))]
           (upload-photo-to-session speaker item))
-        (let [res (post-template template href) item (fetch-item (:location res))]
+        (let [res (post-template href template) item (fetch-item (:location res))]
           (upload-photo-to-session speaker item))))))
 
 
@@ -118,7 +117,7 @@
       put-result (put-template href template (talk "lastModified")) ]
       
       (println "Update-res: " put-result)
-      (add-speakers talk "speakers") (str (decode-string (talk "addKey")) "/speakers"))
+      (add-speakers talk "speakers") (decode-string (talk "addSpeakers")))
       {:resultid (talk "addKey")}
     )
     (let [
