@@ -48,11 +48,7 @@
     (setup-login)))
 
 (defn post-template [uri template]
-  (let [res (client/post uri (setup-write-request template nil))] 
-    (if (= 201 (:status res)) { 
-      :location ((:headers res) "location"), 
-      :last-modified ((:headers res) "last-modified") 
-      })))
+  (client/post uri (setup-write-request template nil)))
 
 (defn put-template [uri template lm]
   (let [res (client/put uri (setup-write-request template lm))] 

@@ -123,11 +123,14 @@
     (let [
       href (read-setup :emsSubmitTalk)
       template (talk-to-template talk nil)
-      post-result (post-template href template) ]
+      post-result (post-template href template) 
+      session-href (:location (:headers post-result))
+      speakers-href (str session-href "/speakers")]
+      
       (println "Post-res: " post-result)
-      (add-speakers (talk "speakers") (:location post-result))
-      {:resultid (encode-string (str (:location post-result) "/speakers")}
-    ))  
+      (add-speakers (talk "speakers") speakers-href)
+      {:resultid (encode-string session-href)}
+    ))
   ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
   ;  (println errormsg)
   ;  {:submitError errormsg}))))
