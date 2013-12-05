@@ -38,7 +38,6 @@
     res))
 
 (defn- setup-write-request [template lm]
-  (println template)
   (merge {
       :body (str template),
       :body-encoding "UTF-8",
@@ -56,6 +55,7 @@
 
 (defn fetch-item [href]
   (let [collection (get-collection (str href)) last-mod ((collection :headers) "last-modified")]
+    (println "AAAAAAAAAAAHHHHHHH " collection)
     (merge 
       (cj/head-item (cj/parse-collection (:body collection)))
       (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})

@@ -61,9 +61,12 @@
     (cio/to-byte-array (:body res))))
 
 (defn upload-photo-to-session [speak item]
-  (let [speak-photo (noir.session/get (speak "dummyId")) photo-url (:href (cj/link-by-rel "photo"))]
+  (println "UploadPhoto")
+  (let [speak-photo (noir.session/get (speak "dummyId"))]
+    (println "SpeakPhoto: **" speak-photo "**")
     (if speak-photo
-      (let [ bytes (:photo-byte-arr speak-photo) 
+      (let [ photo-url (:href (cj/link-by-rel "photo"))
+             bytes (:photo-byte-arr speak-photo)
              ct (:photo-content-type speak-photo) 
              filename (:photo-filename speak-photo) ]
         (add-photo photo-url bytes ct filename)))))
@@ -73,10 +76,19 @@
   (doseq [speaker speakers]
     (let [template (speaker-to-template speaker)]
       (if (speaker "givenId") ;; rename that
-        (let [res (put-template (decode-string (speaker "givenId")) template (speaker "lastModified")) item (fetch-item (:location res))]
+        (let [res (put-template (decode-string (speaker "givenId")) template (speaker "lastModified")) item (fetch-item ((:headers res) "location"))]
           (upload-photo-to-session speaker item))
-        (let [res (post-template href template) item (fetch-item (:location res))]
-          (upload-photo-to-session speaker item))))))
+        (do
+          (println "New speaker: " template)
+          (println "Speakerhref: " href)
+        (let [res (post-template href template)]
+          (println "Photo res" res)
+          (println "+++++")
+          (if (noir.session/get (speaker "dummyId"))
+          (let [item (fetch-item ((:headers res) "location"))]
+            (println "+-+-+-+")
+          (println "Item" item)
+          (upload-photo-to-session speaker item)))))))))
 
 
 (defn- to-speaker [item]
@@ -124,10 +136,11 @@
       href (read-setup :emsSubmitTalk)
       template (talk-to-template talk nil)
       post-result (post-template href template) 
-      session-href (:location (:headers post-result))
+      session-href ((:headers post-result) "location")
       speakers-href (str session-href "/speakers")]
       
       (println "Post-res: " post-result)
+      (println "Speaker ref: " speakers-href)
       (add-speakers (talk "speakers") speakers-href)
       {:resultid (encode-string session-href)}
     ))
