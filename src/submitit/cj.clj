@@ -57,6 +57,6 @@
   (let [collection (get-collection (str href)) last-mod ((collection :headers) "last-modified")]
     (println "AAAAAAAAAAAHHHHHHH " collection)
     (merge 
-      (cj/head-item (cj/parse-collection (:body collection)))
+      (cj/head-item (cj/parse-collection (new java.io.StringReader (:body collection))))
       (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     )))

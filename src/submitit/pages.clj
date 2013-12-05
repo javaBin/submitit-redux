@@ -105,10 +105,11 @@
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
   (let [decoded-url (decode-string (talkd :talkid))] 
   (let [item (fetch-item decoded-url) speaker-list (speakers-from-item item)]
+    (println "generating resp:" item)
     (generate-string
       {
         :presentationType (item "format"),
-        :title (item "title"),
+        :title (.asString (.get (.getValue (.get (.propertyByName (item :data) "title"))))),
         :abstract (item "body"),
         :language (item "lang"),
         :level (item "level"),
