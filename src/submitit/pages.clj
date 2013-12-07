@@ -104,20 +104,23 @@
 (defpage [:get "/talkJson"] {:as talkd}
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
   (let [decoded-url (decode-string (talkd :talkid))] 
-  (let [item (fetch-item decoded-url) speaker-list (speakers-from-item item)]
+  (let [item (fetch-item decoded-url)
+       talk-data (cj/data item)
+        speaker-list (speakers-from-item item)]
+
     (println "generating resp:" item)
     (generate-string
       {
-        :presentationType (item "format"),
-        :title (.asString (.get (.getValue (.get (.propertyByName (item :data) "title"))))),
-        :abstract (item "body"),
-        :language (item "lang"),
-        :level (item "level"),
-        :outline (item "outline"),
-        :highlight (item "summary"),
-        :equipment (item "equipment")
-        :expectedAudience (item "audience")
-        :talkTags (item "keywords")
+        :presentationType (talk-data "format"),
+        :title (talk-data "title"),
+        :abstract (talk-data "body"),
+        :language (talk-data "lang"),
+        :level (talk-data "level"),
+        :outline (talk-data "outline"),
+        :highlight (talk-data "summary"),
+        :equipment (talk-data "equipment")
+        :expectedAudience (talk-data "audience")
+        :talkTags (talk-data "keywords")
         :addKey (talkd :talkid)
         :addSpeakers (encode-string (str (:href (cj/link-by-rel item "speaker collection"))))
         :lastModified (item :lastModified)
