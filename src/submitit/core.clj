@@ -19,13 +19,14 @@
   (:require [collection-json.core :as cj]))
 
 (defn encode-spes-char [value]
+  (if (nil? value) ""
   (-> value
     (.replaceAll "&aelig;" "æ")
     (.replaceAll "&Aelig;" "Æ")
     (.replaceAll "&oslash;" "ø")
     (.replaceAll "&Oslash;" "Ø")
     (.replaceAll "&aring;" "å")
-    (.replaceAll "&Aring;" "Å")))
+    (.replaceAll "&Aring;" "Å"))))
 
 (def random-salt (noir.util.crypt/gen-salt))
 
@@ -91,24 +92,26 @@
           (upload-photo-to-session speaker item)))))))))
 
 
-(defn- to-speaker [item]
-  (let [data (cj/data item)] (merge 
+(defn to-speaker [item]
+  (let [data (cj/data item)]
+    (println "+++Data " data)
+    (merge
   {
-    :speakerName (encode-spes-char (:name data))
-    :email (encode-spes-char (:email data))
-    :bio (encode-spes-char (:bio data))
-    :zipCode (encode-spes-char (:zip-code data))
+    :speakerName (encode-spes-char (data "name"))
+    :email (encode-spes-char (data "email"))
+    :bio (encode-spes-char (data "bio"))
+    :zipCode (encode-spes-char (data "zip-code"))
     :givenId (encode-string (str (:href item)))
     :dummyId "XX"
   }
-  (let [photoloc (:href (cj/link-by-rel "photo"))]
+  (let [photoloc (:href (cj/link-by-rel item "photo"))]
     (if photoloc 
       {:picture (encode-string (str photoloc))} 
       {})))))
   
 (defn speakers-from-item [talk]
-  (let [links (:href (cj/links-by-rel talk "speaker item"))
-        speakers (map (fn [href] (fetch-item href)) links)] 
+  (let [links (cj/links-by-rel talk "speaker item")
+        speakers (map (fn [href] (fetch-item (:href href))) links)]
     (map to-speaker speakers)))
 
 
