@@ -13,7 +13,8 @@
     "outline" (talk "outline")
     "equipment" (talk "equipment")
     "lang" (talk "language")
-    "keywords" (talk "talkTags")      
+    "keywords" (talk "talkTags")
+    "summary" (talk "highlight")
   } (if state {"state" state} {})))] (println t) t))
 
 (defn speaker-to-template [speaker]
