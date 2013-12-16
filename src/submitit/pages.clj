@@ -12,7 +12,9 @@
   )
   (:require [noir.server :as server])
   (:require [clojure.java.io :as io])
-  (:require [collection-json.core :as cj]))
+  (:require [collection-json.core :as cj])
+  (:gen-class)
+  )
 
 (def handler (server/gen-handler {:mode :dev
                                   :ns 'submitit.core}))
