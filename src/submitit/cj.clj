@@ -18,6 +18,7 @@
   } (if state {"state" state} {})))] (println t) t))
 
 (defn speaker-to-template [speaker]
+  (println "speaker-to-template: " speaker)
   (cj/create-template 
     {
       "name" (speaker "speakerName"),
@@ -51,8 +52,12 @@
   (client/post uri (setup-write-request template nil)))
 
 (defn put-template [uri template lm]
-  (let [res (client/put uri (setup-write-request template lm))] 
-    (if (= 204 (:status res)) nil res)))
+  (println "put to " uri)
+  (let [ put-content (setup-write-request template lm)]
+    (println "trying to put " put-content)
+    (let [res (client/put uri put-content)]
+    (println "put returned " res)
+    (if (= 204 (:status res)) nil res))))
 
 (defn fetch-item [href]
   (let [collection (get-collection (str href)) last-mod ((collection :headers) "last-modified")]

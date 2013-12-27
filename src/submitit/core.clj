@@ -76,9 +76,19 @@
 (defn add-speakers [speakers href]
   (doseq [speaker speakers]
     (let [template (speaker-to-template speaker)]
+      (println "speakerfredf '" href)
       (if (speaker "givenId") ;; rename that
-        (let [res (put-template (decode-string (speaker "givenId")) template (speaker "lastModified")) item (fetch-item ((:headers res) "location"))]
+        ; Exsisting speaker
+        (let [
+               speaker-loc (decode-string (speaker "givenId"))
+               res (put-template speaker-loc template (speaker "lastModified"))
+             ]
+          (println "put templ res: " res)
+          (let [
+              item (fetch-item (if (nil? res) speaker-loc ((:headers res) "location")))]
           (upload-photo-to-session speaker item))
+        )
+        ; New speaker
         (do
           (println "New speaker: " template)
           (println "Speakerhref: " href)
@@ -95,14 +105,16 @@
 (defn to-speaker [item]
   (let [data (cj/data item)]
     (println "+++Data " data)
+    (println "+-+-AddSpeak " (str (.get (:href item))))
     (merge
   {
     :speakerName (encode-spes-char (data "name"))
     :email (encode-spes-char (data "email"))
     :bio (encode-spes-char (data "bio"))
     :zipCode (encode-spes-char (data "zip-code"))
-    :givenId (encode-string (str (:href item)))
+    :givenId (encode-string (str (.get (:href item))))
     :dummyId "XX"
+    :lastModified (item :lastModified)
   }
   (let [photoloc (:href (cj/link-by-rel item "photo"))]
     (if photoloc 
@@ -132,7 +144,7 @@
       put-result (put-template href template (talk "lastModified")) ]
       
       (println "Update-res: " put-result)
-      (add-speakers talk "speakers") (decode-string (talk "addSpeakers")))
+      (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")))
       {:resultid (talk "addKey")}
     )
     (let [
@@ -146,7 +158,7 @@
       (println "Speaker ref: " speakers-href)
       (add-speakers (talk "speakers") speakers-href)
       {:resultid (encode-string session-href)}
-    ))
+    )))
   ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
   ;  (println errormsg)
   ;  {:submitError errormsg}))))

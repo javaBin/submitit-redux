@@ -108,8 +108,9 @@
   (let [decoded-url (decode-string (talkd :talkid))] 
   (let [item (fetch-item decoded-url)
        talk-data (cj/data item)
-        speaker-list (speakers-from-item item)]
-
+        speaker-list (speakers-from-item item)
+        add-speak-ref (:href (cj/link-by-rel item "speaker collection"))
+        ]
     (println "generating resp:" item)
     (generate-string
       {
@@ -124,7 +125,7 @@
         :expectedAudience (talk-data "audience")
         :talkTags (talk-data "keywords")
         :addKey (talkd :talkid)
-        :addSpeakers (encode-string (str (:href (cj/link-by-rel item "speaker collection"))))
+        :addSpeakers (encode-string (str add-speak-ref))
         :lastModified (item :lastModified)
         :speakers speaker-list
       }      
