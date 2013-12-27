@@ -80,9 +80,22 @@
   (noir.response/content-type "image/jpeg"
     (io/input-stream (io/file (decode-string (param :picid))))))
 
-(defpage [:get "/speakerPhoto"] {:as param} 
-    (let [bytes (read-picture (decode-string (param :photoid)))] 
-      (io/input-stream bytes)))
+(defn create-encoded-auth []
+  (if (read-setup :emsUser)
+    (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64String
+                    (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)) (java.nio.charset.Charset/forName "UTF-8"))))
+    nil
+    ))
+
+(defpage [:get "/speakerPhoto"] {:as param}
+  (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
+    (.setRequestMethod connection "GET")
+    (if author (.addRequestProperty connection "Authorization" author))
+    (.connect connection)
+    (noir.response/content-type (.getContentType connection)
+      (.getInputStream connection))
+    )
+  )
 
 (defpage [:get "/status"] {:as nothing}
   (let [setupfile (get-setup-filename)]
