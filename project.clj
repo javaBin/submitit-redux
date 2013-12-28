@@ -15,6 +15,7 @@
     [org.jsoup/jsoup "1.7.2"]
     [clj-time "0.4.5"]
     [net.hamnaberg.rest/collection-json-clj "0.1.0-SNAPSHOT"]
+    [com.taoensso/timbre "3.0.0-RC2"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
   :ring {:handler submitit.pages/handler}  

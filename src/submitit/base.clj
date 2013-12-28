@@ -1,6 +1,8 @@
 (ns submitit.base
   (:use [clojure.string :only (split)])
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io])
+  (:require [taoensso.timbre :as logger])
+  )
 
 (def setupenv (ref {}))
 
@@ -51,3 +53,11 @@
     )
     (@setupenv keyval)
   )))
+
+(defn setup-log[]
+  (let [loglevel (read-setup :loglevel)]
+  (logger/set-level!
+    (if loglevel
+      (keyword loglevel)
+      :warn
+    ))))

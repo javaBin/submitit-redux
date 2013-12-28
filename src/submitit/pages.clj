@@ -13,6 +13,7 @@
   (:require [noir.server :as server])
   (:require [clojure.java.io :as io])
   (:require [collection-json.core :as cj])
+  (:require [taoensso.timbre :as timbre])
   (:gen-class)
   )
 
@@ -26,11 +27,15 @@
                         :ns 'submitit.core})))
 
 (defn -main [& m]
-  (println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE")) 
+
+  (println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
   (let [setup-map (read-enviroment-variables)]
     (if setup-map
       (dosync (ref-set setupenv setup-map))
       (throw (new java.lang.RuntimeException "Could not read setupfile"))))
+  (setup-log)
+  (timbre/info "Hello log")
+  (timbre/warn "Warning in log")
   (startup))
             
 (defpage [:get "/tagCollection"] {:as nothing}
