@@ -53,7 +53,7 @@
 
 <span ng-show="needPassword">
   <div class="tile tile-txt tile-big"><div class="tile-inner">
-    <h2 class="first"><i class="fa fa-clock-o"></i> Submissions are now closed</h2>
+    <h2 class="first"><i class="fa fa-lock"></i> Submissions are now closed</h2>
     <p>Call for speakers are now closed. If you need to submit please contact us at <a href="mailto:program@java.no">program@java.no</a> and you will get the password needed to submit.</p>
       <div class="row">
         <div class="span6">
@@ -70,16 +70,17 @@
 <div class="tile tile-txt tile-big"><div class="tile-inner">
 
     <h2 class="first"><i class="fa fa-clock-o"></i> Presentation format</h2>
-    <p>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A. The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</p>
-    <div class="row">
-      <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="presentationTypeGrp">              
-        <button class="btn {{activeClass(talk.presentationType,'presentation')}}" ng-click="setPresentationType('presentation')">Presentation</button>
-        <button class="btn {{activeClass(talk.presentationType,'lightning-talk')}}" ng-click="setPresentationType('lightning-talk')">Lightning talk</button>
-      </div>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
+      <label for="presentationchoice"><span>Presentation:</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
+      <label for="lightningchoice"><span>Lightning Talk:</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
     </div>
 
     <h2><i class="fa fa-puzzle-piece"></i> Title</h2>
-    <p>Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make a reader curious.</p>
+    <p>Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make people curious.</p>
     <p>
         <input type="text" required="required" class="talkInput" ng-model="talk.title" id="titleInput" placeholder="The title of your talk" />
     </p>
@@ -97,26 +98,33 @@
     </p>
 
     <h2><i class="fa fa-flag"></i> Language</h2>
-    <p>The talk can be given in Norwegian or English. The slides may be in English even if you present the talk in Norwegian. We generally recommends that you hold the talk in the language you are most comfortable with. In our experience the talk will be better then.</p>
-    <div class="row">
-      <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="languageGrp">
-        <button class="btn {{activeClass(talk.language,'en')}}" ng-click="setLanguage('en')">English</button>
-        <button class="btn {{activeClass(talk.language,'no')}}" ng-click="setLanguage('no')">Norwegian</button>
-      </div>
+    <p>Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommends that you hold the talk in the language you are most comfortable with.</p>
+    <div class="choice">
+      <input type="radio" name="lang" ng-model="talk.language" value="en" id="enchoice" />
+      <label for="enchoice"><span>English:</span> <br>The talk will be in English.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="lang" ng-model="talk.language" value="no" id="nochoice" />
+      <label for="nochoice"><span>Norwegian:</span> <br>Jeg snakker best p&aring; norsk.</label>
     </div>
 
     <h2><i class="fa fa-signal"></i> Level</h2>
-    <p><strong>Introductory: </strong>A basic introduction to a subject. Assume no knowledge of the subject.</p>
-    <p><strong>Intermediate: </strong>Expecting more than basic knowledge of a subject, but not yet advanced.</p>
-    <p><strong>Advanced: </strong>Good knowledge of the subject.</p>
-    <p><strong>Hardcore: </strong>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</p>
-    <div class="row">
-      <div class="btn-group btnGroupInput span6" data-toggle="buttons-radio" id="levelGrp">              
-        <button class="btn {{activeClass(talk.level,'beginner')}}" ng-click="setLevel('beginner')">Beginner</button>
-        <button class="btn {{activeClass(talk.level,'intermediate')}}" ng-click="setLevel('intermediate')">Intermediate</button>
-        <button class="btn {{activeClass(talk.level,'advanced')}}" ng-click="setLevel('advanced')">Advanced</button>
-        <button class="btn {{activeClass(talk.level,'hardcore')}}" ng-click="setLevel('hardcore')">Hardcore</button>
-      </div>
+    <p>What level will you present at, and what do you thereby expect the listerens to know beforehand.</p>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
+      <label for="beginnerchoice"><span>Introductory:</span> <br>A basic introduction to a subject. Assume no knowledge of the subject.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
+      <label for="intermediatechoice"><span>Intermediate:</span> <br>Expecting more than basic knowledge of a subject, but not yet advanced.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
+      <label for="advancedchoice"><span>Advanced:</span> <br>Good knowledge of the subject.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
+      <label for="hardcorechoice"><span>Hardcore:</span> <br>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on <br>setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</label>
     </div>
 
     <h2><i class="fa fa-users"></i> Expected Audience</h2>
@@ -139,13 +147,13 @@
 
 <div class="tile tile-txt tile-big"><div class="tile-inner">
 
-  <h2 class="first"><i class="fa fa-list-ol"></i> Outline</h2>
+  <h2 class="first"><i class="fa fa-list-ol"></i> Outline <span>(not public)</span></h2>
   <p>This information will be used by the program committee for reviewing the detailed contents. The outline should be a table of contents of the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</p>
   <p>
       <textarea rows="8" required="required" class="talkInput" id="outlineInput" ng-model="talk.outline" placeholder="How do you plan to structure your talk?"></textarea>
   <p>
 
-  <h2><i class="fa fa-laptop"></i> Equipment</h2>
+  <h2><i class="fa fa-laptop"></i> Equipment <span>(not public)</span></h2>
   <p>Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.</p>
   <p>
       <textarea rows="3" class="talkInput" id="equipmentInput" ng-model="talk.equipment" placeholder="Tell us about your needs"></textarea>
@@ -166,7 +174,7 @@
         <h3>Name</h3>
         <p><input class="talkInput speakerInput" type="text" id="speakerNameInput" required="required" ng-model="speaker.speakerName" placeholder="Your full name" /></p>
 
-        <h3>E-mail</h3>
+        <h3>E-mail <span>(not public)</span></h3>
         <p>We never share your email with others, we just need it to keep you updated on the progress.</p>
         <p><input class="talkInput speakerInput" type="email" id="emailInput" required="required" ng-model="speaker.email" placeholder="Your e-mail address" /></p>
 
@@ -179,7 +187,7 @@
         <p><iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
           </iframe></p>
 
-        <h3>Postcode (optional)</h3>
+        <h3>Postcode <span>(optional, not public)</span></h3>
         <p>Please type your postcode if you live in Norway. Leave it blank if you live somewhere else.</p>
         <p><input class="talkInput speakerInput" type="text" id="speakerZipCodeInput" ng-model="speaker.zipCode" placeholder="Your postal code (postnummer)"/></p>
       </div>
