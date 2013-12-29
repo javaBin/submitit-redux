@@ -37,6 +37,8 @@ h2 { font-size:1.2em; margin:2em 0 1.5em 0; line-height: 1.2; color:#000; font-w
 h3 { font-size:1.2em; color:#000; margin:2em 0 1em 0; line-height: 1.5; max-width: 30em; }
 h4 { font-size:.8em; text-transform: uppercase; font-weight: bold; color:#000; margin:0 0 .5em 0; }
 h2 i, h3 i { margin:0 .3em 0 0; }
+.first { margin-top: 0; }
+.last { margin-bottom: 0; }
 
 .space { height: 2em; }
 
@@ -456,7 +458,11 @@ h2.program-header .duration { position: absolute; top:2em; right:2em; }
 
 
 
-
+.talkInput {
+    font-size: 20px !important;
+    padding: 10px !important;
+    width: 800px;
+}
 
 
 
@@ -476,16 +482,16 @@ li {
 }
 
 .speakerBox {
-    border: 10px solid #F6F4ED;
+    border: 10px solid #efefef;
     margin: 10px 0 20px 0;
 }
 .speakerBoxInner {
     padding: 0 0 0 30px;
 }
 .speakerHeader {
-    background: #F6F4ED;
+    background: #efefef;
     color: #280002;
-    font-size: 30px;
+    font-size: 25px;
     padding: 10px 0 10px 10px;
 }
 
