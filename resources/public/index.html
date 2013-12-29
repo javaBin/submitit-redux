@@ -69,17 +69,7 @@
 
 <div class="tile tile-txt tile-big"><div class="tile-inner">
 
-    <h2 class="first"><i class="fa fa-clock-o"></i> Presentation format</h2>
-    <div class="choice">
-      <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
-      <label for="presentationchoice"><span>Presentation:</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
-    </div>
-    <div class="choice">
-      <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
-      <label for="lightningchoice"><span>Lightning Talk:</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
-    </div>
-
-    <h2><i class="fa fa-puzzle-piece"></i> Title</h2>
+    <h2 class="first"><i class="fa fa-puzzle-piece"></i> Title</h2>
     <p>Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make people curious.</p>
     <p>
         <input type="text" required="required" class="talkInput" ng-model="talk.title" id="titleInput" placeholder="The title of your talk" />
@@ -97,6 +87,20 @@
         <textarea rows="10" required="required" class="talkInput" id="abstractInput" ng-model="talk.abstract" placeholder="Full description of your talk"></textarea>
     </p>
 
+</div></div>
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-clock-o"></i> Presentation format</h2>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
+      <label for="presentationchoice"><span>Presentation:</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
+      <label for="lightningchoice"><span>Lightning Talk:</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
+    </div>
+
     <h2><i class="fa fa-flag"></i> Language</h2>
     <p>Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommends that you hold the talk in the language you are most comfortable with.</p>
     <div class="choice">
@@ -108,7 +112,25 @@
       <label for="nochoice"><span>Norwegian:</span> <br>Jeg snakker best p&aring; norsk.</label>
     </div>
 
-    <h2><i class="fa fa-signal"></i> Level</h2>
+    <h2><i class="fa fa-tags"></i> Tags</h2>
+    <p>Please check topics which relate to your presentation</p>
+    <div class="row-fluid" id="tagBoxes">
+      <label class="checkbox inline" ng-repeat="atag in tagList">
+        <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
+      </label>
+    </div>
+
+</div></div>
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-users"></i> Expected Audience</h2>
+    <p>Who should attend this session? How will the participants benefit from attending? Clearly state what knowledge you expect from your participants.</p>
+    <p>
+        <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
+    <p>
+
+    <h2><i class="fa fa-signal"></i> Expected knowledge level</h2>
     <p>What level will you present at, and what do you thereby expect the listerens to know beforehand.</p>
     <div class="choice">
       <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
@@ -125,20 +147,6 @@
     <div class="choice">
       <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
       <label for="hardcorechoice"><span>Hardcore:</span> <br>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on <br>setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</label>
-    </div>
-
-    <h2><i class="fa fa-users"></i> Expected Audience</h2>
-    <p>Who should attend this session? How will the participants benefit from attending? Clearly state what knowledge you expect from your participants.</p>
-    <p>
-        <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
-    <p>
-
-    <h2><i class="fa fa-tags"></i> Tags</h2>
-    <p>Please check topics which relate to your presentation</p>
-    <div class="row-fluid" id="tagBoxes">
-      <label class="checkbox inline" ng-repeat="atag in tagList">
-        <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
-      </label>
     </div>
 
 
