@@ -122,24 +122,6 @@ function UpdateCtrl($scope,$http) {
             });
 
 
-    
-
-    $scope.activeClass = function(model,value) { 
-        return (value == model) ? "active" : "";
-    };
-
-    $scope.setPresentationType = function(value) {
-        $scope.talk.presentationType = value;
-    }
-
-    $scope.setLanguage = function(value) {
-        $scope.talk.language = value;
-    }
-
-    $scope.setLevel = function(value) {
-        $scope.talk.level = value;
-        console.log($scope.tagList);
-    }
 
     $scope.addASpeaker = function() {
         $scope.talk.speakers.push({
