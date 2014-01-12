@@ -16,7 +16,9 @@
   (:require noir.util.crypt)
   (:require noir.session)
   (:require [clojure.contrib.io :as cio])
-  (:require [collection-json.core :as cj]))
+  (:require [collection-json.core :as cj])
+  (:require [taoensso.timbre :as timbre])
+  )
 
 (defn encode-spes-char [value]
   (if (nil? value) ""
@@ -52,7 +54,7 @@
       :headers {"content-disposition" (str "inline; filename=" filename)}
       }) setup-login)
     (catch Exception e 
-      (println "caught exception: " (.getMessage e) "->" e)
+      (timbre/trace "caught exception: " (.getMessage e) "->" e)
       (if (read-setup :photo-copy-dir) (save-file-copy href bytes)))))
 
 (defn read-picture [href]
@@ -62,9 +64,9 @@
     (cio/to-byte-array (:body res))))
 
 (defn upload-photo-to-session [speak item]
-  (println "UploadPhoto")
+  (timbre/trace "UploadPhoto")
   (let [speak-photo (noir.session/get (speak "dummyId"))]
-    (println "SpeakPhoto: **" speak-photo "**")
+    (timbre/trace "SpeakPhoto: **" speak-photo "**")
     (if speak-photo
       (let [ photo-url (:href (cj/link-by-rel "photo"))
              bytes (:photo-byte-arr speak-photo)
@@ -76,36 +78,36 @@
 (defn add-speakers [speakers href]
   (doseq [speaker speakers]
     (let [template (speaker-to-template speaker)]
-      (println "speakerfredf '" href)
+      (timbre/trace "speakerfredf '" href)
       (if (speaker "givenId") ;; rename that
         ; Exsisting speaker
         (let [
                speaker-loc (decode-string (speaker "givenId"))
                res (put-template speaker-loc template (speaker "lastModified"))
              ]
-          (println "put templ res: " res)
+          (timbre/trace "put templ res: " res)
           (let [
               item (fetch-item (if (nil? res) speaker-loc ((:headers res) "location")))]
           (upload-photo-to-session speaker item))
         )
         ; New speaker
         (do
-          (println "New speaker: " template)
-          (println "Speakerhref: " href)
+          (timbre/trace "New speaker: " template)
+          (timbre/trace "Speakerhref: " href)
         (let [res (post-template href template)]
-          (println "Photo res" res)
-          (println "+++++")
+          (timbre/trace "Photo res" res)
+          (timbre/trace "+++++")
           (if (noir.session/get (speaker "dummyId"))
           (let [item (fetch-item ((:headers res) "location"))]
-            (println "+-+-+-+")
-          (println "Item" item)
+            (timbre/trace "+-+-+-+")
+          (timbre/trace "Item" item)
           (upload-photo-to-session speaker item)))))))))
 
 
 (defn to-speaker [item]
   (let [data (cj/data item)]
-    (println "+++Data " data)
-    (println "+-+-AddSpeak " (str (.get (:href item))))
+    (timbre/trace "+++Data " data)
+    (timbre/trace "+-+-AddSpeak " (str (.get (:href item))))
     (merge
   {
     :speakerName (encode-spes-char (data "name"))
@@ -143,7 +145,7 @@
       template (talk-to-template talk (read-state href))
       put-result (put-template href template (talk "lastModified")) ]
       
-      (println "Update-res: " put-result)
+      (timbre/trace "Update-res: " put-result)
       (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")))
       {:resultid (talk "addKey")}
     )
@@ -154,13 +156,13 @@
       session-href ((:headers post-result) "location")
       speakers-href (str session-href "/speakers")]
       
-      (println "Post-res: " post-result)
-      (println "Speaker ref: " speakers-href)
+      (timbre/trace "Post-res: " post-result)
+      (timbre/trace "Speaker ref: " speakers-href)
       (add-speakers (talk "speakers") speakers-href)
       {:resultid (encode-string session-href)}
     )))
   ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
-  ;  (println errormsg)
+  ;  (timbre/trace errormsg)
   ;  {:submitError errormsg}))))
 
 

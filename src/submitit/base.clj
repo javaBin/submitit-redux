@@ -2,6 +2,7 @@
   (:use [clojure.string :only (split)])
   (:require [clojure.java.io :as io])
   (:require [taoensso.timbre :as logger])
+  (:require [taoensso.timbre :as timbre])
   )
 
 (def setupenv (ref {}))
@@ -13,7 +14,7 @@
 (defn frontend-develop-mode? [] 
   (if (= (java.lang.System/getenv "SUBMITIT_FRONTEND_MODE") "true")
     (do 
-      (println "WARNING! Running in frontend development mode")
+      (timbre/trace "WARNING! Running in frontend development mode")
       true)
     false))
 
@@ -36,7 +37,7 @@
         (for [[k v] props]
           [(keyword k) v]))) 
       ;;(hash-map (map (fn [kv] [(keyword (key kv)) (val kv)]) props)))
-    (println "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE."))))
+    (timbre/trace "Did not find setupfile. Use 'lein run <setupfile> <mailaddress>' or set enviroment variable SUBMITIT_SETUP_FILE."))))
 
 (defn read-setup [keyval]
   (if (frontend-develop-mode?) nil

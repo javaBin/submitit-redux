@@ -34,8 +34,7 @@
       (dosync (ref-set setupenv setup-map))
       (throw (new java.lang.RuntimeException "Could not read setupfile"))))
   (setup-log)
-  (timbre/info "Hello log")
-  (timbre/warn "Warning in log")
+  (timbre/info "Log initialized.")
   (startup))
             
 (defpage [:get "/tagCollection"] {:as nothing}
@@ -62,16 +61,16 @@
 
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-    (println "+++TALK+++" talk "+++")    
+    (timbre/trace "+++TALK+++" talk "+++")
     (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
         (let [errme (generate-string {:captchaError true})]
-          (println "CaptchError:" + errme)
+          (timbre/trace "CaptchError:" + errme)
           errme
           )
       (let [error-response (validate-input talk)]
         (if error-response error-response
           (let [talk-result (communicate-talk-to-ems talk)]
-            (println "TALKRES:" talk-result)
+            (timbre/trace "TALKRES:" talk-result)
             (send-mail (speaker-mail-list talk) (str "Confirmation " (if (talk "add ") "on updating" "of") " your JavaZone 2013 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt")) 
               (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
             (generate-string (merge talk-result 
@@ -129,7 +128,7 @@
         speaker-list (speakers-from-item item)
         add-speak-ref (:href (cj/link-by-rel item "speaker collection"))
         ]
-    (println "generating resp:" item)
+    (timbre/trace "generating resp:" item)
     (generate-string
       {
         :presentationType (talk-data "format"),
@@ -176,13 +175,13 @@
   (upload-form nil (paras :speakerid) (paras :dummyKey)))
 
 (defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
-  (println "***")
-  (println filehandler)
-  (println speakerKey)
-  (println dummyKey)
-  (println "***")
-;  (println (type (filehandler :tempfile)))
-;  (println "***")
+  (timbre/trace "***")
+  (timbre/trace filehandler)
+  (timbre/trace speakerKey)
+  (timbre/trace dummyKey)
+  (timbre/trace "***")
+;  (timbre/trace (type (filehandler :tempfile)))
+;  (timbre/trace "***")
 ;  (another-add-photo (str (decode-string speakerKey) "/photo") (to-byte-array (photo-map :tempfile)) filehandler)
 
   (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]

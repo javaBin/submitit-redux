@@ -1,7 +1,9 @@
 (ns submitit.cj
   (:use [submitit.base])
   (:require [clj-http.client :as client])
-  (:require [collection-json.core :as cj]))
+  (:require [collection-json.core :as cj])
+  (:require [taoensso.timbre :as timbre])
+  )
 
 (defn talk-to-template [talk state]
   (let [t (cj/create-template (merge {
@@ -15,10 +17,10 @@
     "lang" (talk "language")
     "keywords" (seq (talk "talkTags"))
     "summary" (talk "highlight")
-  } (if state {"state" state} {})))] (println t) t))
+  } (if state {"state" state} {})))] (timbre/trace t) t))
 
 (defn speaker-to-template [speaker]
-  (println "speaker-to-template: " speaker)
+  (timbre/trace "speaker-to-template: " speaker)
   (cj/create-template 
     {
       "name" (speaker "speakerName"),
@@ -36,7 +38,7 @@
       :headers {"accept" "application/vnd.collection+json"}
     }
     (setup-login)))]
-    (println res)
+    (timbre/trace res)
     res))
 
 (defn- setup-write-request [template lm]
@@ -52,16 +54,16 @@
   (client/post uri (setup-write-request template nil)))
 
 (defn put-template [uri template lm]
-  (println "put to " uri)
+  (timbre/trace "put to " uri)
   (let [ put-content (setup-write-request template lm)]
-    (println "trying to put " put-content)
+    (timbre/trace "trying to put " put-content)
     (let [res (client/put uri put-content)]
-    (println "put returned " res)
+    (timbre/trace "put returned " res)
     (if (= 204 (:status res)) nil res))))
 
 (defn fetch-item [href]
   (let [collection (get-collection (str href)) last-mod ((collection :headers) "last-modified")]
-    (println "AAAAAAAAAAAHHHHHHH " collection)
+    (timbre/trace "AAAAAAAAAAAHHHHHHH " collection)
     (merge 
       (cj/head-item (cj/parse-collection (new java.io.StringReader (:body collection))))
       (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
