@@ -160,12 +160,15 @@
       (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
       (new java.io.ByteArrayInputStream (.toByteArray out)))))
 
-(defn upload-form [message speaker-key dummy-key]
+(defn upload-form [message speaker-key dummy-key picChanged]
   (html5
+    (if picChanged
     [:header
-      [:script {:src "js/jquery-1.7.2.js"}]
+
+       [:script {:src "js/jquery-1.7.2.js"}]
       [:script {:src "js/uploadPictureCommunication.js"}]
       ]
+      )
     [:body
     (if message [:p message])
     [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
@@ -176,7 +179,7 @@
     ]]))
 
 (defpage [:get "/uploadPicture"] {:as paras}
-  (upload-form nil (paras :speakerid) (paras :dummyKey)))
+  (upload-form nil (paras :speakerid) (paras :dummyKey) false))
 
 (defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
   (timbre/trace "***")
@@ -190,11 +193,11 @@
 
   (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
     (cond 
-      (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey)
+      (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey false)
       (not= "XX" dummyKey) (do 
           (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
-          (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)
+          (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
         )
       :else (do 
-        (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)        
-        (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey)))))
+        (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)
+        (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)))))
