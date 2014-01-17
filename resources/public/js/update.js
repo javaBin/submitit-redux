@@ -31,6 +31,10 @@ function readCaptchaFact() {
     return captchaFact.fact;
 }
 
+function pictureChanged() {
+    console.log("Parent function called");
+}
+
 
 function UpdateCtrl($scope,$http) {
     $scope.showMain = true;

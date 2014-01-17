@@ -161,7 +161,11 @@
       (new java.io.ByteArrayInputStream (.toByteArray out)))))
 
 (defn upload-form [message speaker-key dummy-key]
-  (html5 
+  (html5
+    [:header
+      [:script {:src "js/jquery-1.7.2.js"}]
+      [:script {:src "js/uploadPictureCommunication.js"}]
+      ]
     [:body
     (if message [:p message])
     [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
