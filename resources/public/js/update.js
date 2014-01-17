@@ -31,12 +31,13 @@ function readCaptchaFact() {
     return captchaFact.fact;
 }
 
-function pictureChanged() {
-    console.log("Parent function called");
+function pictureChanged(dummyKey,speakerKey) {
+    angular.element("#mainElement").scope().newPicture(dummyKey,speakerKey);
 }
 
 
 function UpdateCtrl($scope,$http) {
+
     $scope.showMain = true;
     $scope.showResult = false;
     $scope.showResultSuccess = false;
@@ -191,5 +192,10 @@ function UpdateCtrl($scope,$http) {
                         });
         return false;
     }
+
+    $scope.newPicture = function(dummyKey,speakerKey) {
+        console.log("Scope called");
+        console.log(dummyKey);
+    };
 
 }

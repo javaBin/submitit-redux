@@ -163,10 +163,9 @@
 (defn upload-form [message speaker-key dummy-key picChanged]
   (html5
     (if picChanged
-    [:header
-
-       [:script {:src "js/jquery-1.7.2.js"}]
-      [:script {:src "js/uploadPictureCommunication.js"}]
+      [:header
+         [:script {:src "js/jquery-1.7.2.js"}]
+         [:script {:src "js/uploadPictureCommunication.js"}]
       ]
       )
     [:body

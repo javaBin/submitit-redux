@@ -1,3 +1,5 @@
 $(document).ready(function() {
-    parent.pictureChanged();
+    var dummyKey = $("#dummyKey").val();
+    var speakerKey = $("#speakerKey").val();
+    parent.pictureChanged(dummyKey,speakerKey);
 });
