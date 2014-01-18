@@ -1,5 +1,7 @@
 (ns submitit.email
-  (:use [submitit.base]))
+  (:use [submitit.base])
+  (:require [taoensso.timbre :as timbre])
+  )
 
 (defn generate-mail-talk-mess [talk-result]
   (if (talk-result :submitError)
@@ -41,10 +43,15 @@
 
 
 (defn send-mail [send-to subject message]
+  (try
   (let [sender (create-mail-sender subject message)]
     (doseq [sto send-to] (.addTo sender sto))
     (.addCc sender (read-setup :mailFrom))
-    (.send sender)))
+    (.send sender))
+    (catch Exception e (do
+                                (timbre/error (str "Error sending mail " (.getMessage e)))
+                                (throw e))
+    )))
 
 
 (defn replace-vector [generate-mail-text template value-vector result]
