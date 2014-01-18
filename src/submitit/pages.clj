@@ -101,6 +101,14 @@
     )
   )
 
+(defpage [:get "/tempPhoto"] {:as param}
+  (let [speak-photo (noir.session/get (param :dummyId))]
+    (if speak-photo
+    (noir.response/content-type (:photo-content-type speak-photo)
+      (new java.io.ByteArrayInputStream (:photo-byte-arr speak-photo)))
+      (noir.response/status 404 "Photo not found"))
+  ))
+
 (defpage [:get "/status"] {:as nothing}
   (let [setupfile (get-setup-filename)]
   (html5

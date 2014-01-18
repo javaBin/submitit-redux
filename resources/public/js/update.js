@@ -198,4 +198,8 @@ function UpdateCtrl($scope,$http) {
         console.log(dummyKey);
     };
 
+    $scope.readpic = function(speaker) {
+
+    }
+
 }
