@@ -56,9 +56,17 @@
   )))
 
 (defn setup-log[]
-  (let [loglevel (read-setup :loglevel)]
+  (let [loglevel (read-setup :loglevel) logfile (read-setup :logfile)]
   (logger/set-level!
     (if loglevel
       (keyword loglevel)
       :warn
-    ))))
+    ))
+    (if logfile
+      (do
+        (logger/set-config! [:appenders :spit :enabled?] true)
+        (logger/set-config! [:shared-appender-config :spit-filename] logfile)
+        )
+      )
+    )
+  )
