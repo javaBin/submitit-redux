@@ -190,7 +190,7 @@
 
         <h3>E-mail <span>(not public)</span></h3>
         <p>We never share your email with others, we just need it to keep you updated on the progress.</p>
-        <p><input class="talkInput speakerInput" type="email" id="emailInput" required="required" ng-model="speaker.email" placeholder="Your e-mail address" /></p>
+        <p><input class="talkInput speakerInput" type="email" id="emailInput" required="required" ng-model="speaker.email" placeholder="Your e-mail address" ng-change="computePictureUrl(speaker)"/></p>
 
         <h3>Speaker bio</h3>
         <p>Describe your affiliation, interests and experience. It should be clear from this text that you are the right person to give this talk. The profile should not be more than a couple of paragraphs long.</p>
