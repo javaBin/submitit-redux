@@ -22,7 +22,7 @@
 
 
 (defn startup []  
-  (let [mode :dev port (Integer/parseInt (get (System/getenv) "PORT" "8080"))]
+  (let [mode :dev port (Integer/parseInt (get (System/getenv) "SUBMITIT_PORT" "8080"))]
     (server/start port {:mode mode
                         :ns 'submitit.core})))
 
