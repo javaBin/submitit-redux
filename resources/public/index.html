@@ -196,7 +196,7 @@
 
         <h3>Picture</h3>
         <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com</p>
-          <p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{readpic(speaker)}}"/>
+          <p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{speaker.picurl}}"/>
           </p>
           <p><iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
           </iframe></p>

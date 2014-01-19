@@ -74,7 +74,8 @@ function UpdateCtrl($scope,$http) {
                 picture: null,
                 zipCode: "",
                 givenId: null,
-                dummyId: getDummySpeakerId()
+                dummyId: getDummySpeakerId(),
+                picurl: null
             }]
         };
 
@@ -196,10 +197,9 @@ function UpdateCtrl($scope,$http) {
     $scope.newPicture = function(dummyKey,speakerKey) {
         console.log("Scope called");
         console.log(dummyKey);
+
     };
 
-    $scope.readpic = function(speaker) {
 
-    }
 
 }
