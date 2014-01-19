@@ -195,8 +195,12 @@ function UpdateCtrl($scope,$http) {
     }
 
     $scope.newPicture = function(dummyKey,speakerKey) {
-        console.log("Scope called");
-        console.log(dummyKey);
+        var speaker = _.find($scope.talk.speakers,function(speaker) {
+            return speaker.dummyId === dummyKey;
+        });
+
+        speaker.picurl = "tempPhoto?dummyId=" + dummyKey + "&time=" + new Date().getTime();
+        $scope.$digest();
 
     };
 
