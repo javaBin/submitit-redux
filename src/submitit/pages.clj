@@ -41,10 +41,7 @@
   (generate-string (tag-list)))
 
 (defpage [:get "/newSpeakerId"] {:as nothing}
-  (let [nid (dosync (let [res @speaker-dummy-id] 
-    (ref-set speaker-dummy-id (inc @speaker-dummy-id))
-    res))
-  ]
+  (let [nid (gen-new-speaker-id)]
   (generate-string {:dummyId (str "DSI" nid)})))
 
 
@@ -199,12 +196,13 @@
 ;  (another-add-photo (str (decode-string speakerKey) "/photo") (to-byte-array (photo-map :tempfile)) filehandler)
 
   (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
-    (cond 
+    (cond
       (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey false)
-      (not= "XX" dummyKey) (do 
+      (empty? speakerKey) (do
           (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
           (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
         )
-      :else (do 
+      :else (do
+        (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
         (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)
         (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)))))

@@ -89,6 +89,7 @@ function UpdateCtrl($scope,$http) {
                 dummyId: getDummySpeakerId(),
                 picurl: null,
                 hasPicture: false
+
             }]
         };
 
@@ -123,7 +124,7 @@ function UpdateCtrl($scope,$http) {
                                 });
                             });
                             $scope.talk.speakers.forEach(function (speaker) {
-                               speaker.hasPicture = (speaker.picture && speaker.picture != null);
+                               speaker.hasPicture = false;
                                $scope.computePictureUrl(speaker);
                             });
 
@@ -213,7 +214,7 @@ function UpdateCtrl($scope,$http) {
 
     $scope.newPicture = function(dummyKey,speakerKey) {
         var speaker = _.find($scope.talk.speakers,function(speaker) {
-            return speaker.dummyId === dummyKey;
+            return speaker.dummyId == dummyKey;
         });
         speaker.hasPicture = true;
         $scope.computePictureUrl(speaker);
@@ -222,18 +223,17 @@ function UpdateCtrl($scope,$http) {
     };
 
     $scope.computePictureUrl = function(speaker) {
-        if (speaker.picture && speaker.picture != null) {
-            speaker.picurl = "speakerPhoto?photoid=" + speaker.picture + "&time=" + new Date().getTime();
-            return;
-        }
         if (speaker.hasPicture) {
             speaker.picurl = "tempPhoto?dummyId=" + speaker.dummyId + "&time=" + new Date().getTime();
             return;
         };
-
+        if (speaker.picture && speaker.picture != null) {
+            speaker.picurl = "speakerPhoto?photoid=" + speaker.picture + "&time=" + new Date().getTime();
+            return;
+        };
         if (speaker.email) {
             speaker.picurl = get_gravatar(speaker.email);
-        }
+        };
 
     };
 

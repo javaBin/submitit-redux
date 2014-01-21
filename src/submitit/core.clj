@@ -34,6 +34,13 @@
 
 (def speaker-dummy-id (ref 0))
 
+(defn gen-new-speaker-id[]
+  (let [nid (dosync (let [res @speaker-dummy-id]
+                      (ref-set speaker-dummy-id (inc @speaker-dummy-id))
+                      res))]
+  nid
+))
+
 (defn tag-list[]
   (parse-string (slurp (clojure.java.io/resource "tagCollection.json"))))
 
@@ -115,7 +122,7 @@
     :bio (encode-spes-char (data "bio"))
     :zipCode (encode-spes-char (data "zip-code"))
     :givenId (encode-string (str (.get (:href item))))
-    :dummyId "XX"
+    :dummyId (gen-new-speaker-id)
     :lastModified (item :lastModified)
   }
   (let [photoloc (:href (cj/link-by-rel item "photo"))]
