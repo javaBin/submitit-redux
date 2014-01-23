@@ -64,7 +64,7 @@
 (defn handle-template [generate-mail-text template tkey value-vector]
   (let [temp-no-lf (clojure.string/join "%newline%" (clojure.string/split template #"\n"))]
   (let [inner-template (re-find (re-pattern (str "%t" tkey "(.*)t%")) temp-no-lf)]
-    (timbre/debug "inner template" inner-template)
+    (timbre/trace "inner template" inner-template)
     (if (nil? inner-template) template
       (clojure.string/join "\n" (clojure.string/split
         (clojure.string/replace temp-no-lf (re-pattern (str "%t" tkey ".*t%"))
@@ -80,10 +80,10 @@
 
 
 (defn generate-mail-text [template value-map]
-  (timbre/debug "** gen-mail-text **")
+  (timbre/trace "** gen-mail-text **")
   (if (empty? value-map) template
     (let [[tkey tvalue] (first value-map)]
-      (timbre/debug "Mailrep " tkey "+++" tvalue)
+      (timbre/trace "Mailrep " tkey "+++" tvalue)
       (generate-mail-text
       (clojure.string/replace
        (handle-arr 
