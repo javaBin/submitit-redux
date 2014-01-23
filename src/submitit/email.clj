@@ -80,6 +80,7 @@
 
 
 (defn generate-mail-text [template value-map]
+  (timbre/debug "** gen-mail-text **")
   (if (empty? value-map) template
     (let [[tkey tvalue] (first value-map)]
       (timbre/debug "Mailrep " tkey "+++" tvalue)
