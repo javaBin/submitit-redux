@@ -125,6 +125,14 @@
         <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
       </label>
     </div>
+    <br/><br/>
+    <p>Please check topics which relate to your type of talk</p>
+    <div class="row-fluid" id="tagBoxes">
+        <label class="checkbox inline" ng-repeat="atag in typeList">
+            <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
+        </label>
+    </div>
+
 
 </div></div>
 

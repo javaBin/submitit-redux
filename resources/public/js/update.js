@@ -61,6 +61,7 @@ function UpdateCtrl($scope,$http) {
     $scope.needPassword = false;
 
     $scope.tagList = [];
+    $scope.typeList = [];
 
     var talkid = $.urlParam("talkid");
     var captchaFact = readCaptchaFact();
@@ -105,7 +106,8 @@ function UpdateCtrl($scope,$http) {
 
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
-                $scope.tagList = data;
+                $scope.tagList = data.tags;
+                $scope.typeList = data.types;
 
                 if (talkid != 0) {
                     var jsonurl = "talkJson?talkid=" + talkid;
@@ -116,13 +118,18 @@ function UpdateCtrl($scope,$http) {
                             $scope.talk = data;
                             $scope.talk.captchaFact = captchaFact;
                             $scope.talk.captchaAnswer = "";
-                            $scope.talk.talkTags.forEach(function (tagname) {
-                                $scope.tagList.forEach(function(atag) {
+
+                            var checkTags = function(atag) {
+                                $scope.talk.talkTags.forEach(function (tagname) {
                                     if (tagname == atag.value) {
                                         atag.checked=true;
                                     }
                                 });
-                            });
+                            };
+
+                            $scope.tagList.forEach(checkTags);
+                            $scope.typeList.forEach(checkTags);
+
                             $scope.talk.speakers.forEach(function (speaker) {
                                speaker.hasPicture = false;
                                $scope.computePictureUrl(speaker);
@@ -175,11 +182,15 @@ function UpdateCtrl($scope,$http) {
 
         var talkTags = [];
 
-        $scope.tagList.forEach(function(atag) {
+        var pushTagged = function(atag) {
             if (atag.checked) {
                 talkTags.push(atag.value);
             }
-        });
+        };
+
+        $scope.tagList.forEach(pushTagged);
+        $scope.typeList.forEach(pushTagged);
+
         $scope.talk.talkTags = talkTags;
 
 
