@@ -287,9 +287,13 @@
   </div></div>
 
   <div class="tile tile-txt tile-big"><div class="tile-inner">
-    <p ng-show="showResutFailure">Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</p>
-    <p ng-show="showResultSuccess">You can review your talk at any time by going <a href="{{talkAddress}}">to this address</a>. We'll also send you this link by email.</p>
-    <p class="whatsnext">Now that you have submitted your presentation, you can start looking forward to the conference. More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>. And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</p>
+    <ul class="fa-ul imagelist green">
+      <li ng-show="showResutFailure"><i class="fa-li fa fa-check-circle-o"></i> Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</li>
+      <li ng-show="showResultSuccess"><i class="fa-li fa fa-check-circle-o"></i> You can review your talk at any time by going <a href="{{talkAddress}}">to this address</a>. We'll also send you this link by email.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Now that you have submitted your presentation, you can start looking forward to the conference.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</li>
+    </ul>
   </div></div>
 </div> <!-- END success wrapper -->
 
