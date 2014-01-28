@@ -10,8 +10,6 @@ while [ -h "$BASEDIR/$0" ]; do
 done
 cd ${BASEDIR}
 
-cd ../backend
-
 # --------------------------------------
 
 set -e
@@ -45,7 +43,7 @@ yellow ""
 yellow "  deployer submitit"
 yellow ""
 
-DEFAULT_JAR=`find . | grep standalone.jar`
+DEFAULT_JAR=`find . -name *standalone.jar`
 DEFAULT_VERSION=`date +%Y%m%d%H%M%S`-SNAPSHOT
 
 ask "Hvor ligger jar-filen? [$DEFAULT_JAR]"
