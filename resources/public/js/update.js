@@ -59,6 +59,7 @@ function UpdateCtrl($scope,$http) {
     $scope.failureError = false;
     $scope.talkAddress = false;
     $scope.needPassword = false;
+    $scope.showCapthca = true;
 
     $scope.tagList = [];
     $scope.typeList = [];
@@ -115,6 +116,7 @@ function UpdateCtrl($scope,$http) {
 
                     $http({method: 'GET', url: jsonurl}).
                         success(function(data, status, headers, config) {
+                            $scope.showCapthca = false;
                             $scope.talk = data;
                             $scope.talk.captchaFact = captchaFact;
                             $scope.talk.captchaAnswer = "";

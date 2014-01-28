@@ -59,7 +59,7 @@
 (defpage [:post "/addTalk"] {:as empty-post}
   (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
     (timbre/trace "+++TALK+++" talk "+++")
-    (if (captcha-error? (talk "captchaAnswer") (talk "captchaFact")) 
+    (if (captcha-error? talk)
         (let [errme (generate-string {:captchaError true})]
           (timbre/trace "CaptchError:" + errme)
           errme

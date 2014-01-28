@@ -223,14 +223,14 @@
 
 </div></div>
 
-<div class="tile tile-txt tile-big"><div class="tile-inner">
+<div class="tile tile-txt tile-big" ng-show="showCapthca"><div class="tile-inner">
 
   <h2 class="first"><i class="fa fa-unlock-alt"></i> Captcha</h2>
   <p>We don't want those nasty spam robots to come present at the conference.</p>
   <div class="row">
     <div class="span4">
       <img ng-src="captcha"/><br/>
-      <input type="text" required="required" class="span3" id="captchaInput" ng-model="talk.captchaAnswer" placeholder="Type the letters in the image"/>
+      <input type="text" ng-required="showCaptcha" class="span3" id="captchaInput" ng-model="talk.captchaAnswer" placeholder="Type the letters in the image"/>
     </div>
 
   </div>

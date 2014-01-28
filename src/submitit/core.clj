@@ -144,9 +144,13 @@
   (let [data (cj/data (fetch-item uri))]
     (:state data)))
 
+(defn exsisting-talk?[talk]
+  (if (talk "addKey") true false)
+  )
+
 (defn communicate-talk-to-ems [talk]
   ;(try 
-  (if (talk "addKey")
+  (if (exsisting-talk? talk)
     (let [
       href (decode-string (talk "addKey"))
       template (talk-to-template talk (read-state href))
@@ -230,8 +234,9 @@
   )]
   (if error-msg (generate-string {:errormessage error-msg}) nil)))
 
-(defn captcha-error? [answer fact]
-  (not= (noir.util.crypt/encrypt random-salt answer) fact))
+(defn captcha-error? [talk]
+  (let [answer (talk "captchaAnswer") fact (talk "captchaFact")]
+    (and (not (exsisting-talk? talk)) (not= (noir.util.crypt/encrypt random-salt answer) fact))))
 
 (defn fetch-picture [aspeak]
   (let [picsrc (read-picture (str (aspeak "href") "/photo"))]
