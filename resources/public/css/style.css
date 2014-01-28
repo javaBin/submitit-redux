@@ -48,7 +48,7 @@ label:hover { cursor: pointer; }
 .space { height: 2em; }
 
 p { margin:0 0 1em 0; line-height: 1.5; max-width: 40em; }
-.imagelist { max-width: 40em; line-height: 1.3; }
+.imagelist { max-width: 40em; line-height: 1.3; margin: 0 0 2em 0; }
 .imagelist i { margin: .4em 0 0 0; }
 .imagelist li { margin: .8em 0; }
 .imagelist.green i { color: #518F89; }
@@ -60,6 +60,12 @@ p { margin:0 0 1em 0; line-height: 1.5; max-width: 40em; }
     display: block;
     border: 1px solid #777;
 }
+.speaker-floatleft {
+    float: left;
+    margin: 0 2em 0 0;
+}
+
+.preserve-newlines { white-space: pre-wrap; }
 
 p.ingress { font-weight: 700; }
 
@@ -595,6 +601,11 @@ li {
  .hideit
  {
  	visibility: hidden;
+ }
+
+ .tile-talksummary h1 {
+    font-size: 2em;
+    margin: 0 0 1em 0;
  }
 
 

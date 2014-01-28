@@ -1,59 +1,124 @@
 <!DOCTYPE html>
-<html ng-app>
+<html class="page-invert" ng-app>
 <head>
-	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/angular.min.js"></script>
-	<script type="text/javascript" src="js/talkDetail.js"></script>
-	
-  	<link href="css/bootstrap.min.css" rel="stylesheet"></link>
-</head>	
+  <title>JavaZone 2014 Talks</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/reset.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="fa/font-awesome.min.css" rel="stylesheet">
+  <script type="text/javascript" src="js/underscore-min.js"></script>
+  <script src="js/jquery-1.7.2.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/talkDetail.js"></script>
+</head>
 <body>
+
+
+<div class="wrapper"> <!-- START wrapper -->
+
+  <div class="menu"><div class="menu-inner">
+    <h1><a href="http://2014.javazone.no/"><span class="img img-logo">JavaZone 2014</span></a></h1>
+    <ul>
+        <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
+        <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
+        <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
+    </ul>
+  </div></div>
+
 	<div ng-controller="TalkDetailCtrl">
-		<div class="offset1 span10" ng-show="showMain">
-			<h1>Talk: "{{talkData.title}}"</h1>
-			<a href="index.html?talkid={{talkData.addKey}}" class="btn btn-large btn-primary btn-block">Update your talk</a>
-			<div style="clear: both; height: 50px">&nbsp;</div>
-			<legend>Abstract</legend>
-			<p>{{talkData.abstract}}</p>
-			<legend>Presentation format</legend>
-			<p>{{talkData.presentationType}}</p>
-			<legend>Language</legend>
-			<p>{{formatLanguage()}}</p>
-			<legend>Level</legend>
-			<p>{{talkData.level}}</p>
-			<legend>Outline</legend>
-			<p>{{talkData.outline}}</p>
-			<legend>Highligh summary</legend>
-			<p>{{talkData.highlight}}</p>
-			<legend>Equipment</legend>
-			<p>{{talkData.equipment}}</p>
-			<legend>Tags</legend>
-			<p>{{formatTags()}}</p>
-			<legend>Expected audience</legend>
-			<p>{{talkData.expectedAudience}}</p>
-			<div ng-repeat="speaker in talkData.speakers">
-				<legend>Speaker</legend>
-				<p>{{speaker.speakerName}}</p>
-				<legend>Email</legend>
-				<p>{{speaker.email}}</p>
-				<legend>Profile</legend>
-				<p>{{speaker.bio}}</p>
-				<legend>Post code</legend>
-				<p>{{speaker.zipCode}}</p>
-				<legend>Photo</legend>
-				<p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{computePictureUrl(speaker)}}"/>
-                </p>   
+		<div ng-show="showMain">
+  			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+				<h1><strong>Your talk:</strong> {{talkData.title}}</h1>
+				<ul class="fa-ul imagelist green">
+					<li><i class="fa-li fa fa-check-circle-o"></i> The following information about your talk is stored in our system. You can <a href="index.html?talkid={{talkData.addKey}}">edit this at any time</a>.</li>
+					<li><i class="fa-li fa fa-check-circle-o"></i> Please note that if you are editing a talk that is already accepted and published in our program, it might take some time (roughly 5-10 minutes) before your changes appear on the program, as there is a bit of caching involved. Changes to pictures will take up to an hour.</li>
+					<li><i class="fa-li fa fa-check-circle-o"></i> More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>.</li>
+					<li><i class="fa-li fa fa-check-circle-o"></i> Again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</li>
+			    </ul>
+				
+				<a href="index.html?talkid={{talkData.addKey}}" class="button btn btn-large">Update your talk</a>
+
 			</div>
-			<legend>Update talk</legend>
-			<p>You can update your talk at any time. Please note that it might take some time (roughly 5 minutes) before your changes appear on the program, as there is a bit of caching involved. Changes to pictures will take up to an hour.</p>
-			<a href="index.html?talkid={{talkData.addKey}}" class="btn btn-large btn-primary btn-block">Update your talk</a>
+			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+				<h1><strong>Title, summary and abstract</strong> (as shown in the program)</h1>
+
+				<h2>{{talkData.title}}</h2>
+
+				<p class="ingress preserve-newlines">{{talkData.highlight}}</p>
+				<p class="preserve-newlines">{{talkData.abstract}}</p>
+
+			</div>
+			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+
+				<h1><strong>Metadata about your talk</strong> (shown in the program)</h1>
+
+				<p><strong>Topics & type of talk: </strong>{{formatTags()}}</p>
+				<p><strong>Presentation format: </strong>{{talkData.presentationType}}</p>
+				<p><strong>Expected knowledge level: </strong>{{talkData.level}}</p>
+				<p><strong>Language: </strong>{{formatLanguage()}}</p>
+
+				<h2>Expected audience and code level</h2>
+				<p class="preserve-newlines">{{talkData.expectedAudience}}</p>
+
+			</div>
+			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+				<h1><strong>Extra information</strong> (only shown to the organizers)</h1>
+
+				<h2><i class="fa fa-list-ol"></i> Outline <span>(not public)</span></h2>
+				<p class="preserve-newlines">{{talkData.outline}}</p>
+
+				<h2><i class="fa fa-laptop"></i> Equipment <span>(not public)</span></h2>
+				<p class="preserve-newlines">{{talkData.equipment}}</p>
+
+			</div>
+
+			<div ng-repeat="speaker in talkData.speakers">
+
+				<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+					<h1><strong>Speaker info</strong> (email & postcode are only for the organizers eyes)</h1>
+
+
+					<div class="imagepreview speaker-floatleft" style="background: url({{computePictureUrl(speaker)}}) no-repeat left top; background-size: cover;"></div>
+					<div class="speaker-floatleft">
+						<h2><i class="fa fa-user"></i> {{speaker.speakerName}} ({{speaker.email}})</h2>
+						<p>Postcode: {{speaker.zipCode}}</p>
+						<p class="preserve-newlines">{{speaker.bio}}</p>
+					</div>
+				</div></div>
+			</div>
+
+			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+				<h1><strong>Want to update this talk?</strong></h1>
+				<p>Go ahead, make changes. The changes will be synced to the official program (when and if published) with a delay of approximately 10 minutes.</p>
+				<a href="index.html?talkid={{talkData.addKey}}" class="button btn btn-large">Update your talk</a>
+			</div>
+
 		</div>
-		<div style="clear: both; height: 50px">&nbsp;</div>
+
 		<div ng-show="showError">
-			<h1>Sorry this did not work</h1>
-			Could not find the talk with this id.
+			<div class="tile tile-txt tile-big tile-talksummary"><div class="tile-inner">
+				<h1>Sorry this did not work</h1>
+				<p>Could not find the talk with this id.</p>
+			</div>
 		</div>
+
 	</div>
+
+		
+
+
+  </div></div>
+</div> <!-- END wrapper -->
+
 </body>
 </html>
+
+
+
+
+
+
