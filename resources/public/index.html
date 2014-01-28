@@ -212,8 +212,8 @@
         <p><textarea rows="4" required="required" class="talkInput speakerInput" id="speakerBioInput" ng-model="speaker.bio" placeholder="Who are you? What makes you tick?"></textarea></p>
 
         <h3>Picture</h3>
-        <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com</p>
-          <p> <img class="thumbnail" style="width: 180px; height: 260px;" ng-src="{{speaker.picurl}}"/>
+        <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address)</p>
+          <p> <img class="imagepreview" style="width: 260px; height: 260px;" ng-src="{{speaker.picurl}}"/>
           </p>
           <p><iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
           </iframe></p>

@@ -53,6 +53,14 @@ p { margin:0 0 1em 0; line-height: 1.5; max-width: 40em; }
 .imagelist li { margin: .8em 0; }
 .imagelist.green i { color: #518F89; }
 
+.imagepreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 200px;
+    display: block;
+    border: 1px solid #777;
+}
+
 p.ingress { font-weight: 700; }
 
 a { color:#F15B40; text-decoration: none; border-bottom:1px solid rgba(0,0,0,0.1); }
