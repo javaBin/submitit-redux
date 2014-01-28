@@ -54,8 +54,8 @@ p { margin:0 0 1em 0; line-height: 1.5; max-width: 40em; }
 .imagelist.green i { color: #518F89; }
 
 .imagepreview {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 200px;
     display: block;
     border: 1px solid #777;

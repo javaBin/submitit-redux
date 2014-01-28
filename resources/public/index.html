@@ -213,9 +213,8 @@
         <p><textarea rows="4" required="required" class="talkInput speakerInput" id="speakerBioInput" ng-model="speaker.bio" placeholder="Who are you? What makes you tick?"></textarea></p>
 
         <h3>Picture</h3>
-        <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address).</p>
-          <p> <img class="imagepreview" style="width: 260px; height: 260px;" ng-src="{{speaker.picurl}}"/>
-          </p>
+        <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address)</p>
+          <div class="imagepreview" style="background: url({{speaker.picurl}}) no-repeat left top; background-size: cover;"></div>
           <p><iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
           </iframe></p>
 
@@ -277,7 +276,7 @@
     <ul>
         <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
         <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
-        <li><a href="http://2014.javazone.no/videos.html">Videos</a></li>
+        <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
     </ul>
   </div></div>
 
@@ -289,9 +288,13 @@
   </div></div>
 
   <div class="tile tile-txt tile-big"><div class="tile-inner">
-    <p ng-show="showResutFailure">Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</p>
-    <p ng-show="showResultSuccess">You can review your talk at any time by going <a href="{{talkAddress}}">to this address</a>. We'll also send you this link by email.</p>
-    <p class="whatsnext">Now that you have submitted your presentation, you can start looking forward to the conference. More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>. And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</p>
+    <ul class="fa-ul imagelist green">
+      <li ng-show="showResutFailure"><i class="fa-li fa fa-check-circle-o"></i> Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</li>
+      <li ng-show="showResultSuccess"><i class="fa-li fa fa-check-circle-o"></i> You can review your talk at any time by going <a href="{{talkAddress}}">to this address</a>. We'll also send you this link by email.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Now that you have submitted your presentation, you can start looking forward to the conference.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</li>
+    </ul>
   </div></div>
 </div> <!-- END success wrapper -->
 
@@ -302,7 +305,7 @@
     <ul>
         <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
         <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
-	<li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
+	       <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
     </ul>
   </div></div>
 
