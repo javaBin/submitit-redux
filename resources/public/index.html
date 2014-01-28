@@ -213,8 +213,7 @@
 
         <h3>Picture</h3>
         <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address)</p>
-          <p> <img class="imagepreview" style="width: 260px; height: 260px;" ng-src="{{speaker.picurl}}"/>
-          </p>
+          <div class="imagepreview" style="background: url({{speaker.picurl}}) no-repeat left top; background-size: cover;"></div>
           <p><iframe seamless frameborder="0" ng-src="uploadPicture?speakerid={{speaker.givenId}}&dummyKey={{speaker.dummyId}}" class="span8">
           </iframe></p>
 
