@@ -37,7 +37,8 @@ _readWithDefault() {
     echo $answer
 }
 
-info "TODO BYGGER"
+info "BYGGER"
+lein uberjar
 
 yellow ""
 yellow "  deployer submitit"
