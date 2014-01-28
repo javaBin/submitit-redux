@@ -41,11 +41,18 @@ h2 i, h3 i { margin:0 .3em 0 0; }
 .last { margin-bottom: 0; }
 h2 span, h3 span, h4 span { color: #888; font-size: 80%; }
 
+strong { font-weight: 600; }
+
 label:hover { cursor: pointer; }
 
 .space { height: 2em; }
 
 p { margin:0 0 1em 0; line-height: 1.5; max-width: 40em; }
+.imagelist { max-width: 40em; line-height: 1.3; }
+.imagelist i { margin: .4em 0 0 0; }
+.imagelist li { margin: .8em 0; }
+.imagelist.green i { color: #518F89; }
+
 p.ingress { font-weight: 700; }
 
 a { color:#F15B40; text-decoration: none; border-bottom:1px solid rgba(0,0,0,0.1); }
@@ -54,8 +61,8 @@ a:hover { color:#000; border-color:#000; text-decoration: none; }
 
 .menu { padding:2.8em 0 1.7em 0; margin:0 1.2em 0 0; font-weight: 300; position: relative; }
 .menu h1 a { border:none; }
-.menu ul { position: absolute; bottom:1.6em; right:5px; width:60%; text-align: right; }
-.menu li { line-height: 2.5; display: inline; margin:0 0 0 2em; }
+.menu ul { position: absolute; bottom:1.6em; right:5px; width:60%; text-align: right;}
+.menu li { line-height: 2.5; display: inline; margin:0 0 0 2em; padding: 0;}
 .menu ul a { color:#394549; font-size:2em; }
 .menu ul a:hover { color:#000; }
 
@@ -345,7 +352,7 @@ h2.program-header .duration { position: absolute; top:2em; right:2em; }
 
 .community h3 { margin:0; }
 
-.button { background: #148f87; color:#fff; padding:.5em 1em; border-radius: .2em; }
+.button { background: #148f87; color:#fff; padding:.5em 1em; border-radius: .2em; text-shadow: none; box-shadow: none; -webkit-box-shadow: none; }
 .button:hover { background: #117972; color:#fff !important; border-color: transparent !important; }
 .button i { display: inline-block; margin: 0 .3em 0 0; }
 
@@ -467,13 +474,34 @@ h2.program-header .duration { position: absolute; top:2em; right:2em; }
 }
 .choice input {
     float: left;
-    margin: 5px 10px 30px 0;
+    margin: 4px 10px 30px 0;
+}
+.choice label {
+    color: #555;
+    font-size: .9em;
+    line-height: 1.3;
+}
+.choice label span {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.floatchoice {
+    box-sizing: border-box;
+    float: left;
+    width: 24%;
+    height: 100px;
+    margin: 5px;
+    padding: 10px;
+}
+.floatchoice input {
+    margin-bottom: 60px;
 }
 
 .talkInput {
-    font-size: 20px !important;
-    padding: 10px !important;
+    font-size: 18px !important;
+    padding: 15px !important;
     width: 800px;
+    line-height: 1.3;
 }
 
 

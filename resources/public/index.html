@@ -28,7 +28,7 @@
   <ul>
       <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
       <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
-      <li><a href="http://2014.javazone.no/videos.html">Videos</a></li>
+      <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
   </ul>
 </div></div>
 
@@ -44,9 +44,13 @@
 
     <h2 class="first"><i class="fa fa-lightbulb-o"></i> Ready to submit? Let us give you a little bit of information first</h2>
 
-    <p>When you submit, you will receive an email as a confirmation. You will also receive a link to a page where you can update your submission.</p>
-    <p>Please fill in this form in the language you are giving your talk. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
-    <p class="last">Deadline for submissions are <strong>28. April 2014</strong>.</p>
+    <ul class="fa-ul imagelist green">
+      <li><i class="fa-li fa fa-check-circle-o"></i> When you submit, you will receive an <strong>email as a confirmation</strong>. There you will find a link to a page where you can update your submission.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> The information given in this form will be <strong>used publicly in the program</strong> where not specified otherwise.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Please fill in this form <strong>in the language you are giving your talk</strong>. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Deadline for submissions are <strong>28. April 2014</strong>, but feel free to submit your talk early :-)</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Now that you know all this, go ahead and fill out this form.</li>
+    </ul>
 
 </div></div>
 
@@ -96,42 +100,45 @@
     <h2 class="first"><i class="fa fa-clock-o"></i> Presentation format</h2>
     <div class="choice">
       <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
-      <label for="presentationchoice"><span>Presentation:</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
+      <label for="presentationchoice"><span>Presentation</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
     </div>
     <div class="choice">
       <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
-      <label for="lightningchoice"><span>Lightning Talk:</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
+      <label for="lightningchoice"><span>Lightning Talk</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
     </div>
     <div class="choice">
         <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
-        <label for="lightningchoice"><span>Workshop:</span> <br>Workshop can last anything between 2 and 8 hours. Use outline below to indicate the preferred length of your workshop</label>
+	<label for="lightningchoice"><span>Workshop</span> <br>Workshop can last anything between 2 and 8 hours. Use outline below to indicate the preferred length of your workshop</label>
     </div>
 
     <h2><i class="fa fa-flag"></i> Language</h2>
     <p>Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommends that you hold the talk in the language you are most comfortable with.</p>
-    <div class="choice">
+    <div class="choice floatchoice">
       <input type="radio" name="lang" ng-model="talk.language" value="en" id="enchoice" />
-      <label for="enchoice"><span>English:</span> <br>The talk will be in English.</label>
+      <label for="enchoice"><span>English</span> <br>The talk will be in English.</label>
     </div>
-    <div class="choice">
+    <div class="choice floatchoice">
       <input type="radio" name="lang" ng-model="talk.language" value="no" id="nochoice" />
-      <label for="nochoice"><span>Norwegian:</span> <br>Jeg snakker best p&aring; norsk.</label>
+      <label for="nochoice"><span>Norwegian</span> <br>Jeg snakker best p&aring; norsk.</label>
     </div>
+    <div style="clear: both"></div>
 
-    <h2><i class="fa fa-tags"></i> Tags</h2>
-    <p>Please check topics which relate to your presentation</p>
-    <div class="row-fluid" id="tagBoxes">
-      <label class="checkbox inline" ng-repeat="atag in tagList">
-        <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
-      </label>
+    <h2><i class="fa fa-tags"></i> Topics for your talk</h2>
+    <p>Please select up to three topics to help the audience get a feel for what you will cover in your talk</p>
+    <div class="choice floatchoice" ng-repeat="atag in tagList">
+      <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
+      <label for="{{atag.value}}"><span>{{atag.value}}</span> <br>{{atag.description}}</label>
     </div>
-    <br/><br/>
-    <p>Please check topics which relate to your type of talk</p>
-    <div class="row-fluid" id="tagBoxes">
-        <label class="checkbox inline" ng-repeat="atag in typeList">
-            <input type="checkbox" class="tagCheckbox" ng-model="atag.checked">{{atag.value}}</input>
-        </label>
+    <div style="clear: both"></div>
+
+
+    <h2><i class="fa fa-book"></i> Type of talk</h2>
+    <p>To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
+    <div class="choice floatchoice" ng-repeat="atag in typeList">
+      <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
+      <label for="{{atag.value}}"><span>{{atag.value}}</span> <br>{{atag.description}}</label>
     </div>
+    <div style="clear: both"></div>
 
 
 </div></div>
@@ -218,7 +225,7 @@
     </div>
 
   </div>
-  <button class="btn" id="addSpeaker" ng-click="addASpeaker()">Add another speaker</button>
+  <button class="btn button" id="addSpeaker" ng-click="addASpeaker()">Add another speaker</button>
 
 
 </div></div>
@@ -248,7 +255,7 @@
   <p>You will receive a copy of this information by email. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
 
   <div class="submitWrapper">
-    <button type="submit" id="submitButton" class="btn btn-large btn-primary" data-loading-text="Submitting talk. Please wait..." ng-click="talkSubmit()">Submit talk now</button>
+    <button type="submit" id="submitButton" class="btn button btn-large btn-primary" data-loading-text="Submitting talk. Please wait..." ng-click="talkSubmit()">Submit talk now</button>
   </div>
 
   <p>If you have any problem submitting your presentation, please contact us on <a href="mailto:program@java.no">program@java.no</a>.</p>
@@ -294,7 +301,7 @@
     <ul>
         <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
         <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
-        <li><a href="http://2014.javazone.no/videos.html">Videos</a></li>
+	<li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
     </ul>
   </div></div>
 

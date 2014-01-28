@@ -1,18 +1,18 @@
 {"tags":
     [
-    {"value" : "Security", "checked": false},
-    {"value" : "Core", "checked": false},
-    {"value" : "Backend", "checked": false},
-    {"value" : "Frontend", "checked": false},
-    {"value" : "Concepts", "checked": false},
-    {"value" : "Craftmanship", "checked": false},
-    {"value" : "Architecture", "checked": false},
-    {"value" : "Teamwork", "checked": false}
+    {"value" : "Security", "description" : "Privacy, Application Security, SSO, Auditing", "checked": false},
+    {"value" : "Core", "description" : "Memory, APIs, Performance", "checked": false},
+    {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false},
+    {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false},
+    {"value" : "Concepts", "description" : "Programming Languages, Functional, Reactive, Features in Languages, Paradigms", "checked": false},
+    {"value" : "Craftmanship", "description" : "Clean Code, CD, DevOps", "checked": false},
+    {"value" : "Architecture", "description" : "Architecture in Practice, Application Architecture, Designs, Scalability", "checked": false},
+    {"value" : "Teamwork", "description" : "Teams and Collaboration, Roles, Outsourcing, Process, Product, Technical Leadership", "checked": false}
     ],
 "types":
-    [{"value" : "Experice reports", "checked": false},
-    {"value" : "Research Innovation", "checked": false},
-    {"value" : "Knowledge Practice", "checked": false},
-    {"value" : "Wisdom", "checked": false}
+    [{"value" : "Experice reports", "description" : "Case Descriptions, Retrospec", "checked": false},
+    {"value" : "Research Innovation", "description" : "New Technologies, Findings", "checked": false},
+    {"value" : "Knowledge Practice", "description" : "How-tos, Introductions, Technical White Papers", "checked": false},
+    {"value" : "Wisdom", "description" : "Experience over time, Opinions, Evangelism", "checked": false}
     ]
 }
