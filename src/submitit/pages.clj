@@ -29,10 +29,11 @@
 (defn -main [& m]
 
   (println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
+  (if (not (frontend-develop-mode?))
   (let [setup-map (read-enviroment-variables)]
     (if setup-map
       (dosync (ref-set setupenv setup-map))
-      (throw (new java.lang.RuntimeException "Could not read setupfile"))))
+      (throw (new java.lang.RuntimeException "Could not read setupfile")))))
   (setup-log)
   (timbre/info "Log initialized.")
   (startup))
