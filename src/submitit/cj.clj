@@ -61,6 +61,13 @@
     (timbre/trace "put returned " res)
     (if (= 204 (:status res)) nil res))))
 
+(defn delete-uri [uri]
+  (timbre/debug "Deleting " uri)
+  (let [result (client/delete uri)]
+    (timbre/debug "Delete res: " result)
+    )
+  )
+
 (defn fetch-item [href]
   (let [collection (get-collection (str href)) last-mod ((collection :headers) "last-modified")]
     (timbre/trace "AAAAAAAAAAAHHHHHHH " collection)

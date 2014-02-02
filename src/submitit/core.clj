@@ -116,6 +116,16 @@
           (timbre/trace "Item" item)
           (upload-photo-to-session speaker item)))))))))
 
+(defn delete-speakers [talk]
+  (doseq [speaker (talk "deletedSpeakers")]
+    (let [
+           speaker-loc (decode-string (speaker "givenId"))
+           ]
+      (delete-uri speaker-loc)
+    )
+  )
+)
+
 
 (defn to-speaker [item]
   (let [data (cj/data item)]
@@ -164,6 +174,7 @@
       
       (timbre/trace "Update-res: " put-result)
       (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")))
+      (if (talk "deletedSpeakers") (delete-speakers talk))
       {:resultid (talk "addKey")}
     )
     (let [
