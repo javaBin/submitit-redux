@@ -75,7 +75,7 @@
   (let [speak-photo (noir.session/get (speak "dummyId"))]
     (timbre/trace "SpeakPhoto: **" speak-photo "**")
     (if speak-photo
-      (let [ photo-url (:href (cj/link-by-rel "photo"))
+      (let [ photo-url (:href (cj/link-by-rel item "photo"))
              bytes (:photo-byte-arr speak-photo)
              ct (:photo-content-type speak-photo) 
              filename (:photo-filename speak-photo) ]
