@@ -54,14 +54,18 @@
   (clojure.java.io/copy photo-byte-arr (clojure.java.io/file (str (read-setup :photo-copy-dir) (encode-string address)))))
 
 (defn add-photo [href bytes ct filename]
-  (try 
+  (try
+    (timbre/trace "Uploading picture to " href)
+    (let [postres
     (client/post href (merge {
       :body bytes
       :content-type ct
       :headers {"content-disposition" (str "inline; filename=" filename)}
-      }) setup-login)
+      }) setup-login)]
+      (timbre/trace "Picture uploaded: " postres)
+      postres)
     (catch Exception e 
-      (timbre/trace "caught exception: " (.getMessage e) "->" e)
+      (timbre/error "caught exception uploading picture to ems: " (.getMessage e) "->" e)
       (if (read-setup :photo-copy-dir) (save-file-copy href bytes)))))
 
 (defn read-picture [href]
@@ -75,11 +79,13 @@
   (let [speak-photo (noir.session/get (speak "dummyId"))]
     (timbre/trace "SpeakPhoto: **" speak-photo "**")
     (if speak-photo
-      (let [ photo-url (:href (cj/link-by-rel item "photo"))
+      (let [photo-link (cj/link-by-rel item "attach-photo")]
+        (timbre/trace "Photo-link: " photo-link)
+      (let [ photo-url (.toString (:href photo-link))
              bytes (:photo-byte-arr speak-photo)
              ct (:photo-content-type speak-photo) 
              filename (:photo-filename speak-photo) ]
-        (add-photo photo-url bytes ct filename)))))
+        (add-photo photo-url bytes ct filename))))))
 
 
 (defn add-speakers [speakers href]
@@ -102,7 +108,7 @@
           (timbre/trace "New speaker: " template)
           (timbre/trace "Speakerhref: " href)
         (let [res (post-template href template)]
-          (timbre/trace "Photo res" res)
+          (timbre/trace "New speaker res" res)
           (timbre/trace "+++++")
           (if (noir.session/get (speaker "dummyId"))
           (let [item (fetch-item ((:headers res) "location"))]
