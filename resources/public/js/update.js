@@ -167,6 +167,7 @@ function UpdateCtrl($scope,$http) {
                 givenId: null,
                 dummyId: getDummySpeakerId()
             });
+        return false;
     }
 
     
@@ -256,7 +257,9 @@ function UpdateCtrl($scope,$http) {
     };
 
     $scope.deleteSpeaker = function(speaker) {
-
+       var index = $scope.talk.speakers.indexOf(speaker);
+       $scope.talk.speakers.splice(index,1);
+       return false;
     }
 
 
