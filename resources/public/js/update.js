@@ -121,6 +121,7 @@ function UpdateCtrl($scope,$http) {
                             $scope.talk = data;
                             $scope.talk.captchaFact = captchaFact;
                             $scope.talk.captchaAnswer = "";
+                            $scope.talk.deletedSpeakers = [];
 
                             var checkTags = function(atag) {
                                 $scope.talk.talkTags.forEach(function (tagname) {
@@ -259,6 +260,9 @@ function UpdateCtrl($scope,$http) {
     $scope.deleteSpeaker = function(speaker) {
        var index = $scope.talk.speakers.indexOf(speaker);
        $scope.talk.speakers.splice(index,1);
+       if (speaker.givenId && speaker.givenId != null) {
+           $scope.talk.deletedSpeakers.push(speaker);
+       }
        return false;
     }
 
