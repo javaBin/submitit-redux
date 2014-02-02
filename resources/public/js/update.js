@@ -60,6 +60,7 @@ function UpdateCtrl($scope,$http) {
     $scope.talkAddress = false;
     $scope.needPassword = false;
     $scope.showCapthca = true;
+    $scope.showGeneralError = false;
 
     $scope.tagList = [];
     $scope.typeList = [];
@@ -171,6 +172,7 @@ function UpdateCtrl($scope,$http) {
     
     $scope.talkSubmit = function(value) {
         $scope.showCapthcaError = false;
+        $scope.showGeneralError = false;
         var submitBtn = $("#submitButton");     
         submitBtn.button('loading');
 
@@ -199,6 +201,7 @@ function UpdateCtrl($scope,$http) {
         $http({method: 'POST', url: "addTalk", data: $scope.talk}).
                         success(function(data, status, headers, config) {
                             submitBtn.button('reset');
+
                             if (data.captchaError) {
                                 $scope.showCapthcaError = true;                             
                             } else if (data.errormessage) {
@@ -220,6 +223,8 @@ function UpdateCtrl($scope,$http) {
                             
                         }).
                         error(function(data, status, headers, config) {
+                            submitBtn.button('reset');
+                            $scope.showGeneralError = true;
                             console.log("some error occured");
                         });
         return false;

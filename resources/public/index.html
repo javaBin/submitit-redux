@@ -254,7 +254,12 @@
   <h2 class="first"><i class="fa fa-heart"></i> That's all! Are you ready to rock JavaZone 2014?</h2>
   <p>You will receive a copy of this information by email. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
 
-  <div class="submitWrapper">
+    <div class="row" id="generalError" ng-show="showGeneralError">
+        <div class="alert alert-error span4">Some unknown error has occured. Please contact program@java.no</div>
+    </div>
+
+
+    <div class="submitWrapper">
     <button type="submit" id="submitButton" class="btn button btn-large btn-primary" data-loading-text="Submitting talk. Please wait..." ng-click="talkSubmit()">Submit talk now</button>
   </div>
 
