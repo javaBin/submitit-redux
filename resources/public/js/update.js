@@ -255,6 +255,10 @@ function UpdateCtrl($scope,$http) {
 
     };
 
+    $scope.deleteSpeaker = function(speaker) {
+
+    }
+
 
 
 }
