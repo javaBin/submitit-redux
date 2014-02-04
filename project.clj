@@ -14,7 +14,7 @@
     [com.google.code.maven-play-plugin.org.playframework/jj-simplecaptcha "1.1"]
     [org.jsoup/jsoup "1.7.2"]
     [clj-time "0.4.5"]
-    [net.hamnaberg.rest/collection-json-clj "0.1.0-SNAPSHOT"]
+    [net.hamnaberg.rest/collection-json-clj "0.1.0"]
     [com.taoensso/timbre "3.0.0-RC2"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
