@@ -65,7 +65,7 @@ if [ $ENV != "test" -a $ENV != "prod" ]; then
 fi
 
 if [ $ENV == "prod" ]; then
-	HOST="212.71.237.26"
+	HOST="2014.javazone.no"
 	BASE="/home/javabin/web/submitit"
 elif [ $ENV == "test" ]; then
 	HOST="test.2014.javazone.no"
