@@ -20,9 +20,15 @@
 (def handler (server/gen-handler {:mode :dev
                                   :ns 'submitit.core}))
 
+(defn server-mode[]
+  (let [val (read-setup :server-mode) confval (if (nil? val) :prod (keyword val))]
+    (timbre/info "Servermode " confval)
+    confval
+    )
+  )
 
 (defn startup []  
-  (let [mode :dev port (Integer/parseInt (get (System/getenv) "SUBMITIT_PORT" "8080"))]
+  (let [mode (server-mode) port (Integer/parseInt (get (System/getenv) "SUBMITIT_PORT" "8080"))]
     (server/start port {:mode mode
                         :ns 'submitit.core})))
 
