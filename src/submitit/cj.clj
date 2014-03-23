@@ -5,7 +5,7 @@
   (:require [taoensso.timbre :as timbre])
   )
 
-(defn talk-to-template [talk state]
+(defn talk-to-template [talk exisisting-talk]
   (let [t (cj/create-template (merge {
     "title" (talk "title")
     "level" (talk "level")
@@ -17,7 +17,11 @@
     "lang" (talk "language")
     "keywords" (seq (talk "talkTags"))
     "summary" (talk "highlight")
-  } (if state {"state" state} {})))] (timbre/trace t) t))
+  }
+  (if (and (map? exisisting-talk) (exisisting-talk "state")) {"state" (exisisting-talk "state")} {})
+  (if (and (map? exisisting-talk) (exisisting-talk "tags")) {"tags" (exisisting-talk "tags")} {})
+    ))]
+    (timbre/debug "Template: " t) t))
 
 (defn speaker-to-template [speaker]
   (timbre/trace "speaker-to-template: " speaker)

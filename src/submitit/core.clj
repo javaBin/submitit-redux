@@ -146,9 +146,10 @@
   (speakers-from-item (fetch-item uri)))
 
 
-(defn read-state [uri]
+(defn read-exisisting-talk [uri]
   (let [data (cj/data (fetch-item uri))]
-    (:state data)))
+    (timbre/debug "Data fetched: " data)
+    data))
 
 (defn exsisting-talk?[talk]
   (if (talk "addKey") true false)
@@ -159,7 +160,7 @@
   (if (exsisting-talk? talk)
     (let [
       href (decode-string (talk "addKey"))
-      template (talk-to-template talk (read-state href))
+      template (talk-to-template talk (read-exisisting-talk href))
       put-result (put-template href template (talk "lastModified")) ]
       
       (timbre/trace "Update-res: " put-result)
