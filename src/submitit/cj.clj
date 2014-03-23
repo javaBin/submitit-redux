@@ -21,7 +21,7 @@
   (if (and (map? exisisting-talk) (exisisting-talk "state")) {"state" (exisisting-talk "state")} {})
   (if (and (map? exisisting-talk) (exisisting-talk "tags")) {"tags" (exisisting-talk "tags")} {})
     ))]
-    (timbre/debug "Template: " t) t))
+    (timbre/trace "Template: " t) t))
 
 (defn speaker-to-template [speaker]
   (timbre/trace "speaker-to-template: " speaker)

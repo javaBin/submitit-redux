@@ -148,7 +148,7 @@
 
 (defn read-exisisting-talk [uri]
   (let [data (cj/data (fetch-item uri))]
-    (timbre/debug "Data fetched: " data)
+    (timbre/trace "Data fetched: " data)
     data))
 
 (defn exsisting-talk?[talk]
