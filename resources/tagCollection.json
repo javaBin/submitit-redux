@@ -5,7 +5,7 @@
     {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false},
     {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false},
     {"value" : "Concepts", "description" : "Programming Languages, Functional, Reactive, Features in Languages, Paradigms", "checked": false},
-    {"value" : "Craftmanship", "description" : "Clean Code, Continuos Delivery, DevOps", "checked": false},
+    {"value" : "Craftmanship", "description" : "Clean Code, Continuous Delivery, DevOps", "checked": false},
     {"value" : "Architecture", "description" : "Architecture in Practice, Application Architecture, Designs, Scalability", "checked": false},
     {"value" : "Teamwork", "description" : "Teams and Collaboration, Roles, Outsourcing, Process, Product, Technical Leadership", "checked": false}
     ],
