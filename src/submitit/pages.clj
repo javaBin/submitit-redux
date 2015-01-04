@@ -4,46 +4,61 @@
     [submitit.cj]
     [submitit.core]
     [submitit.email]
-    [noir.core]
-    [noir.request]
-    [noir.response :only [redirect]]
+
     [cheshire.core :only [generate-string parse-string]]
-    [hiccup.page-helpers :only [html5]]
+    [hiccup.core :only [html]]
   )
-  (:require [noir.server :as server])
+  (:use compojure.core)
   (:require [clojure.java.io :as io])
   (:require [collection-json.core :as cj])
   (:require [taoensso.timbre :as timbre])
+  (:require [compojure.route :as route]
+            [ring.adapter.jetty :as jetty])
   (:gen-class)
   )
 
-(def handler (server/gen-handler {:mode :dev
-                                  :ns 'submitit.core}))
 
-(defn server-mode[]
-  (let [val (read-setup :server-mode) confval (if (nil? val) :prod (keyword val))]
-    (timbre/info "Servermode " confval)
-    confval
-    )
+;(defn startup []
+;  (let [mode (server-mode) port (Integer/parseInt (get (System/getenv) "SUBMITIT_PORT" "8080"))]
+;    (server/start port {:mode mode
+;                        :ns 'submitit.core})))
+
+(defn new-speaker-id []
+  (let [nid (gen-new-speaker-id)]
+    (generate-string {:dummyId (str "DSI" nid)})))
+
+
+(defroutes main-routes
+  (GET "/newSpeakerId" [] (new-speaker-id))
+  (route/resources "/")
+  (route/not-found "404 Not Found"))
+
+
+(defn start-jetty []
+  (jetty/run-jetty main-routes {:port 8888})
   )
 
-(defn startup []  
-  (let [mode (server-mode) port (Integer/parseInt (get (System/getenv) "SUBMITIT_PORT" "8080"))]
-    (server/start port {:mode mode
-                        :ns 'submitit.core})))
 
 (defn -main [& m]
 
   (println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
   (if (not (frontend-develop-mode?))
-  (let [setup-map (read-enviroment-variables)]
-    (if setup-map
-      (dosync (ref-set setupenv setup-map))
-      (throw (new java.lang.RuntimeException "Could not read setupfile")))))
+    (let [setup-map (read-enviroment-variables)]
+      (if setup-map
+        (dosync (ref-set setupenv setup-map))
+        (throw (new java.lang.RuntimeException "Could not read setupfile")))))
   (setup-log)
   (timbre/info "Log initialized.")
-  (startup))
-            
+  ;(startup))
+  (start-jetty)
+  )
+
+
+
+(comment
+
+
+
 (defpage [:get "/tagCollection"] {:as nothing}
   (generate-string (tag-list)))
 
@@ -115,7 +130,7 @@
 
 (defpage [:get "/status"] {:as nothing}
   (let [setupfile (get-setup-filename)]
-  (html5
+  (html
     [:body
       [:h1 "Status"]
       [:p (str "EnvFile: '" setupfile "'")]
@@ -213,3 +228,6 @@
         (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
         (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)
         (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)))))
+
+  ; End comment
+  )

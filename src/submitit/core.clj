@@ -13,8 +13,8 @@
   (:require [clojure.data.codec.base64 :as b64])
   (:require [clj-time.core :only [now] :as cljtime])
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
-  (:require noir.util.crypt)
-  (:require noir.session)
+  ;(:require noir.util.crypt)
+  ;(:require noir.session)
   (:require [clojure.contrib.io :as cio])
   (:require [collection-json.core :as cj])
   (:require [taoensso.timbre :as timbre])
@@ -30,7 +30,8 @@
     (.replaceAll "&aring;" "å")
     (.replaceAll "&Aring;" "Å"))))
 
-(def random-salt (noir.util.crypt/gen-salt))
+;(def random-salt (noir.util.crypt/gen-salt))
+(def random-salt "xyz")
 
 (def speaker-dummy-id (ref 0))
 
@@ -74,19 +75,20 @@
     } setup-login))]
     (cio/to-byte-array (:body res))))
 
-(defn upload-photo-to-session [speak item]
-  (timbre/trace "UploadPhoto")
-  (let [speak-photo (noir.session/get (speak "dummyId"))]
-    (timbre/trace "SpeakPhoto: **" speak-photo "**")
-    (if speak-photo
-      (let [photo-link (cj/link-by-rel item "attach-photo")]
-        (timbre/trace "Photo-link: " photo-link)
-      (let [ photo-url (.toString (:href photo-link))
-             bytes (:photo-byte-arr speak-photo)
-             ct (:photo-content-type speak-photo) 
-             filename (:photo-filename speak-photo) ]
-        (add-photo photo-url bytes ct filename))))))
+(defn session-get[x] nil)
 
+  (defn upload-photo-to-session [speak item]
+    (timbre/trace "UploadPhoto")
+    (let [speak-photo (session-get (speak "dummyId"))]
+      (timbre/trace "SpeakPhoto: **" speak-photo "**")
+      (if speak-photo
+        (let [photo-link (cj/link-by-rel item "attach-photo")]
+          (timbre/trace "Photo-link: " photo-link)
+          (let [photo-url (.toString (:href photo-link))
+                bytes (:photo-byte-arr speak-photo)
+                ct (:photo-content-type speak-photo)
+                filename (:photo-filename speak-photo)]
+            (add-photo photo-url bytes ct filename))))))
 
 (defn add-speakers [speakers href]
   (doseq [speaker speakers]
@@ -110,7 +112,7 @@
         (let [res (post-template href template)]
           (timbre/trace "New speaker res" res)
           (timbre/trace "+++++")
-          (if (noir.session/get (speaker "dummyId"))
+          (if (session-get (speaker "dummyId"))
           (let [item (fetch-item ((:headers res) "location"))]
             (timbre/trace "+-+-+-+")
           (timbre/trace "Item" item)
@@ -241,9 +243,13 @@
   )]
   (if error-msg (generate-string {:errormessage error-msg}) nil)))
 
+(defn do-crypt [salt raw]
+  raw
+  )
+
 (defn captcha-error? [talk]
   (let [answer (talk "captchaAnswer") fact (talk "captchaFact")]
-    (and (not (exsisting-talk? talk)) (not= (noir.util.crypt/encrypt random-salt answer) fact))))
+    (and (not (exsisting-talk? talk)) (not= (do-crypt random-salt answer) fact))))
 
 (defn fetch-picture [aspeak]
   (let [picsrc (read-picture (str (aspeak "href") "/photo"))]

@@ -18,6 +18,7 @@ function get_gravatar(email) {
 }
 
 function getDummySpeakerId() {
+    //return "xuz";
     var dummySpeakerId;
     $.ajax({
         url: "newSpeakerId",
@@ -66,7 +67,8 @@ function UpdateCtrl($scope,$http) {
     $scope.typeList = [];
 
     var talkid = $.urlParam("talkid");
-    var captchaFact = readCaptchaFact();
+    //var captchaFact = readCaptchaFact();
+    var captchaFact = "xxx";
     if (talkid === 0) {
         $scope.talk = {
             presentationType : "presentation",
@@ -96,16 +98,19 @@ function UpdateCtrl($scope,$http) {
             }]
         };
 
+        /*
         $http({method: 'GET', url: "needPassword"}).
         success(function(data, status, headers, config) {
             $scope.needPassword = data.needPassword;
         }).
         error(function(data, status, headers, config) {
             console.log("Error fetching password neeeded");
-        }); 
+        });
+         */
 
     }
 
+    /*
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
                 $scope.tagList = data.tags;
@@ -155,7 +160,7 @@ function UpdateCtrl($scope,$http) {
                 console.log("some error occured");
             });
 
-
+*/
 
     $scope.addASpeaker = function() {
         $scope.talk.speakers.push({
