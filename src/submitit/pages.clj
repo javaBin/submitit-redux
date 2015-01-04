@@ -30,8 +30,10 @@
 
 (defroutes main-routes
   (GET "/newSpeakerId" [] (new-speaker-id))
+  (GET "/tagCollection" [] (generate-string (tag-list)))
   (route/resources "/")
-  (route/not-found "404 Not Found"))
+  (route/not-found "404 Not Found")
+  )
 
 
 (defn start-jetty []
@@ -57,14 +59,6 @@
 
 (comment
 
-
-
-(defpage [:get "/tagCollection"] {:as nothing}
-  (generate-string (tag-list)))
-
-(defpage [:get "/newSpeakerId"] {:as nothing}
-  (let [nid (gen-new-speaker-id)]
-  (generate-string {:dummyId (str "DSI" nid)})))
 
 
 (defpage [:get "/"] {:as attrs}

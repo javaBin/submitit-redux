@@ -110,7 +110,7 @@ function UpdateCtrl($scope,$http) {
 
     }
 
-    /*
+
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
                 $scope.tagList = data.tags;
@@ -160,7 +160,7 @@ function UpdateCtrl($scope,$http) {
                 console.log("some error occured");
             });
 
-*/
+
 
     $scope.addASpeaker = function() {
         $scope.talk.speakers.push({
