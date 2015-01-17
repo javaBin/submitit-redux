@@ -36,6 +36,14 @@
      :body (generate-string {:fact (.trim (.getAnswer gen-cap))})
      }))
 
+(defn captcha [session]
+  {
+    :headers {"Content-Type" "image/jpeg"}
+    :body (let [out (new java.io.ByteArrayOutputStream)]
+            (javax.imageio.ImageIO/write (:capt-image session) "png" out)
+            (new java.io.ByteArrayInputStream (.toByteArray out)))
+    }
+  )
 
 (comment
   (defpage [:get "/captcha"] {:as noting}
@@ -54,6 +62,7 @@
   (GET "/setSess" {session :session} {:session (assoc session :akvar "42") :body "I sat it"})
   (GET "/getSess" {session :session} {:body (str "I am here '" (:akvar session) "'")})
   (GET "/loadCaptcha" {session :session} (load-captcha session))
+  (GET "/captcha" {session :session} (captcha session))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
