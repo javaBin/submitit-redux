@@ -67,8 +67,7 @@ function UpdateCtrl($scope,$http) {
     $scope.typeList = [];
 
     var talkid = $.urlParam("talkid");
-    //var captchaFact = readCaptchaFact();
-    var captchaFact = "xxx";
+    var captchaFact = readCaptchaFact();
     if (talkid === 0) {
         $scope.talk = {
             presentationType : "presentation",
