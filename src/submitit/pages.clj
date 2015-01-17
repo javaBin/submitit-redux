@@ -25,6 +25,8 @@
 ;    (server/start port {:mode mode
 ;                        :ns 'submitit.core})))
 
+
+
 (defn new-speaker-id []
   (let [nid (gen-new-speaker-id)]
     (generate-string {:dummyId (str "DSI" nid)})))
@@ -193,25 +195,6 @@
       (new java.io.ByteArrayInputStream (:photo-byte-arr speak-photo)))
       (noir.response/status 404 "Photo not found"))
   ))
-
-(defpage [:get "/status"] {:as nothing}
-  (let [setupfile (get-setup-filename)]
-  (html
-    [:body
-      [:h1 "Status"]
-      [:p (str "EnvFile: '" setupfile "'")]
-      [:hr]
-      (if (and setupfile (.exists (io/file setupfile)))
-      [:pre (setup-str )]
-      [:p "Could not find setupfile"])
-      [:hr]
-      [:pre (reduce (fn[a b] (str a "\n" b)) (java.lang.System/getProperties))]
-    ])))
-
-
-(defpage [:get "/needPassword"] {:as nothing}
-  (generate-string {:needPassword (need-submit-password?)}))
-
 
 (defn upload-form [message speaker-key dummy-key picChanged]
   (html5
