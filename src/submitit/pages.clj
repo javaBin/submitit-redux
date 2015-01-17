@@ -137,6 +137,8 @@
   (GET "/captcha" {session :session} (captcha session))
   (POST "/addTalk" {body :body} (add-talk (parse-string (slurp body))))
   (GET "/talkJson/:talkid"  request (json-talk ((request :route-params) :talkid)))
+  (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
+
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -228,7 +230,7 @@
 (defpage [:get "/needPassword"] {:as nothing}
   (generate-string {:needPassword (need-submit-password?)}))
 
-  
+
 (defn upload-form [message speaker-key dummy-key picChanged]
   (html5
     (if picChanged
