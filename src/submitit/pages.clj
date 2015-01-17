@@ -100,6 +100,22 @@
   )
 
 
+(defn status-page []
+  (let [setupfile (get-setup-filename)]
+    (html
+      [:body
+       [:h1 "Status"]
+       [:p (str "EnvFile: '" setupfile "'")]
+       [:hr]
+       (if (and setupfile (.exists (io/file setupfile)))
+         [:pre (setup-str )]
+         [:p "Could not find setupfile"])
+       [:hr]
+       [:pre (reduce (fn[a b] (str a "\n" b)) (java.lang.System/getProperties))]
+       ])))
+
+
+
 (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
@@ -109,7 +125,7 @@
   (POST "/addTalk" {body :body} (add-talk (parse-string (slurp body))))
   (GET "/talkJson/:talkid"  request (json-talk ((request :route-params) :talkid)))
   (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
-
+  (GET "/status" [] (status-page))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -138,9 +154,6 @@
 
 (comment
 
-(defpage [:get "/"] {:as attrs}
-  (redirect (if (attrs :talkid) (str "index.html?talkid=" (attrs :talkid)) "index.html")))
-
 
 (defpartial page-header[] 
   [:head 
@@ -151,8 +164,6 @@
 
 
 
-(defpage [:get "/talkDetail"] {:as attrs}
-  (redirect (if (attrs :talkid) (str "talkDetail.html?talkid=" (attrs :talkid)) "index.html")))
 
 (defpage [:get "/savedpic"] {:as param}
   (noir.response/content-type "image/jpeg"
