@@ -272,3 +272,11 @@
               buffer (new java.io.ByteArrayOutputStream)]
     (clojure.java.io/copy input buffer)
     (.toByteArray buffer)))
+
+(defn para-map [query-string]
+  (reduce merge
+  (map (fn [x] {(first x) (second x)})
+  (map #(clojure.string/split % #"=")
+    (clojure.string/split query-string #"\&")
+    )))
+  )

@@ -118,6 +118,34 @@
 
 
 
+(defn upload-form [message speaker-key dummy-key picChanged]
+  (html
+    [:html
+    (if picChanged
+      [:header
+       [:script {:src "js/jquery-1.7.2.js"}]
+       [:script {:src "js/uploadPictureCommunication.js"}]
+       ]
+      )
+    [:body
+     (if message [:p message])
+     [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
+      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
+      [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
+      [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
+      [:input {:type "submit" :value "Upload File"}]
+      ]]]))
+
+(defn upload-picture [query]
+  (let [paras (para-map query)]
+    (upload-form nil (paras "speakerid") (paras "dummyKey") false)
+
+    ))
+
+
+
+
+
 (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
@@ -128,6 +156,7 @@
   (GET "/talkJson/:talkid"  request (json-talk ((request :route-params) :talkid)))
   (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
   (GET "/status" [] (status-page))
+  (GET "/uploadPicture" request (upload-picture (:query-string request)))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -196,25 +225,6 @@
       (noir.response/status 404 "Photo not found"))
   ))
 
-(defn upload-form [message speaker-key dummy-key picChanged]
-  (html5
-    (if picChanged
-      [:header
-         [:script {:src "js/jquery-1.7.2.js"}]
-         [:script {:src "js/uploadPictureCommunication.js"}]
-      ]
-      )
-    [:body
-    (if message [:p message])
-    [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
-      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
-      [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
-      [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
-      [:input {:type "submit" :value "Upload File"}]    
-    ]]))
-
-(defpage [:get "/uploadPicture"] {:as paras}
-  (upload-form nil (paras :speakerid) (paras :dummyKey) false))
 
 (defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
   (timbre/trace "***")
