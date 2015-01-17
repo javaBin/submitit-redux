@@ -14,7 +14,8 @@
   (:require [taoensso.timbre :as timbre])
   (:require [compojure.route :as route]
             [ring.middleware.session :as session]
-            [ring.adapter.jetty :as jetty])
+            [ring.adapter.jetty :as jetty]
+            [ring.util.response :as response-util])
   (:gen-class)
   )
 
@@ -68,37 +69,6 @@
 
 )
 
-(comment
-
-  (defpage [:get "/talkJson"] {:as talkd}
-    (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
-      (let [decoded-url (decode-string (talkd :talkid))]
-        (let [item (fetch-item decoded-url)
-              talk-data (cj/data item)
-              speaker-list (speakers-from-item item)
-              add-speak-ref (:href (cj/link-by-rel item "speaker collection"))
-              ]
-          (timbre/trace "generating resp:" item)
-          (generate-string
-            {
-              :presentationType (talk-data "format"),
-              :title (talk-data "title"),
-              :abstract (talk-data "body"),
-              :language (talk-data "lang"),
-              :level (talk-data "level"),
-              :outline (talk-data "outline"),
-              :highlight (talk-data "summary"),
-              :equipment (talk-data "equipment")
-              :expectedAudience (talk-data "audience")
-              :talkTags (talk-data "keywords")
-              :addKey (talkd :talkid)
-              :addSpeakers (encode-string (str add-speak-ref))
-              :lastModified (item :lastModified)
-              :speakers speaker-list
-              }
-            )))))
-
-  )
 
 (defn json-talk [encoded-talkid]
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
@@ -131,6 +101,7 @@
 
 
 (defroutes main-routes
+  (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
   (GET "/tagCollection" [] (generate-string (tag-list)))
   (GET "/loadCaptcha" {session :session} (load-captcha session))
