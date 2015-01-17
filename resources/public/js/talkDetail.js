@@ -20,7 +20,7 @@ function TalkDetailCtrl($scope,$http) {
 	$scope.showMain = true;
 	$scope.showError = false;
 	var givenId = $.urlParam("talkid");
-	var jsonurl = "talkJson?talkid=" + givenId;
+	var jsonurl = "talkJson/" + givenId;
 
 	$scope.talkData = {}
 
