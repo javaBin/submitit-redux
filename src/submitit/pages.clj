@@ -45,22 +45,10 @@
     }
   )
 
-(comment
-  (defpage [:get "/captcha"] {:as noting}
-    (noir.response/content-type
-      "image/jpeg"
-      (let [out (new java.io.ByteArrayOutputStream)]
-        (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)
-        (new java.io.ByteArrayInputStream (.toByteArray out)))))
-  )
-
-
 
 (defroutes main-routes
   (GET "/newSpeakerId" [] (new-speaker-id))
   (GET "/tagCollection" [] (generate-string (tag-list)))
-  (GET "/setSess" {session :session} {:session (assoc session :akvar "42") :body "I sat it"})
-  (GET "/getSess" {session :session} {:body (str "I am here '" (:akvar session) "'")})
   (GET "/loadCaptcha" {session :session} (load-captcha session))
   (GET "/captcha" {session :session} (captcha session))
   (route/resources "/")
@@ -200,18 +188,6 @@
         :speakers speaker-list
       }      
   )))))
-
-(defpage [:get "/loadCaptcha"] {:as noting}
-  (let [gen-cap (build-captcha)]
-    (noir.session/put! :capt-image (.getImage gen-cap))
-    (generate-string {:fact (noir.util.crypt/encrypt random-salt (.trim (.getAnswer gen-cap)))})))
-
-(defpage [:get "/captcha"] {:as noting}
-  (noir.response/content-type 
-    "image/jpeg" 
-    (let [out (new java.io.ByteArrayOutputStream)]
-      (javax.imageio.ImageIO/write (noir.session/get :capt-image) "png" out)      
-      (new java.io.ByteArrayInputStream (.toByteArray out)))))
 
 (defn upload-form [message speaker-key dummy-key picChanged]
   (html5
