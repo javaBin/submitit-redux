@@ -45,12 +45,35 @@
     }
   )
 
+(defn add-talk [talk]
+  (timbre/trace "+++TALK+++" talk "+++")
+  (if (captcha-error? talk)
+    (let [errme (generate-string {:captchaError true})]
+      (timbre/trace "CaptchError:" + errme)
+      errme
+      )
+    (let [error-response (validate-input talk)]
+      (if error-response error-response
+        (let [talk-result (communicate-talk-to-ems talk)]
+          (timbre/trace "TALKRES:" talk-result)
+          (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2014 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
+                                                                                                                                                                             (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))
+          (generate-string (merge talk-result
+                             (if (talk-result :submitError) {:retError true :addr "xxx"}
+                               {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))
+          ))
+      )
+    )
+
+
+)
 
 (defroutes main-routes
   (GET "/newSpeakerId" [] (new-speaker-id))
   (GET "/tagCollection" [] (generate-string (tag-list)))
   (GET "/loadCaptcha" {session :session} (load-captcha session))
   (GET "/captcha" {session :session} (captcha session))
+  (POST "/addTalk" {body :body} (add-talk (parse-string (slurp body))))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -79,6 +102,22 @@
 
 (comment
 
+  (defpage [:post "/addTalk"] {:as empty-post}
+    (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
+      (timbre/trace "+++TALK+++" talk "+++")
+      (if (captcha-error? talk)
+        (let [errme (generate-string {:captchaError true})]
+          (timbre/trace "CaptchError:" + errme)
+          errme
+          )
+        (let [error-response (validate-input talk)]
+          (if error-response error-response
+            (let [talk-result (communicate-talk-to-ems talk)]
+              (timbre/trace "TALKRES:" talk-result)
+              (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2014 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
+                                                                                                                                                                                 (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))
+              (generate-string (merge talk-result
+                                 (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))))))))
 
 
 (defpage [:get "/"] {:as attrs}
@@ -92,22 +131,6 @@
   [:script {:src "js/bootstrap.min.js"}]
     ])
 
-(defpage [:post "/addTalk"] {:as empty-post}
-  (let [talk (parse-string (slurp ((noir.request/ring-request) :body)))]
-    (timbre/trace "+++TALK+++" talk "+++")
-    (if (captcha-error? talk)
-        (let [errme (generate-string {:captchaError true})]
-          (timbre/trace "CaptchError:" + errme)
-          errme
-          )
-      (let [error-response (validate-input talk)]
-        (if error-response error-response
-          (let [talk-result (communicate-talk-to-ems talk)]
-            (timbre/trace "TALKRES:" talk-result)
-            (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2014 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
-              (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))    
-            (generate-string (merge talk-result 
-              (if (talk-result :submitError) {:retError true :addr "xxx"} {:retError false :addr (str (read-setup :serverhostname) "/talkDetail?talkid=" (talk-result :resultid))})))))))))
 
 
 (defpage [:get "/talkDetail"] {:as attrs}
