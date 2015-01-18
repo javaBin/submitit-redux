@@ -127,11 +127,14 @@ function UpdateCtrl($scope,$http) {
                             $scope.talk.captchaAnswer = "";
 
                             var checkTags = function(atag) {
-                                $scope.talk.talkTags.forEach(function (tagname) {
-                                    if (tagname == atag.value) {
-                                        atag.checked=true;
-                                    }
-                                });
+                                var tags = $scope.talk.talkTags;
+                                if (tags && tags != null) {
+                                    tags.forEach(function (tagname) {
+                                        if (tagname == atag.value) {
+                                            atag.checked = true;
+                                        }
+                                    });
+                                }
                             };
 
                             $scope.tagList.forEach(checkTags);

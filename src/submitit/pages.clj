@@ -178,6 +178,26 @@
   )
 
 
+(defn create-encoded-auth []
+  (if (read-setup :emsUser)
+    (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64String
+                    (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)) (java.nio.charset.Charset/forName "UTF-8"))))
+    nil
+    ))
+
+(defn speaker-photo [request]
+  (let [param ((ring-params/params-request request) :query-params)]
+    (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param "photoid"))))]
+      (.setRequestMethod connection "GET")
+      (if author (.addRequestProperty connection "Authorization" author))
+      (.connect connection)
+      {
+        :headers {"Content-Type"  (.getContentType connection)}
+        :body (.getInputStream connection)
+        }
+    )))
+
+
 (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
@@ -190,6 +210,7 @@
   (GET "/status" [] (status-page))
   (GET "/uploadPicture" request (upload-picture request))
   (POST "/addPic" request (add-picture (mp/multipart-params-request request)))
+  (GET "/speakerPhoto" request (speaker-photo request))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -233,23 +254,6 @@
   (noir.response/content-type "image/jpeg"
     (io/input-stream (io/file (decode-string (param :picid))))))
 
-(defn create-encoded-auth []
-  (if (read-setup :emsUser)
-    (str "Basic " (org.apache.commons.codec.binary.Base64/encodeBase64String
-                    (.getBytes (str (read-setup :emsUser) ":" (read-setup :emsPassword)) (java.nio.charset.Charset/forName "UTF-8"))))
-    nil
-    ))
-
-(defpage [:get "/speakerPhoto"] {:as param}
-  (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param :photoid))))]
-    (.setRequestMethod connection "GET")
-    (if author (.addRequestProperty connection "Authorization" author))
-    (.connect connection)
-    (noir.response/content-type (.getContentType connection)
-      (.getInputStream connection))
-    )
-  )
-
 (defpage [:get "/tempPhoto"] {:as param}
   (let [speak-photo (noir.session/get (param :dummyId))]
     (if speak-photo
@@ -259,27 +263,6 @@
   ))
 
 
-(defpage [:post "/addPic"] {:keys [filehandler speakerKey dummyKey]}
-  (timbre/trace "***")
-  (timbre/trace filehandler)
-  (timbre/trace speakerKey)
-  (timbre/trace dummyKey)
-  (timbre/trace "***")
-;  (timbre/trace (type (filehandler :tempfile)))
-;  (timbre/trace "***")
-;  (another-add-photo (str (decode-string speakerKey) "/photo") (to-byte-array (photo-map :tempfile)) filehandler)
-
-  (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
-    (cond
-      (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey false)
-      (empty? speakerKey) (do
-          (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
-          (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
-        )
-      :else (do
-        (noir.session/put! dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
-        (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)
-        (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)))))
 
   ; End comment
   )
