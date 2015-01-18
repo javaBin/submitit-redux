@@ -15,7 +15,9 @@
   (:require [compojure.route :as route]
             [ring.middleware.session :as session]
             [ring.adapter.jetty :as jetty]
-            [ring.util.response :as response-util])
+            [ring.util.response :as response-util]
+            [ring.middleware.multipart-params :as mp]
+            )
   (:gen-class)
   )
 
@@ -130,7 +132,7 @@
     [:body
      (if message [:p message])
      [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
-      [:input {:type "file" :name "filehandler" :id "filehandler" :required "required"}]
+      [:input {:type "file" :name "file" :id "filehandler" :required "required"}]
       [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
       [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
       [:input {:type "submit" :value "Upload File"}]
@@ -143,7 +145,36 @@
     ))
 
 
+(defn add-picture [mprequest]
+  (let [filehandler ((mprequest :multipart-params) "file")
+        speakerKey ((mprequest :multipart-params) "speakerKey")
+        dummyKey ((mprequest :multipart-params) "dummyKey")
+        session (mprequest :session)
+        ]
 
+    (timbre/trace "***")
+    (timbre/trace filehandler)
+    (timbre/trace speakerKey)
+    (timbre/trace dummyKey)
+    (timbre/trace "***")
+
+    (let [photo-byte-arr (to-byte-array (filehandler :tempfile)) photo-content-type (filehandler :content-type) photo-filename (filehandler :filename)]
+      (cond
+        (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey false)
+        (empty? speakerKey) {:session (assoc session dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
+                             :body (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
+                             }
+
+        :else (do
+                (add-photo (str (decode-string speakerKey) "/photo") photo-byte-arr photo-content-type photo-filename)
+                {
+                  :session (assoc session dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
+                  :body (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
+                  })
+        ))
+
+    )
+  )
 
 
 (defroutes main-routes
@@ -157,6 +188,7 @@
   (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
   (GET "/status" [] (status-page))
   (GET "/uploadPicture" request (upload-picture (:query-string request)))
+  (POST "/addPic" request (add-picture (mp/multipart-params-request request)))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
