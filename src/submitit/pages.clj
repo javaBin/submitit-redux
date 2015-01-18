@@ -210,6 +210,18 @@
       )))
   )
 
+(defn saved-picture [request]
+  (let [param ((ring-params/params-request request) :query-params)]
+    {
+      :headers {"Content-Type" "image/jpeg"}
+      :body (io/input-stream (io/file (decode-string (param "picid"))))
+      }
+
+  ))
+
+
+
+
 
 (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
@@ -225,14 +237,16 @@
   (POST "/addPic" request (add-picture (mp/multipart-params-request request)))
   (GET "/speakerPhoto" request (speaker-photo request))
   (GET "/tempPhoto" request (temp-photo request))
+  (GET "/savedPic" request (saved-picture request))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
 
 
 (defn start-jetty []
-  (jetty/run-jetty (-> main-routes session/wrap-session) {:port 8888})
-  )
+  (let [port (read-setup :port)]
+  (jetty/run-jetty (-> main-routes session/wrap-session) {:port (if port (Integer. port) 8888)})
+  ))
 
 
 (defn -main [& m]
@@ -245,29 +259,7 @@
         (throw (new java.lang.RuntimeException "Could not read setupfile")))))
   (setup-log)
   (timbre/info "Log initialized.")
-  ;(startup))
   (start-jetty)
   )
 
 
-
-(comment
-
-
-(defpartial page-header[] 
-  [:head 
-  [:link {:href "css/bootstrap.min.css" :rel "stylesheet"}]
-  [:script {:src "js/jquery-¸.7.2.js"}]
-  [:script {:src "js/bootstrap.min.js"}]
-    ])
-
-
-
-
-(defpage [:get "/savedpic"] {:as param}
-  (noir.response/content-type "image/jpeg"
-    (io/input-stream (io/file (decode-string (param :picid))))))
-
-
-  ; End comment
-  )
