@@ -17,6 +17,7 @@
             [ring.adapter.jetty :as jetty]
             [ring.util.response :as response-util]
             [ring.middleware.multipart-params :as mp]
+            [ring.middleware.params :as ring-params]
             )
   (:gen-class)
   )
@@ -138,8 +139,8 @@
       [:input {:type "submit" :value "Upload File"}]
       ]]]))
 
-(defn upload-picture [query]
-  (let [paras (para-map query)]
+(defn upload-picture [request]
+  (let [paras ((ring-params/params-request request) :query-params)]
     (upload-form nil (paras "speakerid") (paras "dummyKey") false)
 
     ))
@@ -187,7 +188,7 @@
   (GET "/talkJson/:talkid"  request (json-talk ((request :route-params) :talkid)))
   (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
   (GET "/status" [] (status-page))
-  (GET "/uploadPicture" request (upload-picture (:query-string request)))
+  (GET "/uploadPicture" request (upload-picture request))
   (POST "/addPic" request (add-picture (mp/multipart-params-request request)))
   (route/resources "/")
   (route/not-found "404 Not Found")

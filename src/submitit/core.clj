@@ -56,14 +56,14 @@
 
 (defn add-photo [href bytes ct filename]
   (try
-    (timbre/trace "Uploading picture to " href)
+    (timbre/debug "Uploading picture to " href)
     (let [postres
     (client/post href (merge {
       :body bytes
       :content-type ct
       :headers {"content-disposition" (str "inline; filename=" filename)}
       }) setup-login)]
-      (timbre/trace "Picture uploaded: " postres)
+      (timbre/debug "Picture uploaded: " postres)
       postres)
     (catch Exception e 
       (timbre/error "caught exception uploading picture to ems: " (.getMessage e) "->" e)
@@ -272,11 +272,3 @@
               buffer (new java.io.ByteArrayOutputStream)]
     (clojure.java.io/copy input buffer)
     (.toByteArray buffer)))
-
-(defn para-map [query-string]
-  (reduce merge
-  (map (fn [x] {(first x) (second x)})
-  (map #(clojure.string/split % #"=")
-    (clojure.string/split query-string #"\&")
-    )))
-  )
