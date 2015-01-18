@@ -9,22 +9,18 @@ Submitit is used to submit presentations to ems-redux.
 # Setup
 
 # Dependencies
-The following additional systems are needed:
-Ems-redux : Submitit has no internal database . All data are read from and writtten to ems-redux
-Smtp-server: Needed to send emails
-collection-json.clj: Json Clojure library
+#### The following additional systems are needed:
+* Ems-redux : Submitit has no internal database . All data are read from and writtten to ems-redux
+* Smtp-server: Needed to send emails
 
-# Setting up the collection-json.clj dependency
-1. Clone https://github.com/hamnis/collection-json.clj
-2. Go to the directory where you cloned it
-3. Lein install
 
 # Config file
 Full path to the configuration file must be given in the system propery SUBMITIT_SETUP_FILE.
 The setupfile must be on the following format:
 property=value
 
-The following values can be set:
+### The following values can be set:
+* port: Port that submitit will run on. Default is 8080
 * hostname: The hostname to the smtp server
 * smtpport: The port to the smtp server
 * user: User to logon to smtp (if any)
@@ -44,9 +40,8 @@ The following values can be set:
 ## Frontend developer mode
 Frontend developer mode can be used to debug frontend pages. The server will only return dummy data.
 
-Setup:
+### Setup:
 1. Install leiningen (https://github.com/technomancy/leiningen)
-2. Setup https://github.com/hamnis/collection-json.clj dependency (see chapter abobe)
 3. Set system variable SUBMITIT_FRONTEND_MODE to true (export SUBMITIT_FRONTEND_MODE=true)
 4. lein run
 
@@ -56,7 +51,7 @@ http://localhost:8080/talkDetail.html
 
 ## License
 
-Copyright (C) 2013 javaBin
+Copyright (C) 2015 javaBin
 
 Distributed under the Eclipse Public License, the same as Clojure.
 

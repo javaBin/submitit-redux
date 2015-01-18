@@ -245,7 +245,7 @@
 
 (defn start-jetty []
   (let [port (read-setup :port)]
-  (jetty/run-jetty (-> main-routes session/wrap-session) {:port (if port (Integer. port) 8888)})
+  (jetty/run-jetty (-> main-routes session/wrap-session) {:port (if port (Integer. port) 8080)})
   ))
 
 

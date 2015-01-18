@@ -6,7 +6,6 @@
   	[org.apache.commons/commons-email "1.2"]
     [commons-io "2.4"]
     [commons-codec "1.7"]
-  	;[noir "1.3.0-alpha10"]
     [ring "1.3.2"]
     [ring/ring-core "1.3.2"]
     [compojure "1.1.5"]
@@ -22,7 +21,6 @@
     [com.taoensso/timbre "3.0.0-RC2"]
   	]
   :dev-dependencies [[lein-ring "0.4.3"]]
-;  :ring {:handler submitit.pages/handler}
   :main submitit.pages
   :aot [submitit.pages]
   :plugins [[lein-ring "0.8.2"]]
