@@ -116,7 +116,7 @@ function UpdateCtrl($scope,$http) {
                 $scope.typeList = data.types;
 
                 if (talkid != 0) {
-                    var jsonurl = "talkJson?talkid=" + talkid;
+                    var jsonurl = "talkJson/" + talkid;
 
 
                     $http({method: 'GET', url: jsonurl}).
