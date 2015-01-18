@@ -198,6 +198,19 @@
     )))
 
 
+(defn temp-photo [request]
+  (let [param ((ring-params/params-request request) :query-params) session (request :session)]
+    (let [speak-photo (session (param "dummyId"))]
+      (if speak-photo
+        {
+          :headers {"Content-Type"  (:photo-content-type speak-photo)}
+          :body (new java.io.ByteArrayInputStream (:photo-byte-arr speak-photo))
+          }
+        {:status 404 :body "Photo not found"}
+      )))
+  )
+
+
 (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
@@ -211,6 +224,7 @@
   (GET "/uploadPicture" request (upload-picture request))
   (POST "/addPic" request (add-picture (mp/multipart-params-request request)))
   (GET "/speakerPhoto" request (speaker-photo request))
+  (GET "/tempPhoto" request (temp-photo request))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
@@ -253,15 +267,6 @@
 (defpage [:get "/savedpic"] {:as param}
   (noir.response/content-type "image/jpeg"
     (io/input-stream (io/file (decode-string (param :picid))))))
-
-(defpage [:get "/tempPhoto"] {:as param}
-  (let [speak-photo (noir.session/get (param :dummyId))]
-    (if speak-photo
-    (noir.response/content-type (:photo-content-type speak-photo)
-      (new java.io.ByteArrayInputStream (:photo-byte-arr speak-photo)))
-      (noir.response/status 404 "Photo not found"))
-  ))
-
 
 
   ; End comment
