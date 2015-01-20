@@ -4,7 +4,6 @@
   [submitit.base]
   [submitit.email]
   [submitit.cj]
-  [noir.response :only [redirect]]
   [cheshire.core :only [generate-string parse-string]])
   (:require [ring.middleware.format-params :as format-params])
   (:require [clj-http.client :as client])
