@@ -1,8 +1,6 @@
 (ns submitit.core (:use 
   [clojure.java.io]
 	[clojure.string :only (split)]
-  [noir.core]
-  [noir.request]
   [submitit.base]
   [submitit.email]
   [submitit.cj]
@@ -13,8 +11,6 @@
   (:require [clojure.data.codec.base64 :as b64])
   (:require [clj-time.core :only [now] :as cljtime])
   (:require [clj-time.format :only [formatter parse unparse] :as format-time])
-  ;(:require noir.util.crypt)
-  ;(:require noir.session)
   (:require [clojure.contrib.io :as cio])
   (:require [collection-json.core :as cj])
   (:require [taoensso.timbre :as timbre])
@@ -30,7 +26,6 @@
     (.replaceAll "&aring;" "å")
     (.replaceAll "&Aring;" "Å"))))
 
-;(def random-salt (noir.util.crypt/gen-salt))
 (def random-salt "xyz")
 
 (def speaker-dummy-id (ref 0))

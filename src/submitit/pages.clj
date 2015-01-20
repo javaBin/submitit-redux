@@ -4,7 +4,6 @@
     [submitit.cj]
     [submitit.core]
     [submitit.email]
-
     [cheshire.core :only [generate-string parse-string]]
     [hiccup.core :only [html]]
   )
