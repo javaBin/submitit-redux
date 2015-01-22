@@ -8,7 +8,17 @@
     {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false,
     "tags":[{"value":"Data","checked":false}, {"value":"Integration","checked":false}, {"value":"Server","checked":false}, {"value":"Cloud","checked":false}, {"value":"NoSql","checked":false}]},
     {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false,
-    "tags":[{"value":"UX","checked":false}, {"value":"Frontend","checked":false}, {"value":"Apps","checked":false}, {"value":"Mobile","checked":false}, {"value":"Responsive","checked":false}, {"value":"JavaScript","checked":false}]}
+    "tags":[{"value":"UX","checked":false}, {"value":"Frontend","checked":false}, {"value":"Apps","checked":false}, {"value":"Mobile","checked":false}, {"value":"Responsive","checked":false},{"value":"JavaScript","checked":false}]
+    },
+    {"value" : "Concepts / theory", "description" : "xx", "checked": false,
+        "tags":[{"value":"Programming languages","checked":false}, {"value":"Features in Languages","checked":false}, {"value":"Paradigms","checked":false}]
+    },
+    {"value" : "Craftmanship", "description" : "xx", "checked": false,
+        "tags":[{"value":"Clean Code","checked":false}, {"value":"continuousDelivery","checked":false}, {"value":"DevOps","checked":false}]
+    },
+    {"value" : "Other", "description" : "xx", "checked": false,
+        "tags":[{"value":"Security","checked":false}, {"value":"Iot","checked":false}, {"value":"BigData","checked":false},{"value":"React","checked":false}]
+    }
     ],
 "types":
     [{"value" : "Experience reports", "description" : "Case Descriptions, Retrospectives", "checked": false},
