@@ -1,13 +1,14 @@
-{"tags":
+{"topics":
     [
-    {"value" : "Security", "description" : "Privacy, Application Security, SSO, Auditing", "checked": false},
-    {"value" : "Core", "description" : "Memory, APIs, Performance", "checked": false},
-    {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false},
-    {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false},
-    {"value" : "Concepts", "description" : "Programming Languages, Functional, Reactive, Features in Languages, Paradigms", "checked": false},
-    {"value" : "Craftmanship", "description" : "Clean Code, Continuous Delivery, DevOps", "checked": false},
-    {"value" : "Architecture", "description" : "Architecture in Practice, Application Architecture, Designs, Scalability", "checked": false},
-    {"value" : "Teamwork", "description" : "Teams and Collaboration, Roles, Outsourcing, Process, Product, Technical Leadership", "checked": false}
+    {"value" : "Architecture", "description" : "Architecture description", "checked": false,
+    "tags": [{"value":"Architecture in Practice","checked":false}, {"value":"Application Architecture","checked":false}, {"value":"Designs","checked":false}, {"value":"Scalability","checked":false}]},
+    {"value" : "Java platform", "description" : "Formerly core", "checked": false,
+    "tags": [{"value":"Core","checked":false}, {"value":"Memory","checked":false}, {"value":"APIs","checked":false}, {"value":"Performance","checked":false}, {"value":"Java SE","checked":false}, {"value":"Java EE","checked":false}, {"value":"Java ME","checked":false},
+        {"value":"Scala","checked":false}, {"value":"Clojure","checked":false}, {"value":"Functional","checked":false}]},
+    {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false,
+    "tags":[{"value":"Data","checked":false}, {"value":"Integration","checked":false}, {"value":"Server","checked":false}, {"value":"Cloud","checked":false}, {"value":"NoSql","checked":false}]},
+    {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false,
+    "tags":[{"value":"UX","checked":false}, {"value":"Frontend","checked":false}, {"value":"Apps","checked":false}, {"value":"Mobile","checked":false}, {"value":"Responsive","checked":false}, {"value":"JavaScript","checked":false}]}
     ],
 "types":
     [{"value" : "Experience reports", "description" : "Case Descriptions, Retrospectives", "checked": false},

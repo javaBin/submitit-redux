@@ -97,7 +97,7 @@ function UpdateCtrl($scope,$http) {
             }]
         };
 
-        /*
+
         $http({method: 'GET', url: "needPassword"}).
         success(function(data, status, headers, config) {
             $scope.needPassword = data.needPassword;
@@ -105,14 +105,23 @@ function UpdateCtrl($scope,$http) {
         error(function(data, status, headers, config) {
             console.log("Error fetching password neeeded");
         });
-         */
 
     }
 
+    $scope.tagList = [];
+
+    $scope.topicChanged = function(val) {
+        var topic = _.findWhere($scope.topicList,{value:val});
+        var newtl = [];
+        topic.tags.forEach(function(ta) {
+            newtl.push(_.clone(ta));
+        });
+        $scope.tagList = newtl;
+    }
 
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
-                $scope.tagList = data.tags;
+                $scope.topicList = data.topics;
                 $scope.typeList = data.types;
 
                 if (talkid != 0) {
