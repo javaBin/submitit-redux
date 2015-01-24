@@ -143,16 +143,15 @@
     <div style="clear: both"></div>
 
 
-
-    <h2><i class="fa fa-book"></i> Type of talk</h2>
+    <h2><i class="fa fa-tags"></i> Type of talk</h2>
     <p>To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
-    <div class="choice floatchoice" ng-repeat="atype in typeList">
-      <input type="checkbox" class="tagCheckbox" ng-model="atype.checked" id="{{atype.value}}" />
-      <label for="{{atype.value}}"><span>{{atype.value}}</span> <br>{{atype.description}}</label>
-    </div>
+    <p ng-repeat="mytype in typeList">
+        <input type="radio" ng-model="selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
+    </p>
     <div style="clear: both"></div>
 
 
+    
 </div></div>
 
 <div class="tile tile-txt tile-big"><div class="tile-inner">
