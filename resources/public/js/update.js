@@ -48,10 +48,14 @@ function pictureChanged(dummyKey,speakerKey) {
     angular.element("#mainElement").scope().newPicture(dummyKey,speakerKey);
 }
 
-
-function UpdateCtrl($scope,$http) {
+angular.module('submititapp', [])
+//    .config(function($sceProvider) {
+//        $sceProvider.enabled(false);
+//    })
+    .controller('UpdateCtrl', ['$scope','$http', function($scope,$http) {
 
     $scope.showMain = true;
+    $scope.showUserError = false;
     $scope.showResult = false;
     $scope.showResultSuccess = false;
     $scope.showResutFailure = false;
@@ -93,9 +97,12 @@ function UpdateCtrl($scope,$http) {
                 dummyId: getDummySpeakerId(),
                 picurl: null,
                 hasPicture: false
-
             }]
         };
+
+
+        $scope.talk.speakers[0].ifurl="uploadPicture?speakerid=&dummyKey=" +
+            $scope.talk.speakers[0].dummyId;
 
 
         $http({method: 'GET', url: "needPassword"}).
@@ -150,9 +157,12 @@ function UpdateCtrl($scope,$http) {
                             $scope.typeList.forEach(checkTags);
 
                             $scope.talk.speakers.forEach(function (speaker) {
-                               speaker.hasPicture = false;
-                               $scope.computePictureUrl(speaker);
+                                speaker.hasPicture = false;
+                                $scope.computePictureUrl(speaker);
+                                speaker.ifurl="uploadPicture?speakerid=" + speaker.givenId + "&dummyKey=";
                             });
+
+                            
 
                         }).
                         error(function(data, status, headers, config) {
@@ -174,21 +184,26 @@ function UpdateCtrl($scope,$http) {
 
 
     $scope.addASpeaker = function() {
-        $scope.talk.speakers.push({
-                speakerName: "",
-                email: "",
-                bio: "",
-                picture: null,
-                zipCode: "",
-                givenId: null,
-                dummyId: getDummySpeakerId()
-            });
+        var newsp = {
+            speakerName: "",
+            email: "",
+            bio: "",
+            picture: null,
+            zipCode: "",
+            givenId: null,
+            dummyId: getDummySpeakerId()
+        };
+        newsp.ifurl="uploadPicture?speakerid=&dummyKey=" + newsp.dummyId;
+        $scope.talk.speakers.push(newsp);
+
+
     }
 
     
     $scope.talkSubmit = function(value) {
         $scope.showCapthcaError = false;
         $scope.showGeneralError = false;
+        $scope.showUserError = false;
         var submitBtn = $("#submitButton");     
         submitBtn.button('loading');
 
@@ -273,4 +288,4 @@ function UpdateCtrl($scope,$http) {
 
 
 
-}
+}]);

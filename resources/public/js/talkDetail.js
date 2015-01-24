@@ -16,7 +16,9 @@ function get_gravatar(email) {
 }
 
 
-function TalkDetailCtrl($scope,$http) {
+angular.module('submititapp', [])
+	.controller('TalkDetailCtrl', ['$scope','$http', function($scope,$http) {
+
 	$scope.showMain = true;
 	$scope.showError = false;
 	var givenId = $.urlParam("talkid");
@@ -64,4 +66,4 @@ function TalkDetailCtrl($scope,$http) {
 
     };
 
-}
+}]);
