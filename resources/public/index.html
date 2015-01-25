@@ -146,7 +146,7 @@
     <h2><i class="fa fa-tags"></i> Type of talk</h2>
     <p>To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
     <p ng-repeat="mytype in typeList">
-        <input type="radio" ng-model="selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
+        <input type="radio" ng-model="$parent.selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
     </p>
     <div style="clear: both"></div>
 
