@@ -100,6 +100,8 @@ angular.module('submititapp', [])
             }]
         };
 
+        $scope.canHaveMoreSpeakers = true;
+
 
         $scope.talk.speakers[0].ifurl="uploadPicture?speakerid=&dummyKey=" +
             $scope.talk.speakers[0].dummyId;
@@ -162,7 +164,7 @@ angular.module('submititapp', [])
                                 speaker.ifurl="uploadPicture?speakerid=" + speaker.givenId + "&dummyKey=";
                             });
 
-                            
+                            $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
 
                         }).
                         error(function(data, status, headers, config) {
@@ -196,7 +198,7 @@ angular.module('submititapp', [])
         newsp.ifurl="uploadPicture?speakerid=&dummyKey=" + newsp.dummyId;
         $scope.talk.speakers.push(newsp);
 
-
+        $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
     }
 
     
@@ -313,6 +315,8 @@ angular.module('submititapp', [])
         };
 
     };
+
+
 
 
 
