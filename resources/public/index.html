@@ -126,7 +126,7 @@
     <h2><i class="fa fa-tags"></i> Topics</h2>
     <p>Select one topic.</p>
     <p ng-repeat="topic in topicList">
-      <input type="radio" ng-model="dummy" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
+      <input type="radio" ng-model="$parent.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
     </p>
     <div style="clear: both"></div>
 
