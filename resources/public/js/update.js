@@ -203,7 +203,7 @@ angular.module('submititapp', [])
     $scope.talkSubmit = function(value) {
         $scope.showCapthcaError = false;
         $scope.showGeneralError = false;
-        $scope.showUserError = false;
+        $scope.showUserErrorMessage = false;
         var submitBtn = $("#submitButton");     
         submitBtn.button('loading');
 
@@ -212,6 +212,22 @@ angular.module('submititapp', [])
         if (!valid) {
             submitBtn.button('reset');
             return true;
+        }
+
+        var displayUserError = function(message) {
+            submitBtn.button('reset');
+            $scope.showUserErrorMessage =true;
+            $scope.userErrorMessage = message;
+        };
+
+        if (!$scope.talk.selectedType || $scope.talk.selectedType === null || $scope.talk.selectedType === "") {
+            displayUserError("Please select a type of talk");
+            return false;
+        }
+
+        if (!$scope.talk.selectedTopic || $scope.talk.selectedTopic === null || $scope.talk.selectedTopic === "") {
+            displayUserError("Please select a talk topic");
+            return false;
         }
         
 
@@ -224,9 +240,21 @@ angular.module('submititapp', [])
         };
 
         $scope.tagList.forEach(pushTagged);
-        $scope.typeList.forEach(pushTagged);
+
+
+
+        if ($scope.customChecked) {
+            talkTags.push($scope.customTag);
+        }
+
+        if (talkTags.length > 2 || talkTags.length < 1) {
+            displayUserError("Please select one or two tags");
+            return false;
+        }
 
         $scope.talk.talkTags = talkTags;
+
+
 
 
         $http({method: 'POST', url: "addTalk", data: $scope.talk}).

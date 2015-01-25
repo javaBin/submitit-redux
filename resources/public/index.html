@@ -126,7 +126,7 @@
     <h2><i class="fa fa-tags"></i> Topics</h2>
     <p>Select one topic.</p>
     <p ng-repeat="topic in topicList">
-      <input type="radio" ng-model="$parent.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
+      <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
     </p>
     <div style="clear: both"></div>
 
@@ -136,7 +136,7 @@
         <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
         <label for="{{atag.value}}"><span>{{atag.value}}</span></label>
     </div>
-    <div class="choice floatchoice" ng-show="selectedTopic">
+    <div class="choice floatchoice" ng-show="talk.selectedTopic">
         <input type="checkbox" class="tagCheckbox" ng-model="customChecked" />
         <input type="text" ng-model="customTag" placeholder="Your custom tag" ng-disabled="!customChecked">
     </div>
@@ -146,7 +146,7 @@
     <h2><i class="fa fa-tags"></i> Type of talk</h2>
     <p>To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
     <p ng-repeat="mytype in typeList">
-        <input type="radio" ng-model="$parent.selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
+        <input type="radio" ng-model="$parent.talk.selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
     </p>
     <div style="clear: both"></div>
 
@@ -269,7 +269,7 @@
         <div class="alert alert-error span4">Some unknown error has occured. Please contact program@java.no</div>
     </div>
 
-    <div class="row"  ng-show="showUserErrormessage">
+    <div class="row"  ng-show="showUserErrorMessage">
         <div class="alert alert-error span4">{{userErrorMessage}}</div>
     </div>
 
