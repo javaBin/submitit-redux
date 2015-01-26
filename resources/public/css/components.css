@@ -1,0 +1,54 @@
+.button {
+	-webkit-transition: color .4s ease, border-color .4s ease;
+	-moz-transition: color .4s ease, border-color .4s ease;
+	-o-transition: color .4s ease, border-color .4s ease;
+	transition: color .4s ease, border-color .4s ease;
+	background-image: none !important;
+	border: 1px solid #286a65;
+	color: #286a65;
+	display: inline-block;
+	margin: 10px 0;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.button.button-wide {
+	padding: 10px 40px;
+}
+
+.button:hover {
+	border-color: #ff8641;
+	color: #ff8641;
+}
+
+.splitter, .splitter:before, .splitter:after {
+	border: 1px solid #c0c0c0;
+	border-radius: 100%;
+	height: 4px;
+	width: 4px;
+}
+
+.splitter {
+	margin: 70px auto;
+	position: relative;
+}
+
+.splitter.small {
+	margin: 35px auto;
+}
+
+.splitter:before, .splitter:after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: -1px;
+}
+
+.splitter:before {
+	left: -30px;
+}
+
+.splitter:after {
+	left: 28px;
+}

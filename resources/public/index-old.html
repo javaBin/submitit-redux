@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="page-invert" ng-app="submititapp">
+<head>
+  <title>JavaZone 2015 Talks</title>
+  <link href="css/reset.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script type="text/javascript" src="js/underscore-min.js"></script>
+  <script src="js/jquery-1.7.2.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,700' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript" src="js/angular.min.js"></script>
+
+  <script type="text/javascript" src="js/update.js"></script>
+</head>
+<body ng-controller="UpdateCtrl">
+
+
+<div class="wrapper" ng-show="showMain" id="mainElement"> <!-- START main content wrapper -->
+
+
+
+<div class="menu"><div class="menu-inner">
+  <h1><a href="http://2014.javazone.no/"><span class="img img-logo">JavaZone 2014</span></a></h1>
+  <ul>
+      <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
+      <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
+      <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
+  </ul>
+</div></div>
+
+
+<div class="tile tile-big tile-tall"><div class="tile-inner img-crowd">
+  <div class="img-inner"></div>
+  <span class="extra extra">
+      <strong>Got something to say? Then you should talk!</strong> <br> Submit your presentation or workshop for JavaZone 2014 here!
+  </span>
+</div></div>
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-lightbulb-o"></i> Ready to submit? Let us give you a little bit of information first</h2>
+
+    <ul class="fa-ul imagelist green">
+      <li><i class="fa-li fa fa-check-circle-o"></i> When you submit, you will receive <strong>a confirmation by email</strong>. There you will find a link to a page where you can update your submission.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> The information given in this form will be <strong>used publicly in the program</strong>, unless specified otherwise.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Please fill in this form <strong>in the language you are giving your talk</strong>. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Deadline for submissions is <strong>28. April 2014</strong>, but feel free to submit your talk early :-)</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Now that you know all this, go ahead and fill out this form.</li>
+    </ul>
+
+</div></div>
+
+
+<form id="submitForm">
+
+<span ng-show="needPassword">
+  <div class="tile tile-txt tile-big"><div class="tile-inner">
+    <h2 class="first"><i class="fa fa-lock"></i> Submissions are now closed</h2>
+    <p>Call for speakers are now closed. If you need to submit please contact us at <a href="mailto:program@java.no">program@java.no</a> and you will get the password needed to submit.</p>
+      <div class="row">
+        <div class="span6">
+          <input type="password" required="required" class="talkInput span6" ng-model="talk.password" id="passwordInput" placeholder="Type submit password" ng-required="needPassword"/>
+        </div>
+    </div>
+  </div></div>
+</span>
+
+
+
+
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-puzzle-piece"></i> Title</h2>
+    <p>Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make people curious.</p>
+    <p>
+        <input type="text" required="required" class="talkInput" ng-model="talk.title" id="titleInput" placeholder="The title of your talk or workshop" />
+    </p>
+
+    <h2><i class="fa fa-bullseye"></i> Summary</h2>
+    <p>Describe the content of your talk in a few sentences. The summary will be used as an introduction to your talk in the program. It might also be used in printed material, on Twitter, at Vimeo etc.</p>
+    <p>
+        <textarea rows="4" required="required" class="talkInput" id="highlightInput" ng-model="talk.highlight" placeholder="Short summary of your talk or workshop"></textarea>
+    <p>
+
+    <h2><i class="fa fa-edit"></i> Full abstract</h2>
+    <p>Give a concise description of the contents and goals of your talk. It should preferably not be longer than 300 words. Don't repeat the summary here, as the summary will be shown above this abstract in the program.</p>
+    <p>
+        <textarea rows="10" required="required" class="talkInput" id="abstractInput" ng-model="talk.abstract" placeholder="Full description of your talk or workshop"></textarea>
+    </p>
+
+</div></div>
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-clock-o"></i> Presentation format</h2>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
+      <label for="presentationchoice"><span>Presentation</span> <br>The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
+      <label for="lightningchoice"><span>Lightning Talk</span> <br>The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
+	    <label for="workshopchoice"><span>Workshop</span> <br>Workshops can last anything between 2 and 8 hours. Use outline below to indicate the preferred length of your workshop.</label>
+    </div>
+
+    <h2><i class="fa fa-flag"></i> Language</h2>
+    <p>Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommend that you hold the talk in the language you are most comfortable with.</p>
+    <div class="choice floatchoice">
+      <input type="radio" name="lang" ng-model="talk.language" value="en" id="enchoice" />
+      <label for="enchoice"><span>English</span> <br>The talk will be in English.</label>
+    </div>
+    <div class="choice floatchoice">
+      <input type="radio" name="lang" ng-model="talk.language" value="no" id="nochoice" />
+      <label for="nochoice"><span>Norwegian</span> <br>Jeg snakker best p&aring; norsk.</label>
+    </div>
+    <div style="clear: both"></div>
+
+    <h2><i class="fa fa-tags"></i> Topics</h2>
+    <p>Select one topic.</p>
+    <p ng-repeat="topic in topicList">
+      <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
+    </p>
+    <div style="clear: both"></div>
+
+    <h2><i class="fa fa-book"></i> Select tag</h2>
+    <p>Please select one or two tags to help the audience get a feel for what you will cover in your talk or workshop.</p>
+    <div class="choice floatchoice" ng-repeat="atag in tagList">
+        <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
+        <label for="{{atag.value}}"><span>{{atag.value}}</span></label>
+    </div>
+    <div class="choice floatchoice" ng-show="talk.selectedTopic">
+        <input type="checkbox" class="tagCheckbox" ng-model="customChecked" />
+        <input type="text" ng-model="customTag" placeholder="Your custom tag" ng-disabled="!customChecked">
+    </div>
+    <div style="clear: both"></div>
+
+
+    <h2><i class="fa fa-tags"></i> Type of talk</h2>
+    <p>To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
+    <p ng-repeat="mytype in typeList">
+        <input type="radio" ng-model="$parent.talk.selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
+    </p>
+    <div style="clear: both"></div>
+
+
+
+</div></div>
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+    <h2 class="first"><i class="fa fa-users"></i> Expected audience and code level</h2>
+    <p>Who should attend this session? How will the participants benefit from attending? Clearly state what knowledge you expect from your participants. To indicate code level we recommend you use the following levels "No code", "Code in slides" or "Live coding".
+	 </p>
+    <p>
+        <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
+    <p>
+
+    <h2><i class="fa fa-signal"></i> Expected knowledge level</h2>
+    <p>What level will you present at, and what do you thereby expect the listeners to know beforehand.</p>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
+      <label for="beginnerchoice"><span>Introductory:</span> <br>A basic introduction to a subject. Assume no knowledge of the subject.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
+      <label for="intermediatechoice"><span>Intermediate:</span> <br>Expecting more than basic knowledge of a subject, but not yet advanced.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
+      <label for="advancedchoice"><span>Advanced:</span> <br>Good knowledge of the subject.</label>
+    </div>
+    <div class="choice">
+      <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
+      <label for="hardcorechoice"><span>Hardcore:</span> <br>Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on <br>setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</label>
+    </div>
+
+
+</div></div>
+
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+  <h2 class="first"><i class="fa fa-list-ol"></i> Outline <span>(not public)</span></h2>
+  <p>This information will be used by the program committee for reviewing the detailed contents. The outline should be rough agenda for the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</p>
+  <p>
+      <textarea rows="8" required="required" class="talkInput" id="outlineInput" ng-model="talk.outline" placeholder="How do you plan to structure your talk?"></textarea>
+  <p>
+
+  <h2><i class="fa fa-laptop"></i> Equipment <span>(not public)</span></h2>
+  <p>Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.</p>
+  <p>
+      <textarea rows="3" class="talkInput" id="equipmentInput" ng-model="talk.equipment" placeholder="Tell us about your needs"></textarea>
+  <p>
+
+</div></div>
+
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+  <h2 class="first"><i class="fa fa-heart"></i> Speakers</h2>
+  <p>Please add relevant information about yourself. If you are multiple people presenting, add all the people by clicking "add another speaker" below.</p>
+
+  <div id="speakerList">
+    <div class="speakerBox" ng-repeat="speaker in talk.speakers">
+      <div class="speakerHeader">Speaker</div>
+      <div class="speakerBoxInner">
+        <h3>Name</h3>
+        <p><input class="talkInput speakerInput" type="text" id="speakerNameInput" required="required" ng-model="speaker.speakerName" placeholder="Your full name" /></p>
+
+        <h3>E-mail <span>(not public)</span></h3>
+        <p>We never share your email with others, we just need it to keep you updated on the progress.</p>
+        <p><input class="talkInput speakerInput" type="email" id="emailInput" required="required" ng-model="speaker.email" placeholder="Your e-mail address" ng-change="computePictureUrl(speaker)"/></p>
+
+        <h3>Speaker bio</h3>
+        <p>Describe your affiliation, interests and experience. It should be clear from this text that you are the right person to give this talk. The profile should not be more than a couple of paragraphs long.</p>
+        <p><textarea rows="4" required="required" class="talkInput speakerInput" id="speakerBioInput" ng-model="speaker.bio" placeholder="Who are you? What makes you tick?"></textarea></p>
+
+        <h3>Picture</h3>
+        <p>Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address)</p>
+          <div class="imagepreview" style="background: url({{speaker.picurl}}) no-repeat left top; background-size: cover;"></div>
+          <p><iframe seamless frameborder="0" ng-src="{{speaker.ifurl}}" class="span8">
+          </iframe></p>
+
+        <h3>Postcode <span>(optional, not public)</span></h3>
+        <p>Please type your postcode if you live in Norway. Leave it blank if you live somewhere else.</p>
+        <p><input class="talkInput speakerInput" type="text" id="speakerZipCodeInput" ng-model="speaker.zipCode" placeholder="Your postal code (postnummer)"/></p>
+      </div>
+    </div>
+
+  </div>
+  <button ng-show="canHaveMoreSpeakers" class="btn button" id="addSpeaker" ng-click="addASpeaker()">Add another speaker</button>
+
+
+</div></div>
+
+<div class="tile tile-txt tile-big" ng-show="showCapthca"><div class="tile-inner">
+
+  <h2 class="first"><i class="fa fa-unlock-alt"></i> Captcha</h2>
+  <p>We don't want those nasty spam robots to come present at the conference.</p>
+  <div class="row">
+    <div class="span4">
+      <img ng-src="captcha"/><br/>
+      <input type="text" ng-required="showCaptcha" class="span3" id="captchaInput" ng-model="talk.captchaAnswer" placeholder="Type the letters in the image"/>
+    </div>
+
+  </div>
+  <div class="row" id="captchaError" ng-show="showCapthcaError">
+    <div class="alert alert-error span4">Captcha was wrong. Try again.</div>
+  </div>
+
+
+</div></div>
+
+
+<div class="tile tile-txt tile-big"><div class="tile-inner">
+
+  <h2 class="first"><i class="fa fa-heart"></i> That's all! Are you ready to rock JavaZone 2014?</h2>
+  <p>You will receive a copy of this information by email. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
+
+    <div class="row" id="generalError" ng-show="showGeneralError">
+        <div class="alert alert-error span4">Some unknown error has occured. Please contact program@java.no</div>
+    </div>
+
+    <div class="row"  ng-show="showUserErrorMessage">
+        <div class="alert alert-error span4">{{userErrorMessage}}</div>
+    </div>
+
+    <div class="submitWrapper">
+    <button type="submit" id="submitButton" class="btn button btn-large btn-primary" data-loading-text="Submitting talk. Please wait..." ng-click="talkSubmit()">Submit talk now</button>
+  </div>
+
+  <p>If you have any problem submitting your presentation, please contact us on <a href="mailto:program@java.no">program@java.no</a>.</p>
+
+</div></div>
+
+
+
+</form>
+</div> <!-- END main content wrapper -->
+
+
+
+<div class="wrapper" ng-show="showResult"> <!-- START success wrapper -->
+
+  <div class="menu"><div class="menu-inner">
+    <h1><a href="http://2014.javazone.no/"><span class="img img-logo">JavaZone 2014</span></a></h1>
+    <ul>
+        <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
+        <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
+        <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
+    </ul>
+  </div></div>
+
+  <div class="tile tile-big tile-tall"><div class="tile-inner img-spektrum">
+    <div class="img-inner"></div>
+    <span class="extra extra">
+        <strong>Your talk has been submitted. We'll keep you posted about the progress by email.</strong> <br> Thank you for helping making JavaZone awesome!
+    </span>
+  </div></div>
+
+  <div class="tile tile-txt tile-big"><div class="tile-inner">
+    <ul class="fa-ul imagelist green">
+      <li ng-show="showResutFailure"><i class="fa-li fa fa-check-circle-o"></i> Right now your talk is not availiable for editing. We will send you an email with a link where you can edit it when it's availiable.</li>
+      <li ng-show="showResultSuccess"><i class="fa-li fa fa-check-circle-o"></i> You can review your talk at any time by going <a href="{{talkAddress}}">to this address</a>. We'll also send you this link by email.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> Now that you have submitted your presentation, you can start looking forward to the conference.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> More information about the conference are availiable at our <a href="http://2014.javazone.no/">web pages</a>.</li>
+      <li><i class="fa-li fa fa-check-circle-o"></i> And again, thanks for submitting your talk &#45; JavaZone would be nothing without our great speakers!</li>
+    </ul>
+  </div></div>
+</div> <!-- END success wrapper -->
+
+<div class="wrapper" ng-show="showFailure"> <!-- START failure wrapper -->
+
+  <div class="menu"><div class="menu-inner">
+    <h1><a href="http://2014.javazone.no/"><span class="img img-logo">JavaZone 2014</span></a></h1>
+    <ul>
+        <li><a href="http://2014.javazone.no/speakers.html">Speakers</a></li>
+        <li><a href="http://2014.javazone.no/partners.html">Partners</a></li>
+	       <li><a href="http://2014.javazone.no/tickets.html">Tickets</a></li>
+    </ul>
+  </div></div>
+
+  <div class="tile tile-txt tile-big"><div class="tile-inner">
+    <h2 class="first"><i class="fa fa-heart"></i> Sorry, something went bad!</h2>
+    <p>Please contact us on <a href="mailto:program@java.no">program@java.no</a> if this problem persists.</p>
+    {{failureError}}
+  </div></div>
+</div> <!-- END failure wrapper -->
+
+</body>
+</html>
