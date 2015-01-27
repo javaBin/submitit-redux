@@ -89,7 +89,7 @@ button {
 	width: 150px;
 	margin: 0 auto;
 }
-.uploader .imagepreview {
+.imagepreview {
 	width: 150px;
 	height: 150px;
 	border-radius: 1000px;
@@ -104,7 +104,9 @@ button {
 }
 
 
-
+.ingress {
+	font-weight: bold;
+}
 
 
 
