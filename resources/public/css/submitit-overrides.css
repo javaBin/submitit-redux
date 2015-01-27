@@ -101,3 +101,36 @@ button {
 	font-size: .8em;
 	text-align: center;
 }
+
+
+
+
+
+
+
+
+
+/*  menu */
+.nav {
+	top: 0;
+}
+
+.nav .logo a {
+	margin-left: 0;
+}
+
+.nav-toggle {
+	display: none;
+}
+
+.nav-element {
+	width: 33.33%;
+}
+
+.nav-mobile {
+	display: none;
+}
+
+.nav-item {
+	display: table-cell;
+}
