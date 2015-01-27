@@ -232,7 +232,7 @@
     (para-error? (talk "highlight")) "highlight is required"
     (para-error? (talk "expectedAudience")) "Expected audience is required"
     (< (count (talk "speakers")) 1) "One speaker must be added"  
-    (> (count (talk "speakers")) 5) "Max 5 speakers is allowed"  
+    (> (count (talk "speakers")) 2) "Max 2 speakers is allowed"
     :else (validate-speaker-input (talk "speakers"))
   )]
   (if error-msg (generate-string {:errormessage error-msg}) nil)))
