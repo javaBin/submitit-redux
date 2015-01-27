@@ -2,7 +2,7 @@
   "topics": [
     {
       "value": "Architecture",
-      "description": "Architecture description",
+      "description": "Talks about designs, scalability or architecture in general.",
       "checked": false,
       "tags": [
 	{
@@ -24,8 +24,8 @@
       ]
     },
     {
-      "value": "Java platform",
-      "description": "Formerly core",
+      "value": "Java platforms",
+      "description": "Talks about aspects on the different java platforms (SE, ME, EE), jvm langugages, performance or other java Core topics.",
       "checked": false,
       "tags": [
 	{
@@ -72,7 +72,7 @@
     },
     {
       "value": "Backend",
-      "description": "Data, Integration, Server, Cloud, NoSQL",
+      "description": "Talks about (big) Data, Integration, Server, Cloud, NoSQL",
       "checked": false,
       "tags": [
 	{
@@ -99,7 +99,7 @@
     },
     {
       "value": "Frontend",
-      "description": "UX, UI, Apps, Mobile, Responsive",
+      "description": "Everything frontend. UX, UI, Apps, Mobile, Responsive, etc.",
       "checked": false,
       "tags": [
 	{
@@ -130,7 +130,7 @@
     },
     {
       "value": "Concepts / theory",
-      "description": "xx",
+      "description": "Talks about concepts and theory in computer science.",
       "checked": false,
       "tags": [
 	{
@@ -149,7 +149,7 @@
     },
     {
       "value": "Craftmanship",
-      "description": "xx",
+      "description": "Clean Code, Continous Delivery, DevOps or similiar.",
       "checked": false,
       "tags": [
 	{
@@ -168,7 +168,7 @@
     },
     {
       "value": "Other",
-      "description": "xx",
+      "description": "General tags.",
       "checked": false,
       "tags": [
 	{
