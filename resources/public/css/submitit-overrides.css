@@ -73,8 +73,9 @@ button {
 	font-style: italic;
 }
 .uploader {
+	margin: 1.5em 0 0 0;
 	padding: .5em 0 1em 0;
-	background: #eee;
+	border: 1px solid #eee;
 }
 .uploader .uploader-left {
 	float: left;
