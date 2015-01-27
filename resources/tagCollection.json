@@ -1,29 +1,215 @@
-{"topics":
-    [
-    {"value" : "Architecture", "description" : "Architecture description", "checked": false,
-    "tags": [{"value":"Architecture in Practice","checked":false}, {"value":"Application Architecture","checked":false}, {"value":"Designs","checked":false}, {"value":"Scalability","checked":false}]},
-    {"value" : "Java platform", "description" : "Formerly core", "checked": false,
-    "tags": [{"value":"Core","checked":false}, {"value":"Memory","checked":false}, {"value":"APIs","checked":false}, {"value":"Performance","checked":false}, {"value":"Java SE","checked":false}, {"value":"Java EE","checked":false}, {"value":"Java ME","checked":false},
-        {"value":"Scala","checked":false}, {"value":"Clojure","checked":false}, {"value":"Functional","checked":false}]},
-    {"value" : "Backend", "description" : "Data, Integration, Server, Cloud, NoSQL", "checked": false,
-    "tags":[{"value":"Data","checked":false}, {"value":"Integration","checked":false}, {"value":"Server","checked":false}, {"value":"Cloud","checked":false}, {"value":"NoSql","checked":false}]},
-    {"value" : "Frontend", "description" : "UX, UI, Apps, Mobile, Responsive", "checked": false,
-    "tags":[{"value":"UX","checked":false}, {"value":"Frontend","checked":false}, {"value":"Apps","checked":false}, {"value":"Mobile","checked":false}, {"value":"Responsive","checked":false},{"value":"JavaScript","checked":false}]
+{
+  "topics": [
+    {
+      "value": "Architecture",
+      "description": "Architecture description",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Architecture in Practice",
+	  "checked": false
+	},
+	{
+	  "value": "Application Architecture",
+	  "checked": false
+	},
+	{
+	  "value": "Designs",
+	  "checked": false
+	},
+	{
+	  "value": "Scalability",
+	  "checked": false
+	}
+      ]
     },
-    {"value" : "Concepts / theory", "description" : "xx", "checked": false,
-        "tags":[{"value":"Programming languages","checked":false}, {"value":"Features in Languages","checked":false}, {"value":"Paradigms","checked":false}]
+    {
+      "value": "Java platform",
+      "description": "Formerly core",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Core",
+	  "checked": false
+	},
+	{
+	  "value": "Memory",
+	  "checked": false
+	},
+	{
+	  "value": "APIs",
+	  "checked": false
+	},
+	{
+	  "value": "Performance",
+	  "checked": false
+	},
+	{
+	  "value": "Java SE",
+	  "checked": false
+	},
+	{
+	  "value": "Java EE",
+	  "checked": false
+	},
+	{
+	  "value": "Java ME",
+	  "checked": false
+	},
+	{
+	  "value": "Scala",
+	  "checked": false
+	},
+	{
+	  "value": "Clojure",
+	  "checked": false
+	},
+	{
+	  "value": "Functional",
+	  "checked": false
+	}
+      ]
     },
-    {"value" : "Craftmanship", "description" : "xx", "checked": false,
-        "tags":[{"value":"Clean Code","checked":false}, {"value":"continuousDelivery","checked":false}, {"value":"DevOps","checked":false}]
+    {
+      "value": "Backend",
+      "description": "Data, Integration, Server, Cloud, NoSQL",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Data",
+	  "checked": false
+	},
+	{
+	  "value": "Integration",
+	  "checked": false
+	},
+	{
+	  "value": "Server",
+	  "checked": false
+	},
+	{
+	  "value": "Cloud",
+	  "checked": false
+	},
+	{
+	  "value": "NoSql",
+	  "checked": false
+	}
+      ]
     },
-    {"value" : "Other", "description" : "xx", "checked": false,
-        "tags":[{"value":"Security","checked":false}, {"value":"Iot","checked":false}, {"value":"BigData","checked":false},{"value":"React","checked":false}]
+    {
+      "value": "Frontend",
+      "description": "UX, UI, Apps, Mobile, Responsive",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "UX",
+	  "checked": false
+	},
+	{
+	  "value": "Frontend",
+	  "checked": false
+	},
+	{
+	  "value": "Apps",
+	  "checked": false
+	},
+	{
+	  "value": "Mobile",
+	  "checked": false
+	},
+	{
+	  "value": "Responsive",
+	  "checked": false
+	},
+	{
+	  "value": "JavaScript",
+	  "checked": false
+	}
+      ]
+    },
+    {
+      "value": "Concepts / theory",
+      "description": "xx",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Programming languages",
+	  "checked": false
+	},
+	{
+	  "value": "Features in Languages",
+	  "checked": false
+	},
+	{
+	  "value": "Paradigms",
+	  "checked": false
+	}
+      ]
+    },
+    {
+      "value": "Craftmanship",
+      "description": "xx",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Clean Code",
+	  "checked": false
+	},
+	{
+	  "value": "continuousDelivery",
+	  "checked": false
+	},
+	{
+	  "value": "DevOps",
+	  "checked": false
+	}
+      ]
+    },
+    {
+      "value": "Other",
+      "description": "xx",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "Iot",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
+	}
+      ]
     }
-    ],
-"types":
-    [{"value" : "Experience reports", "description" : "Case Descriptions, Retrospectives", "checked": false},
-    {"value" : "Research Innovation", "description" : "New Technologies, Findings", "checked": false},
-    {"value" : "Knowledge Practice", "description" : "How-tos, Introductions, Technical White Papers", "checked": false},
-    {"value" : "Wisdom", "description" : "Experience over time, Opinions, Evangelism", "checked": false}
-    ]
+  ],
+  "types": [
+    {
+      "value": "Experience reports",
+      "description": "Case Descriptions, Retrospectives",
+      "checked": false
+    },
+    {
+      "value": "Research Innovation",
+      "description": "New Technologies, Findings",
+      "checked": false
+    },
+    {
+      "value": "Knowledge Practice",
+      "description": "How-tos, Introductions, Technical White Papers",
+      "checked": false
+    },
+    {
+      "value": "Wisdom",
+      "description": "Experience over time, Opinions, Evangelism",
+      "checked": false
+    }
+  ]
 }

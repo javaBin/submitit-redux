@@ -238,7 +238,7 @@
                 <div class="choice" ng-repeat="topic in topicList">
                   <label>
                     <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>
-                    <div class="label"><span>{{topic.value}}</span></div>
+		    <div class="label"><span>{{topic.value}}</span> {{topic.description}}</div>
                   </label>
                 </div>
               </p>
