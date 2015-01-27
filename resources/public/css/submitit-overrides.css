@@ -1,7 +1,10 @@
 .input-section h4 {
-	margin: 1em 0 0 0;
+	margin: 2em 0 0 0;
 	font-size: 1.3em;
 	font-weight: 300;
+}
+.input-section h4.first {
+	margin-top: .5em;
 }
 .input-section p {
 	margin: .5em 0;
@@ -17,27 +20,40 @@
 }
 
 .choice {
-	position: relative;
-	height: 3.5em;
 	font-size: .8em;
 	margin: 1em 0 0 0;
+	cursor: pointer;
 }
-.choice input {
+.choice label input {
 	position: absolute;
 	left: 0;
 	top: .4em;
 }
 .choice label {
-	position: absolute;
-	left: 2.5em;
-	top: 0;
+	display: block;
+	position: relative;
+	width: 100%;
 	font-weight: 300;
-	font-size: .9em
+	font-size: .9em;
+}
+.choice label .label {
+	margin: 0 0 0 2em;
 }
 .choice label span {
 	font-weight: 400;
 	display: block;
 	font-size: 1.3em;
+}
+.choice label.customtag .label {
+	height: 3em;
+}
+.choice label.customtag .label input {
+	margin: 0 0 0 1.5em;
+	padding: .5em;
+	font-size: 1.2em;
+}
+.choice label.customtag .tagCheckbox {
+	top: 1.2em;
 }
 
 .center {
@@ -47,9 +63,41 @@ button {
 	background: none;
 	font-weight: 300;
 }
-.imagepreview {
-	width: 300px;
-	height: 300px;
+
+.section-content p.explanation {
+	margin: 1.5em 0;
+}
+.tagexplanation {
+	font-size: .8em;
+	color: #777;
+	font-style: italic;
+}
+.uploader {
+	padding: .5em 0 1em 0;
+	background: #eee;
+}
+.uploader .uploader-left {
+	float: left;
+	width: 50%;
+}
+.uploader .uploader-right {
+	float: left;
+	width: 50%;
+}
+.uploader .imagepreview-wrapper {
+	width: 150px;
+	margin: 0 auto;
+}
+.uploader .imagepreview {
+	width: 150px;
+	height: 150px;
 	border-radius: 1000px;
 	border: 1px solid #bbb;
+}
+.uploader h4 {
+	font-weight: bold;
+	text-transform: uppercase;
+	margin: 0 0 .5em 0;
+	font-size: .8em;
+	text-align: center;
 }

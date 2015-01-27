@@ -81,11 +81,10 @@
       <div class="sub-section cf">
         <h1 class="section-header">Submitting a talk to JavaZone 2015</h1>
         <div class="section-content">
-          <p>When you submit, you will receive <strong>a confirmation by email</strong>. There you will find a link to a page where you can update your submission.</p>
-          <p>The information given in this form will be <strong>used publicly in the program</strong>, unless specified otherwise.</p>
-          <p>Please fill in this form <strong>in the language you are giving your talk</strong>. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
-          <p>Deadline for submissions is <strong>28. April 2014</strong>, but feel free to submit your talk early :-)</p>
-          <p>Now that you know all this, go ahead and fill out this form.</p>
+          <p class="explanation"><strong>Submitting: </strong> When you submit, you will receive a confirmation by email. There you will find a link to a page where you can update your submission.</p>
+          <p class="explanation"><strong>Publication:</strong> The information given in this form will be used publicly in the program, unless specified otherwise.</p>
+          <p class="explanation"><strong>Language:</strong> Please fill in this form in the language you are giving your talk. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
+          <p class="explanation"><strong>Deadline:</strong> The deadline for submissions is April 28th 2014, but feel free to submit your talk early :-)</p>
         </div>
       </div>
     </div>
@@ -116,7 +115,7 @@
           <h1 class="section-header">Your talk</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Title</h4>
+              <h4 class="first">Title</h4>
               <p class="help">Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make people curious.</p>
               <p>
                   <input type="text" required="required" class="talkInput" ng-model="talk.title" id="titleInput" placeholder="The title of your talk or workshop" />
@@ -145,7 +144,7 @@
           <h1 class="section-header">Your audience</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Expected audience and code level</h4>
+              <h4 class="first">Expected audience and code level</h4>
               <p class="help">Who should attend this session? How will the participants benefit from attending? Clearly state what knowledge you expect from your participants. To indicate code level we recommend you use the following levels "No code", "Code in slides" or "Live coding".</p>
               <p>
                   <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
@@ -156,20 +155,28 @@
               <p class="help">What level will you present at, and what do you thereby expect the listeners to know beforehand.</p>
               <p>
                   <div class="choice">
-                    <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
-                    <label for="beginnerchoice"><span>Introductory</span> A basic introduction to a subject. Assume no knowledge of the subject.</label>
+                    <label for="beginnerchoice">
+                      <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
+                      <div class="label"><span>Introductory</span> A basic introduction to a subject. Assume no knowledge of the subject.</div>
+                    </label>
                   </div>
                   <div class="choice">
-                    <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
-                    <label for="intermediatechoice"><span>Intermediate</span> Expecting more than basic knowledge of a subject, but not yet advanced.</label>
+                    <label for="intermediatechoice">
+                      <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
+                       <div class="label"><span>Intermediate</span> Expecting more than basic knowledge of a subject, but not yet advanced.</div>
+                    </label>
                   </div>
                   <div class="choice">
-                    <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
-                    <label for="advancedchoice"><span>Advanced</span> Good knowledge of the subject.</label>
+                    <label for="advancedchoice">
+                      <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
+                       <div class="label"><span>Advanced</span> Good knowledge of the subject.</div>
+                    </label>
                   </div>
                   <div class="choice">
-                    <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
-                    <label for="hardcorechoice"><span>Hardcore</span> Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</label>
+                    <label for="hardcorechoice">
+                      <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
+                       <div class="label"><span>Hardcore</span> Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</div>
+                    </label>
                   </div>
               </p>
             </div>
@@ -183,20 +190,26 @@
           <h1 class="section-header">Metadata</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Presentation format</h4>
-              <p class="help">xxx help here</p>
+              <h4 class="first">Presentation format</h4>
+              <p class="help">Which format will you present your ideas in?</p>
               <p>
                 <div class="choice">
-                  <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
-                  <label for="presentationchoice"><span>Presentation</span> The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</label>
+                  <label for="presentationchoice">
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
+                    <div class="label"><span>Presentation</span> The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</div>
+                  </label>
                 </div>
                 <div class="choice">
-                  <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
-                  <label for="lightningchoice"><span>Lightning Talk</span> The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</label>
+                  <label for="lightningchoice">
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
+                    <div class="label"><span>Lightning Talk</span> The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</div>
+                  </label>
                 </div>
                 <div class="choice">
-                  <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
-                  <label for="workshopchoice"><span>Workshop</span> Workshops can last anything between 2 and 8 hours. Use outline below to indicate the preferred length of your workshop.</label>
+                  <label for="workshopchoice">
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
+                    <div class="label"><span>Workshop</span> Workshops can last anything between 2 and 8 hours. Use outline below to indicate the preferred length of your workshop.</div>
+                  </label>
                 </div>
               </p>
             </div>
@@ -204,50 +217,61 @@
               <h4>Language</h4>
               <p class="help">Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommend that you hold the talk in the language you are most comfortable with.</p>
               <p>
-                <div class="choice floatchoice">
-                  <input type="radio" name="lang" ng-model="talk.language" value="en" id="enchoice" />
-                  <label for="enchoice"><span>English</span> The talk will be in English.</label>
+                <div class="choice">
+                  <label for="enchoice">
+                    <input type="radio" name="lang" ng-model="talk.language" value="en" id="enchoice" />
+                    <div class="label"><span>English</span> The talk will be in English.</div>
+                  </label>
                 </div>
-                <div class="choice floatchoice">
-                  <input type="radio" name="lang" ng-model="talk.language" value="no" id="nochoice" />
-                  <label for="nochoice"><span>Norwegian</span> Jeg snakker best p&aring; norsk.</label>
+                <div class="choice">
+                  <label for="nochoice">
+                    <input type="radio" name="lang" ng-model="talk.language" value="no" id="nochoice" />
+                    <div class="label"><span>Norwegian</span> Jeg snakker best p&aring; norsk.</div>
+                  </label>
                 </div>
-                <div style="clear: both"></div>
               </p>
             </div>
             <div class="input-section">
-              <h4>Topics</h4>
-              <p class="help">xxx bedre forklaing her... Select one topic</p>
+              <h4>Category</h4>
+              <p class="help">Select the main category your talk will fit into.</p>
               <p>
-                <p ng-repeat="topic in topicList">
-                  <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>{{topic.value}}
-                </p>
-                <div style="clear: both"></div>
+                <div class="choice" ng-repeat="topic in topicList">
+                  <label>
+                    <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>
+                    <div class="label"><span>{{topic.value}}</span></div>
+                  </label>
+                </div>
               </p>
             </div>
             <div class="input-section">
               <h4>Tags</h4>
               <p class="help">Please select one or two tags to help the audience get a feel for what you will cover in your talk or workshop.</p>
               <p>
-                <div class="choice floatchoice" ng-repeat="atag in tagList">
+                <div class="choice" ng-repeat="atag in tagList">
+                  <label>
                     <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
-                    <label for="{{atag.value}}"><span>{{atag.value}}</span></label>
+                    <div class="label"><span>{{atag.value}}</span></div>
+                  </label>
                 </div>
-                <div class="choice floatchoice" ng-show="talk.selectedTopic">
+                <div class="choice" ng-show="talk.selectedTopic">
+                  <label class="customtag">
                     <input type="checkbox" class="tagCheckbox" ng-model="customChecked" />
-                    <input type="text" ng-model="customTag" placeholder="Your custom tag" ng-disabled="!customChecked">
+                    <div class="label"><input type="text" ng-model="customTag" placeholder="...or write your own custom tag" ng-disabled="!customChecked"></div>
+                  </label>
                 </div>
-                <div style="clear: both"></div>
+                <div class="tagexplanation" ng-show="!talk.selectedTopic">Please select a category above to see the tags relevant to that category.</div>
               </p>
             </div>
             <div class="input-section">
               <h4>Type of talk</h4>
               <p class="help">To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
               <p>
-                <p ng-repeat="mytype in typeList">
-                    <input type="radio" ng-model="$parent.talk.selectedType" value="{{mytype.value}}" name="typeGroup" />{{mytype.value}} - {{mytype.description}}
-                </p>
-                <div style="clear: both"></div>
+                <div class="choice" ng-repeat="mytype in typeList">
+                  <label>
+                    <input type="radio" ng-model="$parent.talk.selectedType" value="{{mytype.value}}" name="typeGroup" />
+                    <div class="label"><span>{{mytype.value}}</span> {{mytype.description}}</div>
+                  </label>
+                </div>
               </p>
             </div>
           
@@ -261,7 +285,7 @@
           <h1 class="section-header">Your info to the program committee</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Outline <span>(not public)</span></h4>
+              <h4 class="first">Outline <span>(not public)</span></h4>
               <p class="help">This information will be used by the program committee for reviewing the detailed contents. The outline should be rough agenda for the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</p>
               <p>
                   <textarea rows="6" required="required" class="talkInput" id="outlineInput" ng-model="talk.outline" placeholder="How do you plan to structure your talk?"></textarea>
@@ -293,15 +317,15 @@
           <h1 class="section-header">Speaker #{{$index + 1}}</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Full name</h4>
-              <p class="help">TODO help here...</p>
+              <h4 class="first">Full name</h4>
+              <p class="help">Your name as it will be shown in the program.</p>
               <p>
                   <input class="talkInput speakerInput" type="text" id="speakerNameInput" required="required" ng-model="speaker.speakerName" placeholder="Your full name" />
               </p>
             </div>
             <div class="input-section">
               <h4>E-mail <span>(not public)</span></h4>
-              <p class="help">We never share your email with others, we just need it to keep you updated on the progress.</p>
+              <p class="help">We'll never share your email with others, we just need it to keep you updated on the progress.</p>
               <p>
                   <input class="talkInput speakerInput" type="email" id="emailInput" required="required" ng-model="speaker.email" placeholder="Your e-mail address" ng-change="computePictureUrl(speaker)"/>
               </p>
@@ -316,11 +340,17 @@
             <div class="input-section">
               <h4>Picture</h4>
               <p class="help">Upload a picture of yourself here. If you don't upload a picture, we will use one from gravatar.com based on your email address (which you can see a preview of below after you enter your email address)</p>
-              <p>
-                  <div class="imagepreview" style="background: url({{speaker.picurl}}) no-repeat left top; background-size: cover;"></div>
-                  <iframe seamless frameborder="0" ng-src="{{speaker.ifurl}}" class="span8">
-                  </iframe>
-              </p>
+              <div class="uploader">
+                <div class="uploader-left">
+                  <h4>Upload picture</h4>
+                  <iframe seamless frameborder="0" ng-src="{{speaker.ifurl}}" class="span8"></iframe>
+                </div>
+                <div class="uploader-right">
+                  <h4>Preview</h4>
+                  <div class="imagepreview-wrapper"><div class="imagepreview" style="background: url({{speaker.picurl}}) no-repeat left top; background-size: cover;"></div></div>
+                </div>
+                <div style="clear: both"></div>
+              </div>
             </div>
             <div class="input-section">
               <h4>Postcode <span>(optional, not public)</span></h4>
@@ -344,7 +374,7 @@
           <h1 class="section-header">Prove your'e not a robot…</h1>
           <div class="section-content">
             <div class="input-section">
-              <h4>Stupid captcha arrgh!</h4>
+              <h4 class="first">Stupid captcha arrgh!</h4>
               <p class="help">We don't want those nasty spam robots to come present at the conference.</p>
               <p>
                   <img ng-src="captcha"/><br/>
