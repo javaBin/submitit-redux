@@ -155,8 +155,11 @@ angular.module('submititapp', [])
                                 }
                             };
 
-                            $scope.tagList.forEach(checkTags);
-                            $scope.typeList.forEach(checkTags);
+                            var topelm = _.findWhere($scope.topicList,{value: $scope.talk.selectedTopic});
+                            if (topelm) {
+                                $scope.tagList = topelm.tags;
+                                $scope.tagList.forEach(checkTags);
+                            }
 
                             $scope.talk.speakers.forEach(function (speaker) {
                                 speaker.hasPicture = false;

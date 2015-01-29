@@ -73,6 +73,10 @@
 
 )
 
+(defn sel-topic [tags]
+  (first (map #(.substring % 6) (filter #(.startsWith % "topic:") tags)))
+  )
+
 
 (defn json-talk [encoded-talkid]
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
@@ -99,6 +103,7 @@
             :addSpeakers (encode-string (str add-speak-ref))
             :lastModified (item :lastModified)
             :speakers speaker-list
+            :selectedTopic (sel-topic (talk-data "keywords"))
             }
           ))))
   )
