@@ -247,7 +247,7 @@
   (GET "/savedPic" request (saved-picture request))
   (GET "/talkDetail" request (redir-talk-detail request))
   (route/resources "/")
-  (route/not-found "404 Not Found")
+  (route/not-found {:status 404 :body "404 Not Found"})
   )
 
 
