@@ -36,8 +36,14 @@ Equipment:
 Expected audience:
 %expectedAudience%
 
+Category:
+%selectedTopic%
+
 Tags:
 %atalkTags%
+
+Type of talk:
+%selectedType%
 
 Speakers:
 %tspeakers
