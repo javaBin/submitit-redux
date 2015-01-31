@@ -74,6 +74,7 @@
 
 
 (defn match-tag [tags starting-with]
+  (timbre/trace "Tags" tags)
   (first (map #(.substring % (count starting-with)) (filter #(.startsWith % starting-with) tags)))
   )
 

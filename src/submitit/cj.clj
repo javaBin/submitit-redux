@@ -5,6 +5,10 @@
   (:require [taoensso.timbre :as timbre])
   )
 
+(defn compute-tags [talk]
+  (seq (concat (talk "talkTags") [(str "topic:" (talk "selectedTopic")) (str "type:" (talk "selectedType"))]))
+  )
+
 (defn talk-to-template [talk exisisting-talk]
   (let [t (cj/create-template (merge {
     "title" (talk "title")
@@ -15,7 +19,7 @@
     "outline" (talk "outline")
     "equipment" (talk "equipment")
     "lang" (talk "language")
-    "keywords" (seq (talk "talkTags"))
+    "keywords" (compute-tags talk)
     "summary" (talk "highlight")
   }
   (if (and (map? exisisting-talk) (exisisting-talk "state")) {"state" (exisisting-talk "state")} {})
