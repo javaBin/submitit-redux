@@ -46,7 +46,7 @@
   (try
   (let [sender (create-mail-sender subject message)]
     (doseq [sto send-to] (.addTo sender sto))
-    (.addCc sender (read-setup :mailFrom))
+    (.addBcc sender (read-setup :mailBcc))
     (.send sender))
     (catch Exception e (do
                                 (timbre/error (str "Error sending mail " (.getMessage e)))
