@@ -73,8 +73,8 @@
 
 )
 
-(defn sel-topic [tags]
-  (first (map #(.substring % 6) (filter #(.startsWith % "topic:") tags)))
+(defn match-tag [tags starting-with]
+  (first (map #(.substring % (count starting-with)) (filter #(.startsWith % starting-with) tags)))
   )
 
 
@@ -103,7 +103,8 @@
             :addSpeakers (encode-string (str add-speak-ref))
             :lastModified (item :lastModified)
             :speakers speaker-list
-            :selectedTopic (sel-topic (talk-data "keywords"))
+            :selectedTopic (match-tag (talk-data "keywords") "topic:")
+            :selectedType (match-tag (talk-data "keywords") "type:")
             }
           ))))
   )
