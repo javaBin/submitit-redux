@@ -123,8 +123,14 @@
 		          <h1 class="section-header">Metadata</h1>
 		          <div class="section-content">
 		            <div class="input-section">
-		              <h4 class="first">Topics and type of talk</h4>
+						<h4 class="first">Category</h4>
+						<p class="abstract">{{talkData.selectedTopic}}</p>
+
+						<h4 class="first">Tags</h4>
 		              <p class="abstract">{{formatTags()}}</p>
+
+						<h4 class="first">Type of talk</h4>
+						<p class="abstract">{{talkData.selectedType}}</p>
 
 		              <h4>Presentation format</h4>
 		              <p class="abstract">{{talkData.presentationType}}</p>

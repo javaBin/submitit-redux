@@ -73,10 +73,6 @@
 
 )
 
-(defn match-tag [tags starting-with]
-  (first (map #(.substring % (count starting-with)) (filter #(.startsWith % starting-with) tags)))
-  )
-
 
 (defn json-talk [encoded-talkid]
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
@@ -98,7 +94,7 @@
             :highlight (talk-data "summary"),
             :equipment (talk-data "equipment")
             :expectedAudience (talk-data "audience")
-            :talkTags (talk-data "keywords")
+            :talkTags (remove-system-tags (talk-data "keywords"))
             :addKey encoded-talkid
             :addSpeakers (encode-string (str add-speak-ref))
             :lastModified (item :lastModified)

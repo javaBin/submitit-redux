@@ -70,3 +70,14 @@
       )
     )
   )
+
+
+
+(defn match-tag [tags starting-with]
+  (first (map #(.substring % (count starting-with)) (filter #(.startsWith % starting-with) tags)))
+  )
+
+(defn remove-system-tags [tags]
+  (filter (fn [atag] (not (or (.startsWith atag "topic:") (.startsWith atag "type:")))) tags)
+  )
+
