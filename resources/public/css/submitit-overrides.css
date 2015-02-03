@@ -109,7 +109,9 @@ button {
 	font-weight: bold;
 }
 
-
+input:invalid, textarea:invalid {
+    box-shadow: none;
+}
 
 
 
