@@ -7,7 +7,7 @@
   <meta http-equiv="content-language" content="en">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="JavaZone is Norway's largest IT-conference, and takes place in Oslo, September 9th–10th 2015.">
-  
+
   <!-- fonts -->
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
@@ -29,7 +29,7 @@
 
 </head>
 <body id="javazone" ng-controller="UpdateCtrl">
-  
+
   <!-- menu -->
   <div class="nav">
     <div class="container cf">
@@ -38,8 +38,8 @@
         </div>
         <div class="nav-element logo">
           <a href="http://2015.javazone.no/">
-        
-<!-- logo -->    
+
+<!-- logo -->
 <svg width="100px" height="98px" viewBox="0 0 100 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="shape-rendering: geometricPrecision">
     <g id="logo" transform="translate(11.240099, 0.000000)" sketch:type="MSShapeGroup">
         <path d="M2.29480672,60.8641405 C0.253885737,61.3401106 -0.558527547,60.2434021 0.479881979,58.4149074 L25.8020338,13.8285542 L74.9563392,0.069029781 C76.9754474,-0.496272927 78.6122517,0.754207735 78.6122517,2.86041052 L78.6122517,39.2474028 C78.6122517,41.3543118 76.9594303,43.4478032 74.9168408,43.9241263 L2.29480672,60.8641405 L2.29480672,60.8641405 Z" id="logo-four" fill="#FF8635"></path>
@@ -73,7 +73,7 @@
     <div class="wrapper" ng-show="showMain" id="mainElement">
 
     <div class="jumbotron container">
-      <h1>Got something to say? Then you should talk!</h1>
+      <h1>Got something to say? JavaZone is the place to say it!</h1>
       <p>JavaZone takes place in Oslo, Norway, on September 8th-10th 2015. The conference offers a combination of technical talks and workshops in an informal atmosphere with an expected attendance of more than 2500 highly skilled developers.</p>
     </div>
 
@@ -81,9 +81,9 @@
       <div class="sub-section cf">
         <h1 class="section-header">Submitting a talk to JavaZone 2015</h1>
         <div class="section-content">
-          <p class="explanation"><strong>Submitting: </strong> When you submit, you will receive a confirmation by email. There you will find a link to a page where you can update your submission.</p>
-          <p class="explanation"><strong>Publication:</strong> The information given in this form will be used publicly in the program, unless specified otherwise.</p>
-          <p class="explanation"><strong>Language:</strong> Please fill in this form in the language you are giving your talk. That means, if you are presenting in Norwegian, skriv p&aring; norsk!</p>
+          <p class="explanation"><strong>Submitting: </strong> Once you have submitted your talk you will receive a confirmation by email. In this email you'll find a link to a page where you can further update your submission should you wish.</p>
+          <p class="explanation"><strong>Publication:</strong> The information given in this form will be published in the program, unless specifically stated otherwise.</p>
+          <p class="explanation"><strong>Language:</strong> Please complete this form using the same language that you'll be presenting in. In other words, if you plan on presenting in Norwegian, skriv p&aring; norsk!</p>
           <p class="explanation"><strong>Deadline:</strong> The deadline for submissions is April 20th 2015, but feel free to submit your talk early :-)</p>
         </div>
       </div>
@@ -100,7 +100,7 @@
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">You need a password</h4>
-              <p class="help">Call for speakers are now closed. If you need to submit please contact us at <a href="mailto:program@java.no">program@java.no</a> and you will get the password needed to submit.</p>
+              <p class="help">The Call for Speakers is now closed. However if you have a brilliant idea for a presentation or workshop we might make an exception. Contact us at <a href="mailto:program@java.no">program@java.no</a> and we will consider your case.</p>
               <p>
                   <input type="password" required="required" class="talkInput span6" ng-model="talk.password" id="passwordInput" placeholder="Type submit password" ng-required="needPassword"/>
               </p>
@@ -116,21 +116,21 @@
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">Title</h4>
-              <p class="help">Select an expressive title that captures the contents of your talk well without being too long. Remember that the title must be attractive and should make people curious.</p>
+              <p class="help">Select an expressive and snappy title that captures the content of your talk without being too long. Remember that the title must be attractive and should make people curious.</p>
               <p>
                   <input type="text" required="required" class="talkInput" ng-model="talk.title" id="titleInput" placeholder="The title of your talk or workshop" />
               </p>
             </div>
             <div class="input-section">
               <h4>Summary</h4>
-              <p class="help">Describe the content of your talk in a few sentences. The summary will be used as an introduction to your talk in the program. It might also be used in printed material, on Twitter, at Vimeo etc.</p>
+              <p class="help">Describe the content of your talk in a few sentences. The summary will be used as an introduction to your talk in the program. It may also be used in printed material, on Twitter, on Vimeo etc.</p>
               <p>
                   <textarea rows="4" required="required" class="talkInput" id="highlightInput" ng-model="talk.highlight" placeholder="Short summary of your talk or workshop"></textarea>
               </p>
             </div>
             <div class="input-section">
               <h4>Full abstract</h4>
-              <p class="help">Give a concise description of the contents and goals of your talk. It should preferably not be longer than 300 words. Don't repeat the summary here, as the summary will be shown above this abstract in the program.</p>
+              <p class="help">Give a concise description of the content and goals of your talk. Try not to exceed 300 words. Don't repeat the summary here as the summary will be shown along with this abstract in the JavaZone program.</p>
               <p>
                   <textarea rows="8" required="required" class="talkInput" id="abstractInput" ng-model="talk.abstract" placeholder="Full description of your talk or workshop"></textarea>
               </p>
@@ -145,7 +145,7 @@
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">Expected audience and code level</h4>
-              <p class="help">Who should attend this session? How will the participants benefit from attending? Clearly state what knowledge you expect from your participants. To indicate code level we recommend you use the following levels "No code", "Code in slides" or "Live coding".</p>
+              <p class="help">Who should attend this session? How will the participants benefit from attending? Explicitly state what your audience needs to know in order to get the most out of your presentation. To indicate the amount of code in your talk we recommend you use the following phrases: "No code", "Code in slides" or "Live coding".</p>
               <p>
                   <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
               </p>
@@ -157,25 +157,25 @@
                   <div class="choice">
                     <label for="beginnerchoice">
                       <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
-                      <div class="label"><span>Introductory</span> A basic introduction to a subject. Assume no knowledge of the subject.</div>
+                      <div class="label"><span>Introductory</span> A basic introduction. Assumes no prior knowledge of the subject.</div>
                     </label>
                   </div>
                   <div class="choice">
                     <label for="intermediatechoice">
                       <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
-                       <div class="label"><span>Intermediate</span> Expecting more than basic knowledge of a subject, but not yet advanced.</div>
+                       <div class="label"><span>Intermediate</span> Some experience / knowledge of the subject is assumed.</div>
                     </label>
                   </div>
                   <div class="choice">
                     <label for="advancedchoice">
                       <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
-                       <div class="label"><span>Advanced</span> Good knowledge of the subject.</div>
+                       <div class="label"><span>Advanced</span> The talk is aimed at those who already have a good amount of experience and knowledge of the subject.</div>
                     </label>
                   </div>
                   <div class="choice">
                     <label for="hardcorechoice">
                       <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
-                       <div class="label"><span>Hardcore</span> Assume a fair amount of knowledge in the audience. Do not spend more than 5-7 minutes on setting the stage, and avoid introductory material. The deeper and more hardcore, the better.</div>
+                       <div class="label"><span>Hardcore</span> This talk is for those experts who don't need any introduction to the subject. There'll be no introductory material, and a minimum amount of time will be used setting the stage.</div>
                     </label>
                   </div>
               </p>
@@ -191,31 +191,31 @@
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">Presentation format</h4>
-              <p class="help">Which format will you present your ideas in?</p>
+              <p class="help">In which format are you presenting your talk?</p>
               <p>
                 <div class="choice">
                   <label for="presentationchoice">
                     <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
-                    <div class="label"><span>Presentation</span> The length of a presentation will be maximum 60 minutes. Preferably 50 minutes with 10 minutes to Q &amp; A.</div>
+                    <div class="label"><span>Presentation</span> Presentations should be no more than 60 minutes long. Aim for a 50 minute long talk, and leave 10 minutes for Q&amp;A at the end.</div>
                   </label>
                 </div>
                 <div class="choice">
                   <label for="lightningchoice">
                     <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
-                    <div class="label"><span>Lightning Talk</span> The length of a lightning talk will be maximum 10 minutes including Q &amp; A.</div>
+                    <div class="label"><span>Lightning Talk</span> Lightning Talks are no longer than 10 minutes long, including Q&amp;A.  Note that the time limit is strictly enforced!</div>
                   </label>
                 </div>
                 <div class="choice">
                   <label for="workshopchoice">
                     <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
-                    <div class="label"><span>Workshop</span> Workshops can last 2, 4 or 8 hours. Use outline below to indicate the length of your workshop.</div>
+                    <div class="label"><span>Workshop</span> Workshops can last 2, 4 or 8 hours. Use the "Outline" text box below to indicate the length of your workshop.</div>
                   </label>
                 </div>
               </p>
             </div>
             <div class="input-section">
               <h4>Language</h4>
-              <p class="help">Which language will you present your talk in? The slides may be in English even if you present the talk in Norwegian. We generally recommend that you hold the talk in the language you are most comfortable with.</p>
+              <p class="help">Which language will you be holding the talk in? Note it is permitted to use English in your slides, even though you may be talking in Norwegian. We generally recommend that you hold the talk in the language you are most comfortable with.</p>
               <p>
                 <div class="choice">
                   <label for="enchoice">
@@ -274,7 +274,7 @@
                 </div>
               </p>
             </div>
-          
+
           </div>
         </div>
       </div>
@@ -282,18 +282,18 @@
 
       <div class="section container cf">
         <div class="sub-section cf">
-          <h1 class="section-header">Your info to the program committee</h1>
+          <h1 class="section-header">Information to the Program Committee</h1>
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">Outline <span>(not public)</span></h4>
-              <p class="help">This information will be used by the program committee for reviewing the detailed contents. The outline should be rough agenda for the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</p>
+              <p class="help">The information will be used by the Program Committee to review the details of your talk. The outline should be rough agenda for the talk, with a few keywords for each section, and with a rough estimate of the time spent on each.</p>
               <p>
                   <textarea rows="6" required="required" class="talkInput" id="outlineInput" ng-model="talk.outline" placeholder="How do you plan to structure your talk?"></textarea>
               </p>
             </div>
             <div class="input-section">
               <h4>Equipment <span>(not public)</span></h4>
-              <p class="help">Please specify any additional special equipment you may need, e.g., more than one slide projector, video projection facilities, computer tables, paper boards, etc.</p>
+              <p class="help">Please specify any additional special equipment you may need. Note that all get access to a slide projector, video projection facilities, computer tables, paper boards, etc.</p>
               <p>
                   <textarea rows="3" class="talkInput" id="equipmentInput" ng-model="talk.equipment" placeholder="Tell us about your needs"></textarea>
               </p>
@@ -371,11 +371,11 @@
 
       <div class="section container cf">
         <div class="sub-section cf">
-          <h1 class="section-header">Prove your'e not a robot…</h1>
+          <h1 class="section-header">Prove that you are not a Robot!</h1>
           <div class="section-content">
             <div class="input-section">
               <h4 class="first">Stupid captcha arrgh!</h4>
-              <p class="help">We don't want those nasty spam robots to come present at the conference.</p>
+              <p class="help">We don't want any nasty spam robots present at our conference!</p>
               <p>
                   <img ng-src="captcha"/><br/>
                   <input type="text" ng-required="showCaptcha" class="span3" id="captchaInput" ng-model="talk.captchaAnswer" placeholder="Type the letters in the image"/>
@@ -392,7 +392,7 @@
 
       <div class="jumbotron container">
         <h1>Woooah, that's it! Really!</h1>
-        <p>You will receive a copy of this information by e-mail. There, you'll also find a link to edit this talk. You can edit the details of your talk right up until the conference.</p>
+        <p>You will receive a copy of this information by e-mail. The email will contain a link so you can edit your talk. You can edit the details of your talk right up until the conference.</p>
       </div>
 
       <div class="center">
@@ -421,8 +421,7 @@
 
 
     <!-- START success wrapper -->
-
-    <div class="wrapper" ng-show="showResult"> 
+    <div class="wrapper" ng-show="showResult">
 
 
       <div class="jumbotron container">
@@ -442,7 +441,7 @@
 	</div>
       </div>
 
-    </div> 
+    </div>
     <!-- END success wrapper -->
 
 
@@ -452,7 +451,7 @@
 
 
     <!-- START failure wrapper -->
-    <div class="wrapper" ng-show="showFailure"> 
+    <div class="wrapper" ng-show="showFailure">
 
       <div class="jumbotron container">
 	<h1>Sorry, something went bad!</h1>
@@ -460,7 +459,7 @@
 	<p>{failureError}}</p>
       </div>
 
-    </div> 
+    </div>
     <!-- END failure wrapper -->
 
 
@@ -472,7 +471,7 @@
 
 
 
-    
+
   </div>
 
   <!-- google analytics -->
