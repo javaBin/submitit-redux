@@ -50,7 +50,7 @@
     }
   )
 
-(defn add-talk [talk]
+(defn add-talk [talk session]
   (timbre/trace "+++TALK+++" talk "+++")
   (if (captcha-error? talk)
     (let [errme (generate-string {:captchaError true})]
@@ -59,7 +59,7 @@
       )
     (let [error-response (validate-input talk)]
       (if error-response error-response
-        (let [talk-result (communicate-talk-to-ems talk)]
+        (let [talk-result (communicate-talk-to-ems talk session)]
           (timbre/trace "TALKRES:" talk-result)
           (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2015 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
                                                                                                                                                                              (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))
@@ -236,7 +236,7 @@
   (GET "/tagCollection" [] (generate-string (tag-list)))
   (GET "/loadCaptcha" {session :session} (load-captcha session))
   (GET "/captcha" {session :session} (captcha session))
-  (POST "/addTalk" {body :body} (add-talk (parse-string (slurp body))))
+  (POST "/addTalk" {body :body session :session} (add-talk (parse-string (slurp body)) session))
   (GET "/talkJson/:talkid"  request (json-talk ((request :route-params) :talkid)))
   (GET "/needPassword" [] (generate-string {:needPassword (need-submit-password?)}))
   (GET "/status" [] (status-page))
