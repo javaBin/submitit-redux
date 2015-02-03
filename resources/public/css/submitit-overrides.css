@@ -28,6 +28,7 @@
 	position: absolute;
 	left: 0;
 	top: .4em;
+	width: auto;
 }
 .choice label {
 	display: block;
@@ -108,7 +109,9 @@ button {
 	font-weight: bold;
 }
 
-
+input:invalid, textarea:invalid {
+    box-shadow: none;
+}
 
 
 
