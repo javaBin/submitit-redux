@@ -2,7 +2,7 @@
   "topics": [
     {
       "value": "Architecture",
-      "description": "Talks about designs, scalability or architecture in general.",
+      "description": "Talks about design, scalability or architecture in general.",
       "checked": false,
       "tags": [
 	{
@@ -20,16 +20,32 @@
 	{
 	  "value": "Scalability",
 	  "checked": false
+	},
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
 	}
       ]
     },
     {
       "value": "Java platforms",
-      "description": "Talks about aspects on the different java platforms (SE, ME, EE), JVM languages, performance or other java Core topics.",
+      "description": "Talks about aspects on the different java platforms (SE, ME, EE), jvm langugages, performance or other java core topics.",
       "checked": false,
       "tags": [
 	{
-	  "value": "Core",
+	  "value": "Core Java",
 	  "checked": false
 	},
 	{
@@ -67,6 +83,22 @@
 	{
 	  "value": "Functional",
 	  "checked": false
+	},
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
 	}
       ]
     },
@@ -75,10 +107,6 @@
       "description": "Talks about (Big) Data, Integration, Server, Cloud, NoSQL",
       "checked": false,
       "tags": [
-	{
-	  "value": "Data",
-	  "checked": false
-	},
 	{
 	  "value": "Integration",
 	  "checked": false
@@ -94,6 +122,22 @@
 	{
 	  "value": "NoSql",
 	  "checked": false
+	},
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
 	}
       ]
     },
@@ -107,7 +151,7 @@
 	  "checked": false
 	},
 	{
-	  "value": "Frontend",
+	  "value": "Web Technologies",
 	  "checked": false
 	},
 	{
@@ -119,17 +163,33 @@
 	  "checked": false
 	},
 	{
-	  "value": "Responsive",
+	  "value": "Responsive Design",
 	  "checked": false
 	},
 	{
 	  "value": "JavaScript",
 	  "checked": false
+	},
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
 	}
       ]
     },
     {
-      "value": "Concepts / theory",
+      "value": "Concepts / Theory",
       "description": "Talks about concepts and theory in computer science.",
       "checked": false,
       "tags": [
@@ -144,39 +204,13 @@
 	{
 	  "value": "Paradigms",
 	  "checked": false
-	}
-      ]
-    },
-    {
-      "value": "Craftmanship",
-      "description": "Clean Code, Continous Delivery, DevOps or similar.",
-      "checked": false,
-      "tags": [
-	{
-	  "value": "Clean Code",
-	  "checked": false
 	},
-	{
-	  "value": "continuousDelivery",
-	  "checked": false
-	},
-	{
-	  "value": "DevOps",
-	  "checked": false
-	}
-      ]
-    },
-    {
-      "value": "Other",
-      "description": "Can't make it fit?",
-      "checked": false,
-      "tags": [
 	{
 	  "value": "Security",
 	  "checked": false
 	},
 	{
-	  "value": "Iot",
+	  "value": "IoT",
 	  "checked": false
 	},
 	{
@@ -188,7 +222,65 @@
 	  "checked": false
 	}
       ]
-    }
+    },
+    {
+      "value": "Craftmanship",
+      "description": "Clean Code, Continuous Delivery, DevOps or similiar.",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Clean Code",
+	  "checked": false
+	},
+	{
+	  "value": "Continuous Delivery",
+	  "checked": false
+	},
+	{
+	  "value": "DevOps",
+	  "checked": false
+	},
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
+	}
+      ]
+    },
+    {
+      "value": "Other Awesomeness",
+      "description": "If your proposed talk doesn't fit nicely into the main categories",
+      "checked": false,
+      "tags": [
+	{
+	  "value": "Security",
+	  "checked": false
+	},
+	{
+	  "value": "IoT",
+	  "checked": false
+	},
+	{
+	  "value": "BigData",
+	  "checked": false
+	},
+	{
+	  "value": "React",
+	  "checked": false
+	}
+      ]
+    }    
   ],
   "types": [
     {
