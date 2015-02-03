@@ -13,7 +13,7 @@
 .input-section p.help {
 	color: #666;
 }
-.input-section input, .input-section textarea {
+.input-section input, .input-section textarea, .input-section .customtag .label input {
 	width: 100%;
 	padding: 1em;
 	border: 1px solid #eee;

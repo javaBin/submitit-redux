@@ -245,7 +245,7 @@
             </div>
             <div class="input-section">
               <h4>Tags</h4>
-              <p class="help">Please select one or two tags to help the audience get a feel for what you will cover in your talk or workshop.</p>
+              <p class="help">Please select <strong>max two tags</strong> to help the audience get a feel for what you will cover in your talk or workshop. One of these can be your custom tag if you feel our provided tags doesn't fit your talk.</p>
               <p>
                 <div class="choice" ng-repeat="atag in tagList">
                   <label>
@@ -256,7 +256,7 @@
                 <div class="choice" ng-show="talk.selectedTopic">
                   <label class="customtag">
                     <input type="checkbox" class="tagCheckbox" ng-model="customChecked" />
-                    <div class="label"><input type="text" ng-model="customTag" placeholder="...or write your own custom tag" ng-disabled="!customChecked"></div>
+                    <div class="label"><input type="text" ng-model="customTag" placeholder="...or write your own custom tag"></div>
                   </label>
                 </div>
                 <div class="tagexplanation" ng-show="!talk.selectedTopic">Please select a category above to see the tags relevant to that category.</div>
