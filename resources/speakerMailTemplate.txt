@@ -32,7 +32,6 @@ Level: %level%
 Equipment: 
 %equipment%
 
-
 Expected audience:
 %expectedAudience%
 
@@ -53,4 +52,3 @@ Post code: %zipCode%
 Speakers profile:
 %bio%
 t%
-
