@@ -126,10 +126,10 @@
 						<h4 class="first">Category</h4>
 						<p class="abstract">{{talkData.selectedTopic}}</p>
 
-						<h4 class="first">Tags</h4>
-		              <p class="abstract">{{formatTags()}}</p>
+						<h4>Tags</h4>
+		              	<p class="abstract">{{formatTags()}}</p>
 
-						<h4 class="first">Type of talk</h4>
+						<h4>Type of talk</h4>
 						<p class="abstract">{{talkData.selectedType}}</p>
 
 		              <h4>Presentation format</h4>
@@ -151,10 +151,10 @@
 		          <div class="section-content">
 		            <div class="input-section">
 		              <h4 class="first">Outline <span>(not public)</span></h4>
-		              <p class="abstract">{{talkData.outline}}</p>
+		              <p class="abstract preserve-newlines">{{talkData.outline}}</p>
 
 		              <h4>Equipment <span>(not public)</span></h4>
-		              <p class="abstract">{{talkData.equipment}}</p>
+		              <p class="abstract preserve-newlines">{{talkData.equipment}}</p>
 
 		            </div>
 		          </div>
@@ -176,7 +176,7 @@
 		              <p class="abstract">{{speaker.zipCode}}</p>
 
 		              <h4>Bio</h4>
-		              <p class="abstract">{{speaker.bio}}</p>
+		              <p class="abstract preserve-newlines">{{speaker.bio}}</p>
 
 		              <div class="imagepreview speaker-floatleft" style="background: url({{computePictureUrl(speaker)}}) no-repeat left top; background-size: cover;"></div>
 		            </div>
