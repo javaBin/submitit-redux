@@ -37,8 +37,9 @@ function readCaptchaFact() {
         url: "loadCaptcha",
         async: false,
         cache: false,
-        success: function(data) {
-            captchaFact=$.parseJSON(data);
+        dataType: 'json',
+        success: function(data, a, b) {
+            captchaFact=data;
         }
     });
     return captchaFact.fact;
