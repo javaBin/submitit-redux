@@ -113,6 +113,9 @@ input:invalid, textarea:invalid {
     box-shadow: none;
 }
 
+.preserve-newlines {
+	white-space: pre-wrap;
+}
 
 
 
