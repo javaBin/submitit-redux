@@ -69,11 +69,10 @@
     } setup-login))]
     (cio/to-byte-array (:body res))))
 
-(defn session-get[x] nil)
 
-  (defn upload-photo-to-session [speak item]
+  (defn upload-photo-to-session [speak item session]
     (timbre/trace "UploadPhoto")
-    (let [speak-photo (session-get (speak "dummyId"))]
+    (let [speak-photo (session (speak "dummyId"))]
       (timbre/trace "SpeakPhoto: **" speak-photo "**")
       (if speak-photo
         (let [photo-link (cj/link-by-rel item "attach-photo")]
@@ -84,7 +83,7 @@
                 filename (:photo-filename speak-photo)]
             (add-photo photo-url bytes ct filename))))))
 
-(defn add-speakers [speakers href]
+(defn add-speakers [speakers href session]
   (doseq [speaker speakers]
     (let [template (speaker-to-template speaker)]
       (timbre/trace "speakerfredf '" href)
@@ -97,7 +96,7 @@
           (timbre/trace "put templ res: " res)
           (let [
               item (fetch-item (if (nil? res) speaker-loc ((:headers res) "location")))]
-          (upload-photo-to-session speaker item))
+          (upload-photo-to-session speaker item session))
         )
         ; New speaker
         (do
@@ -106,11 +105,11 @@
         (let [res (post-template href template)]
           (timbre/trace "New speaker res" res)
           (timbre/trace "+++++")
-          (if (session-get (speaker "dummyId"))
+          (if (session (speaker "dummyId"))
           (let [item (fetch-item ((:headers res) "location"))]
             (timbre/trace "+-+-+-+")
           (timbre/trace "Item" item)
-          (upload-photo-to-session speaker item)))))))))
+          (upload-photo-to-session speaker item session)))))))))
 
 
 (defn to-speaker [item]
@@ -151,7 +150,7 @@
   (if (talk "addKey") true false)
   )
 
-(defn communicate-talk-to-ems [talk]
+(defn communicate-talk-to-ems [talk session]
   ;(try 
   (if (exsisting-talk? talk)
     (let [
@@ -160,7 +159,7 @@
       put-result (put-template href template (talk "lastModified")) ]
       
       (timbre/trace "Update-res: " put-result)
-      (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")))
+      (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")) session)
       {:resultid (talk "addKey")}
     )
     (let [
@@ -172,7 +171,7 @@
       
       (timbre/trace "Post-res: " post-result)
       (timbre/trace "Speaker ref: " speakers-href)
-      (add-speakers (talk "speakers") speakers-href)
+      (add-speakers (talk "speakers") speakers-href session)
       {:resultid (encode-string session-href)}
     )))
   ;(catch Exception e (let [errormsg (str "Exception: " (.getMessage e) "->" e)]
