@@ -5,6 +5,10 @@ $.urlParam = function(name){
     return results ? results[1] || 0 : 0;
 }
 
+$(function() {
+    $('input,select').keypress(function(event) { return event.keyCode != 13; });
+});
+
 function get_gravatar(email) {
 
     // MD5 (Message-Digest Algorithm) by WebToolkit
