@@ -164,6 +164,15 @@ angular.module('submititapp', [])
                             if (topelm) {
                                 $scope.tagList = topelm.tags;
                                 $scope.tagList.forEach(checkTags);
+
+                                if ($scope.talk.talkTags && $scope.talk.talkTags !== null) {
+                                    $scope.talk.talkTags.forEach(function(myTag) {
+                                        if (!_.findWhere($scope.tagList,{value: myTag})) {
+                                            $scope.customChecked = true;
+                                            $scope.customTag = myTag;
+                                        }
+                                    });
+                                }
                             }
 
                             $scope.talk.speakers.forEach(function (speaker) {
