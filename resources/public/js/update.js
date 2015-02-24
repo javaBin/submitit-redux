@@ -248,6 +248,13 @@ angular.module('submititapp', [])
             displayUserError("Please select a talk topic");
             return false;
         }
+
+        if ($scope.customChecked && !$scope.customTag.match(/^[A-Za-z0-9 æøåÆØÅ]+$/)) {
+            displayUserError("Please use only letters and numbers in custom tag");
+            return false;
+        }
+
+
         
 
         var talkTags = [];
