@@ -218,6 +218,10 @@
   (let [close-time (read-setup :closing-time)]
     (and (not (nil? close-time)) (< 0 (.compareTo (time-now) close-time)))))
 
+(defn illegal-keywords? [keywords]
+  (reduce (fn [a b] (or a b)) (map #(not (re-find #"^[A-Za-z0-9 æøåÆØÅ]+$" %)) keywords))
+  )
+
 (defn validate-input [talk]
   (let [error-msg 
     (cond 
@@ -230,6 +234,7 @@
     (para-error? (talk "title")) "Title is required"
     (para-error? (talk "highlight")) "highlight is required"
     (para-error? (talk "expectedAudience")) "Expected audience is required"
+      (illegal-keywords? (talk "talkTags")) "Illegal characters in keyword"
     (< (count (talk "speakers")) 1) "One speaker must be added"  
     (> (count (talk "speakers")) 2) "Max 2 speakers is allowed"
     :else (validate-speaker-input (talk "speakers"))

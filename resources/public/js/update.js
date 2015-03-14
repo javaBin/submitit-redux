@@ -250,7 +250,7 @@ angular.module('submititapp', [])
         }
 
         if ($scope.customChecked && !$scope.customTag.match(/^[A-Za-z0-9 æøåÆØÅ]+$/)) {
-            displayUserError("Please use only letters and numbers in custom tag");
+            displayUserError("Please dont use special characters in your tag (only letters and digits)");
             return false;
         }
 
