@@ -76,3 +76,10 @@
       (cj/head-item (cj/parse-collection (new java.io.StringReader (:body collection))))
       (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     )))
+
+(defn delete-uri [uri]
+  (timbre/debug "Deleting " uri)
+  (let [result (client/delete uri)]
+    (timbre/debug "Delete res: " result)
+    )
+  )

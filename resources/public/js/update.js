@@ -341,7 +341,21 @@ angular.module('submititapp', [])
     };
 
 
+    $scope.deleteSpeaker = function(speaker) {
+        var index = $scope.talk.speakers.indexOf(speaker);
+        $scope.talk.speakers.splice(index,1);
+        if (speaker.givenId && speaker.givenId != null) {
+            if (!$scope.talk.deletedSpeakers) {
+                $scope.talk.deletedSpeakers = [];
+            }
+            $scope.talk.deletedSpeakers.push(speaker);
+        }
+        return false;
+    }
 
 
 
-}]);
+
+
+
+    }]);

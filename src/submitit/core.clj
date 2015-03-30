@@ -150,6 +150,17 @@
   (if (talk "addKey") true false)
   )
 
+(defn delete-speakers [talk]
+  (doseq [speaker (talk "deletedSpeakers")]
+    (let [
+           speaker-loc (decode-string (speaker "givenId"))
+           ]
+      (delete-uri speaker-loc)
+      )
+    )
+  )
+
+
 (defn communicate-talk-to-ems [talk session]
   ;(try 
   (if (exsisting-talk? talk)
@@ -157,9 +168,10 @@
       href (decode-string (talk "addKey"))
       template (talk-to-template talk (read-exisisting-talk href))
       put-result (put-template href template (talk "lastModified")) ]
-      
       (timbre/trace "Update-res: " put-result)
+
       (add-speakers (talk "speakers") (decode-string (talk "addSpeakers")) session)
+      (if (talk "deletedSpeakers") (delete-speakers talk))
       {:resultid (talk "addKey")}
     )
     (let [
