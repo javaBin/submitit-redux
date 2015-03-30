@@ -77,9 +77,9 @@
       (if (and last-mod (not= "" last-mod)) {:lastModified last-mod} {})
     )))
 
-(defn delete-uri [uri]
+(defn delete-uri [uri last-modified]
   (timbre/debug "Deleting " uri)
-  (let [result (client/delete uri)]
+  (let [result (client/delete uri (merge (setup-login) {:headers {"if-unmodified-since" last-modified}}))]
     (timbre/debug "Delete res: " result)
     )
   )

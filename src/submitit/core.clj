@@ -155,7 +155,7 @@
     (let [
            speaker-loc (decode-string (speaker "givenId"))
            ]
-      (delete-uri speaker-loc)
+      (delete-uri speaker-loc (speaker "lastModified"))
       )
     )
   )
