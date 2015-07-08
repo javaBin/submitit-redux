@@ -1,0 +1,6 @@
+language: clojure
+jdk:
+- oraclejdk8
+notifications:
+  slack:
+    secure: D7JuIl5o03YKFVYx/wOAfOjVo+ZqECLPf5hSS91tE+09I0BMSlRsmWhRcRGUN+hiulyXpEdCMSP3jGquHA2k1U3VQTL2J6pZmb8nuv3XVOTL/lNORaw486qf9GZ8NgMoemAymbWprMMcWeZ1sScdzAU5TT3bV/gYFNzjgdHT4SA=
