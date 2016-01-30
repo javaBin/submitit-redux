@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="submititapp">
 <head>
-  <title>JavaZone 2015</title>
+  <title>JavaZone 2016</title>
   <meta charset="utf-8">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta http-equiv="content-language" content="en">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="JavaZone is Norway's largest IT-conference, and takes place in Oslo, September 9th–10th 2015.">
+  <meta name="description" content="JavaZone is Norway's largest IT-conference, and takes place in Oslo, September 7th–8th 2016.">
 
   <!-- fonts -->
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900' rel='stylesheet' type='text/css'>
@@ -37,7 +37,7 @@
         <div class="nav-element nav-item left">
         </div>
         <div class="nav-element logo">
-          <a href="http://2015.javazone.no/">
+          <a href="http://2016.javazone.no/">
 
 <!-- logo -->
 <svg width="100px" height="98px" viewBox="0 0 100 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="shape-rendering: geometricPrecision">
@@ -74,17 +74,17 @@
 
     <div class="jumbotron container">
       <h1>Got something to say? JavaZone is the place to say it!</h1>
-      <p>JavaZone takes place in Oslo, Norway, on September 8th-10th 2015. The conference offers a combination of technical talks and workshops in an informal atmosphere with an expected attendance of more than 2500 highly skilled developers.</p>
+      <p>JavaZone takes place in Oslo, Norway, on September 7th-8th 2015. The conference offers a combination of technical talks and workshops in an informal atmosphere with an expected attendance of more than 2500 highly skilled developers.</p>
     </div>
 
     <div class="section container cf">
       <div class="sub-section cf">
-        <h1 class="section-header">Submitting a talk to JavaZone 2015</h1>
+        <h1 class="section-header">Submitting a talk to JavaZone 2016</h1>
         <div class="section-content">
           <p class="explanation"><strong>Submitting: </strong> Once you have submitted your talk you will receive a confirmation by email. In this email you'll find a link to a page where you can further update your submission should you wish.</p>
           <p class="explanation"><strong>Publication:</strong> The information given in this form will be published in the program, unless specifically stated otherwise.</p>
           <p class="explanation"><strong>Language:</strong> Please complete this form using the same language that you'll be presenting in. In other words, if you plan on presenting in Norwegian, skriv p&aring; norsk!</p>
-          <p class="explanation"><strong>Deadline:</strong> The deadline for submissions is April 20th 2015, but feel free to submit your talk early :-)</p>
+          <p class="explanation"><strong>Deadline:</strong> The deadline for submissions is April 18th 2016, but feel free to submit your talk early :-)</p>
         </div>
       </div>
     </div>
@@ -122,13 +122,6 @@
               </p>
             </div>
             <div class="input-section">
-              <h4>Summary</h4>
-              <p class="help">Describe the content of your talk in a few sentences. The summary will be used as an introduction to your talk in the program. It may also be used in printed material, on Twitter, on Vimeo etc.</p>
-              <p>
-                  <textarea rows="4" required="required" class="talkInput" id="highlightInput" ng-model="talk.highlight" placeholder="Short summary of your talk or workshop"></textarea>
-              </p>
-            </div>
-            <div class="input-section">
               <h4>Full abstract</h4>
               <p class="help">Give a concise description of the content and goals of your talk. Try not to exceed 300 words. Don't repeat the summary here as the summary will be shown along with this abstract in the JavaZone program.</p>
               <p>
@@ -150,37 +143,6 @@
                   <textarea rows="6" required="required" class="talkInput" id="expectedAudienceInput" ng-model="talk.expectedAudience" placeholder="Who is this talk for?"></textarea>
               </p>
             </div>
-            <div class="input-section">
-              <h4>Expected knowledge level</h4>
-              <p class="help">What level will you present at, and what do you thereby expect the listeners to know beforehand.</p>
-              <p>
-                  <div class="choice">
-                    <label for="beginnerchoice">
-                      <input type="radio" name="level" ng-model="talk.level" value="beginner" id="beginnerchoice" />
-                      <div class="label"><span>Introductory</span> A basic introduction. Assumes no prior knowledge of the subject.</div>
-                    </label>
-                  </div>
-                  <div class="choice">
-                    <label for="intermediatechoice">
-                      <input type="radio" name="level" ng-model="talk.level" value="intermediate" id="intermediatechoice" />
-                       <div class="label"><span>Intermediate</span> Some experience / knowledge of the subject is assumed.</div>
-                    </label>
-                  </div>
-                  <div class="choice">
-                    <label for="advancedchoice">
-                      <input type="radio" name="level" ng-model="talk.level" value="advanced" id="advancedchoice" />
-                       <div class="label"><span>Advanced</span> The talk is aimed at those who already have a good amount of experience and knowledge of the subject.</div>
-                    </label>
-                  </div>
-                  <div class="choice">
-                    <label for="hardcorechoice">
-                      <input type="radio" name="level" ng-model="talk.level" value="hardcore" id="hardcorechoice" />
-                       <div class="label"><span>Hardcore</span> This talk is for those experts who don't need any introduction to the subject. There'll be no introductory material, and a minimum amount of time will be used setting the stage.</div>
-                    </label>
-                  </div>
-              </p>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -195,24 +157,35 @@
               <p>
                 <div class="choice">
                   <label for="presentationchoice">
-                    <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" />
-                    <div class="label"><span>Presentation</span> Presentations should be no more than 60 minutes long. Aim for a 50 minute long talk, and leave 10 minutes for Q&amp;A at the end.</div>
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="presentation" id="presentationchoice" ng-click="prestypeChanged(talk.presentationType)"/>
+                    <div class="label"><span>Presentation</span> Presentations can be 45 or 60 minutes long. This include Q&amp;A.</div>
                   </label>
                 </div>
                 <div class="choice">
                   <label for="lightningchoice">
-                    <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" />
-                    <div class="label"><span>Lightning Talk</span> Lightning Talks are no longer than 10 minutes long, including Q&amp;A.  Note that the time limit is strictly enforced!</div>
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="lightning-talk" id="lightningchoice" ng-click="prestypeChanged(talk.presentationType)" />
+                    <div class="label"><span>Lightning Talk</span> Lightning Talks are 10 or 20 minutes long, including Q&amp;A.  Note that the time limit is strictly enforced!</div>
                   </label>
                 </div>
                 <div class="choice">
                   <label for="workshopchoice">
-                    <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" />
-                    <div class="label"><span>Workshop</span> Workshops can last 2, 4 or 8 hours. Use the "Outline" text box below to indicate the length of your workshop.</div>
+                    <input type="radio" name="format" ng-model="talk.presentationType" value="workshop" id="workshopchoice" ng-click="prestypeChanged(talk.presentationType)" />
+                    <div class="label"><span>Workshop</span> Workshops can last 2, 4 or 8 hours. </div>
                   </label>
                 </div>
               </p>
             </div>
+
+            <div class="input-section">
+              <h4 class="first">Presentation length</h4>
+              <p class="help">Please select the length of the presentation (in minutes). {{lengthDescription}}</p>
+              <p>
+                <select class="form-control" ng-model="talk.length">
+                  <option ng-repeat="tlen in talkLengths">{{tlen}}</option>
+                </select>
+              </p>
+            </div>
+
             <div class="input-section">
               <h4>Language</h4>
               <p class="help">Which language will you be holding the talk in? Note it is permitted to use English in your slides, even though you may be talking in Norwegian. We generally recommend that you hold the talk in the language you are most comfortable with.</p>
@@ -231,49 +204,15 @@
                 </div>
               </p>
             </div>
-            <div class="input-section">
-              <h4>Category</h4>
-              <p class="help">Select the main category your talk will fit into.</p>
-              <p>
-                <div class="choice" ng-repeat="topic in topicList">
-                  <label>
-                    <input type="radio" ng-model="$parent.talk.selectedTopic" value="{{topic.value}}" name="topicgroup" ng-change="topicChanged(topic.value)"/>
-		    <div class="label"><span>{{topic.value}}</span> {{topic.description}}</div>
-                  </label>
-                </div>
-              </p>
-            </div>
+
             <div class="input-section">
               <h4>Tags</h4>
               <p class="help">Please select <strong>max two tags</strong> to help the audience get a feel for what you will cover in your talk or workshop. One of these can be your custom tag if you feel our provided tags doesn't fit your talk.</p>
               <p>
-                <div class="choice" ng-repeat="atag in tagList">
-                  <label>
-                    <input type="checkbox" class="tagCheckbox" ng-model="atag.checked" id="{{atag.value}}" />
-                    <div class="label"><span>{{atag.value}}</span></div>
-                  </label>
-                </div>
-                <div class="choice" ng-show="talk.selectedTopic">
-                  <label class="customtag">
-                    <input type="checkbox" class="tagCheckbox" ng-model="customChecked" />
-                    <div class="label"><input type="text" ng-model="customTag" placeholder="...or write your own custom tag"></div>
-                  </label>
-                </div>
-                <div class="tagexplanation" ng-show="!talk.selectedTopic">Please select a category above to see the tags relevant to that category.</div>
+                
               </p>
             </div>
-            <div class="input-section">
-              <h4>Type of talk</h4>
-              <p class="help">To help the audience understand the type of talk you will be giving, mark your talk with one of these types.</p>
-              <p>
-                <div class="choice" ng-repeat="mytype in typeList">
-                  <label>
-                    <input type="radio" ng-model="$parent.talk.selectedType" value="{{mytype.value}}" name="typeGroup" />
-                    <div class="label"><span>{{mytype.value}}</span> {{mytype.description}}</div>
-                  </label>
-                </div>
-              </p>
-            </div>
+
 
           </div>
         </div>

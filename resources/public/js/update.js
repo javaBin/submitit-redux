@@ -77,6 +77,26 @@ angular.module('submititapp', [])
 
     var talkid = $.urlParam("talkid");
     var captchaFact = readCaptchaFact();
+    var typeDescription = {
+        presentation: {
+            text: "Presentations can have a length of 45 or 60 minutes. Including Q&A",
+            lengths: [45,60]
+        },
+        "lightning-talk": {
+            text: "Lightning talks can be 10 or 20 minutes long. The time limit is strictly enforced",
+            lengths: [10,20]
+        },
+        workshop: {
+            text: "Workshops last 2, 4 or 8 hours (120, 240 or 480 minutes)",
+            lengths: [120,240,480]
+        }
+    }
+    $scope.prestypeChanged = function(presentationType) {
+        $scope.lengthDescription = typeDescription[presentationType].text;
+        $scope.talkLengths = typeDescription[presentationType].lengths;
+    };
+
+
     if (talkid === 0) {
         $scope.talk = {
             presentationType : "presentation",
@@ -105,7 +125,11 @@ angular.module('submititapp', [])
             }]
         };
 
+        $scope.lengthDescription = typeDescription[$scope.talk.presentationType].text;
+        $scope.talkLengths = typeDescription[$scope.talk.presentationType].lengths;
+
         $scope.canHaveMoreSpeakers = true;
+
 
 
         $scope.talk.speakers[0].ifurl="uploadPicture?speakerid=&dummyKey=" +
@@ -146,6 +170,9 @@ angular.module('submititapp', [])
                         success(function(data, status, headers, config) {
                             $scope.showCapthca = false;
                             $scope.talk = data;
+                            $scope.lengthDescription = typeDescription[$scope.talk.presentationType].text;
+                            $scope.talkLengths = typeDescription[$scope.talk.presentationType].lengths;
+
                             $scope.talk.captchaFact = captchaFact;
                             $scope.talk.captchaAnswer = "";
 
