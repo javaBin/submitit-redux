@@ -148,19 +148,9 @@ angular.module('submititapp', [])
 
     $scope.tagList = [];
 
-    $scope.topicChanged = function(val) {
-        var topic = _.findWhere($scope.topicList,{value:val});
-        var newtl = [];
-        topic.tags.forEach(function(ta) {
-            newtl.push(_.clone(ta));
-        });
-        $scope.tagList = newtl;
-    }
 
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
-                $scope.topicList = data.topics;
-                $scope.typeList = data.types;
 
                 if (talkid != 0) {
                     var jsonurl = "talkJson/" + talkid;
@@ -265,48 +255,6 @@ angular.module('submititapp', [])
             $scope.showUserErrorMessage =true;
             $scope.userErrorMessage = message;
         };
-
-        if (!$scope.talk.selectedType || $scope.talk.selectedType === null || $scope.talk.selectedType === "") {
-            displayUserError("Please select a type of talk");
-            return false;
-        }
-
-        if (!$scope.talk.selectedTopic || $scope.talk.selectedTopic === null || $scope.talk.selectedTopic === "") {
-            displayUserError("Please select a talk topic");
-            return false;
-        }
-
-        if ($scope.customChecked && !$scope.customTag.match(/^[A-Za-z0-9 æøåÆØÅ]+$/)) {
-            displayUserError("Please dont use special characters in your tag (only letters and digits)");
-            return false;
-        }
-
-
-        
-
-        var talkTags = [];
-
-        var pushTagged = function(atag) {
-            if (atag.checked) {
-                talkTags.push(atag.value);
-            }
-        };
-
-        $scope.tagList.forEach(pushTagged);
-
-
-
-        if ($scope.customChecked) {
-            talkTags.push($scope.customTag);
-        }
-
-        if (talkTags.length > 2 || talkTags.length < 1) {
-            displayUserError("Please select one or two tags");
-            return false;
-        }
-
-        $scope.talk.talkTags = talkTags;
-
 
 
 
