@@ -232,7 +232,8 @@
     (para-error? (talk "outline")) "outline is required"
     (para-error? (talk "title")) "Title is required"
     (para-error? (talk "expectedAudience")) "Expected audience is required"
-    (< (count (talk "speakers")) 1) "One speaker must be added"  
+    (> (count (talk "talkTags")) 3) "Max 3 tags is allowed"
+    (< (count (talk "speakers")) 1) "One speaker must be added"
     (> (count (talk "speakers")) 2) "Max 2 speakers is allowed"
     :else (validate-speaker-input (talk "speakers"))
   )]

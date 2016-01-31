@@ -72,8 +72,6 @@ angular.module('submititapp', [])
     $scope.showCapthca = true;
     $scope.showGeneralError = false;
 
-    $scope.tagList = [];
-    $scope.typeList = [];
 
     var talkid = $.urlParam("talkid");
     var captchaFact = readCaptchaFact();
@@ -95,6 +93,21 @@ angular.module('submititapp', [])
         $scope.lengthDescription = typeDescription[presentationType].text;
         $scope.talkLengths = typeDescription[presentationType].lengths;
     };
+
+    $scope.addATag = function() {
+        var newTag = $scope.tagInput;
+        if (!newTag || newTag.trim().length == 0) {
+            return;
+        }
+        newTag = newTag.trim().toLowerCase();
+        if (_.indexOf($scope.talk.talkTags,newTag) === -1) {
+            $scope.talk.talkTags.push(newTag);
+        }
+    }
+
+    $scope.removeATag = function(atag) {
+        $scope.talk.talkTags = _.without($scope.talk.talkTags,atag);
+    }
 
 
     if (talkid === 0) {
@@ -151,7 +164,8 @@ angular.module('submititapp', [])
 
     $http({method: 'GET', url: "tagCollection"}).
             success(function(data, status, headers, config) {
-
+                var tagx = ['java','clojure','anders'];
+                $("#tagInput").autocomplete({source: tagx});
                 if (talkid != 0) {
                     var jsonurl = "talkJson/" + talkid;
 
@@ -166,31 +180,7 @@ angular.module('submititapp', [])
                             $scope.talk.captchaFact = captchaFact;
                             $scope.talk.captchaAnswer = "";
 
-                            var checkTags = function(atag) {
-                                var tags = $scope.talk.talkTags;
-                                if (tags && tags != null) {
-                                    tags.forEach(function (tagname) {
-                                        if (tagname == atag.value) {
-                                            atag.checked = true;
-                                        }
-                                    });
-                                }
-                            };
 
-                            var topelm = _.findWhere($scope.topicList,{value: $scope.talk.selectedTopic});
-                            if (topelm) {
-                                $scope.tagList = topelm.tags;
-                                $scope.tagList.forEach(checkTags);
-
-                                if ($scope.talk.talkTags && $scope.talk.talkTags !== null) {
-                                    $scope.talk.talkTags.forEach(function(myTag) {
-                                        if (!_.findWhere($scope.tagList,{value: myTag})) {
-                                            $scope.customChecked = true;
-                                            $scope.customTag = myTag;
-                                        }
-                                    });
-                                }
-                            }
 
                             $scope.talk.speakers.forEach(function (speaker) {
                                 speaker.hasPicture = false;
