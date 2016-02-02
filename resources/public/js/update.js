@@ -95,7 +95,7 @@ angular.module('submititapp', [])
     };
 
     $scope.addATag = function() {
-        var newTag = $scope.tagInput;
+        var newTag = $("#tagInput").val();
         if (!newTag || newTag.trim().length == 0) {
             return;
         }
@@ -162,9 +162,10 @@ angular.module('submititapp', [])
     $scope.tagList = [];
 
 
-    $http({method: 'GET', url: "tagCollection"}).
+    $http({method: 'GET', url: "tagcoll.json"}).
             success(function(data, status, headers, config) {
-                var tagx = ['java','clojure','anders'];
+                //var tagx = ['java','clojure','anders'];
+                var tagx = data;
                 $("#tagInput").autocomplete({source: tagx});
                 if (talkid != 0) {
                     var jsonurl = "talkJson/" + talkid;
@@ -194,7 +195,7 @@ angular.module('submititapp', [])
                         error(function(data, status, headers, config) {
                             console.log("Could not load talk");
                             $scope.showMain = false;
-                            $scope.failureError = "Could not find a talk with this id"
+                            $scope.failureError = "Could not find a talk with this id";
                             $scope.showFailure = true;
                         });
                     

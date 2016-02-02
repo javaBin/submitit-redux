@@ -211,7 +211,7 @@
               <h4>Tags</h4>
               <p class="help">You can tag your talk with up to three tags</p>
               <p>
-                <input type="text" class="talkInput" id="tagInput" placeholder="Add a tag" ng-model="tagInput"/><buttton class="button" ng-click="addATag()">Add tag</buttton>
+                <input type="text" class="talkInput" id="tagInput" placeholder="Add a tag"/><buttton class="button" ng-click="addATag()">Add tag</buttton>
               </p>
               <h3>
                 <span ng-repeat="ttag in talk.talkTags"><mark>{{ttag}} <span ng-click="removeATag(ttag)">(x)</span></mark>&nbsp;&nbsp;</span>
