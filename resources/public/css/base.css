@@ -25,6 +25,12 @@ body {
     /* We make our own highlights instead */
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-font-smoothing: antialiased;
+
+
+    background-image: url("../img/background_blurred.jpg");
+    background-attachment: fixed;
+    min-height: 100%;
+    width: 100%;
 }
 
 
@@ -36,13 +42,19 @@ html {
 }
 
 .content {
-    margin: 210px 0 40px 0;
+    padding: 210px 0 40px 0;
+}
+
+.nav .container {
+    background: transparent;
 }
 
 .container {
-    max-width: 860px;
+    max-width: 1000px;
     margin-left: 20px;
     margin-right: 20px;
+    background: #fff;
+    padding: 20px 50px;
 }
 
 .container-big {

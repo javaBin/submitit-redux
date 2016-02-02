@@ -3,7 +3,6 @@
 	-moz-transition: line-height .1s ease;
 	-o-transition: line-height .1s ease;
 	transition: line-height .1s ease;
-	background: rgba(254, 254, 254, .95);
 	position: absolute;
 	text-align: center;
 	top: -180px;
