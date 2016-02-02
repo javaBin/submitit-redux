@@ -80,7 +80,7 @@
     </div>
 
     <div class="section container cf">
-      <div class="sub-section cf">
+      <div class="sub-section sub-section-margin-top cf">
         <h1 class="section-header">Submitting a talk to JavaZone 2016</h1>
         <div class="section-content">
           <p class="explanation"><strong>Submitting: </strong> Once you have submitted your talk you will receive a confirmation by email. In this email you'll find a link to a page where you can further update your submission should you wish.</p>
@@ -116,6 +116,7 @@
 
       <div class="section container cf">
         <div class="sub-section cf">
+          <div class="icon icon-talk"></div>
           <h1 class="section-header">Your talk</h1>
           <div class="section-content">
             <div class="input-section">
@@ -147,6 +148,7 @@
 
       <div class="section container cf">
         <div class="sub-section cf">
+          <div class="icon icon-metadata"></div>
           <h1 class="section-header">Metadata</h1>
           <div class="section-content">
             <div class="input-section">
@@ -223,6 +225,7 @@
 
       <div class="section container cf">
         <div class="sub-section cf">
+          <div class="icon icon-programcommittee"></div>
           <h1 class="section-header">Information to the Program Committee</h1>
           <div class="section-content">
             <div class="input-section">
@@ -248,6 +251,7 @@
 
 
       <div class="jumbotron container">
+        <div class="icon icon-whoami"></div>
         <h1>That's it for your talk. But who are you?</h1>
         <p>Please give us a little bit of information about yourself. You can also add any additional speakers here. All of you will be shown in the program.</p>
       </div>
@@ -312,6 +316,7 @@
 
       <div class="section container cf" ng-show="showCapthca">
         <div class="sub-section cf">
+          <div class="icon icon-norobots"></div>
           <h1 class="section-header">Prove that you are not a Robot!</h1>
           <div class="section-content">
             <div class="input-section">
@@ -332,6 +337,7 @@
       <div class="splitter"></div>
 
       <div class="jumbotron container">
+        <div class="icon icon-submit"></div>
         <h1>Woooah, that's it! Really!</h1>
         <p>You will receive a copy of this information by e-mail. The email will contain a link so you can edit your talk. You can edit the details of your talk right up until the conference.</p>
       </div>
@@ -366,6 +372,7 @@
 
 
       <div class="jumbotron container">
+        <div class="icon icon-success"></div>
       	<h1>Your talk has been submitted</h1>
       	<p>We'll keep you posted about the progress by email. Thank you for helping making JavaZone awesome!</p>
       </div>
@@ -395,9 +402,10 @@
     <div class="wrapper" ng-show="showFailure">
 
       <div class="jumbotron container">
-	<h1>Sorry, something went bad!</h1>
+        <div class="icon icon-failure"></div>
+	      <h1>Sorry, something went bad!</h1>
         <p>Please contact us on <a href="mailto:program@java.no">program@java.no</a> if this problem persists.</p>
-	<p>{{failureError}}</p>
+	       <p>{{failureError}}</p>
       </div>
 
     </div>

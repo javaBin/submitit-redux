@@ -76,6 +76,10 @@
 @media (min-width: 768px) {
 
 	.sub-section {
+		/* margin-top: 2.5em; */
+	}
+
+	.sub-section-margin-top {
 		margin-top: 2.5em;
 	}
 

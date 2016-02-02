@@ -172,3 +172,59 @@ select {
     position: relative; 
     top: -89px; 
 }
+
+
+
+
+
+
+
+
+
+
+.icon {
+    height: 200px;
+    width: 200px;
+    margin: 0 auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.icon-talk {
+    background-image: url("../img/speaker.svg");
+}
+
+.icon-metadata {
+    background-image: url("../img/metadata.svg");
+}
+
+.icon-programcommittee {
+    background-image: url("../img/programcommittee.svg");
+}
+
+.icon-whoami {
+    background-image: url("../img/legorobot.svg");
+}
+
+.icon-norobots {
+    background-image: url("../img/robot.svg");
+}
+
+.icon-submit {
+    background-image: url("../img/rocket.svg");
+}
+
+.icon-success {
+    background-image: url("../img/highfive.svg");
+}
+
+.icon-failure {
+    background-image: url("../img/depression.svg");
+}
+
+
+
+
+
+
+
