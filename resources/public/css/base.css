@@ -99,6 +99,34 @@ h1 {
     }
 }
 
+select {
+    font-size: 2em;
+}
+
+.tags {
+    margin-top: 2em;
+}
+
+.tags .tag {
+    border: 1px solid #286a65;
+    color: #286a65;
+    padding: .5em 3em .5em 1em;
+    margin: .5em;
+    border-radius: 100px;
+    float: left;
+    position: relative;
+}
+.tags .tag .tag-remove {
+    position: absolute;
+    right: .5em;
+    top: .4em;
+    background: #286a65;
+    color: #fff;
+    padding: 0 .65em .2em .65em;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the

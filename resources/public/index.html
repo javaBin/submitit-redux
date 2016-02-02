@@ -76,7 +76,7 @@
 
     <div class="jumbotron container">
       <h1>Got something to say? JavaZone is the place to say it!</h1>
-      <p>JavaZone takes place in Oslo, Norway, on September 7th-8th 2015. The conference offers a combination of technical talks and workshops in an informal atmosphere with an expected attendance of more than 2500 highly skilled developers.</p>
+      <p>JavaZone takes place in Oslo, Norway, on September 7th-8th 2016. The conference offers a combination of technical talks and workshops in an informal atmosphere with an expected attendance of more than 2500 highly skilled developers.</p>
     </div>
 
     <div class="section container cf">
@@ -179,11 +179,11 @@
             </div>
 
             <div class="input-section">
-              <h4 class="first">Presentation length</h4>
+              <h4>Prefered presentation length</h4>
               <p class="help">Please select the length of the presentation (in minutes). {{lengthDescription}}</p>
               <p>
                 <select class="form-control" ng-model="talk.length">
-                  <option ng-repeat="tlen in talkLengths">{{tlen}}</option>
+                  <option ng-repeat="tlen in talkLengths" value={{tlen}}>{{tlen}} minutes</option>
                 </select>
               </p>
             </div>
@@ -213,9 +213,9 @@
               <p>
                 <input type="text" class="talkInput" id="tagInput" placeholder="Add a tag"/><buttton class="button" ng-click="addATag()">Add tag</buttton>
               </p>
-              <h3>
-                <span ng-repeat="ttag in talk.talkTags"><mark>{{ttag}} <span ng-click="removeATag(ttag)">(x)</span></mark>&nbsp;&nbsp;</span>
-              </h3>
+              <div class="tags">
+                <div class="tag" ng-repeat="ttag in talk.talkTags">{{ttag}} <span class="tag-remove" ng-click="removeATag(ttag)">x</span></div>
+              </div>
             </div>
 
 
