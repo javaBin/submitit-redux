@@ -103,6 +103,7 @@ angular.module('submititapp', [])
         if (_.indexOf($scope.talk.talkTags,newTag) === -1) {
             $scope.talk.talkTags.push(newTag);
         }
+        $("#tagInput").val("").focus();
     }
 
     $scope.removeATag = function(atag) {
