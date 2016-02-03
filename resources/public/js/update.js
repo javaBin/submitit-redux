@@ -211,7 +211,8 @@ angular.module('submititapp', [])
 
 
 
-    $scope.addASpeaker = function() {
+    $scope.addASpeaker = function(e) {
+        e.preventDefault();
         var newsp = {
             speakerName: "",
             email: "",
