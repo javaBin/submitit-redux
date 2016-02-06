@@ -51,7 +51,7 @@ http://localhost:8080/talkDetail.html
 
 ## License
 
-Copyright (C) 2015 javaBin
+Copyright (C) 2016 javaBin
 
 Distributed under the Eclipse Public License, the same as Clojure.
 

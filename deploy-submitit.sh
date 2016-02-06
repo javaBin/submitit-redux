@@ -65,13 +65,13 @@ if [ $ENV != "test" -a $ENV != "prod" -a $ENV != "dev" ]; then
 fi
 
 if [ $ENV == "prod" ]; then
-	HOST="2015.javazone.no"
+	HOST="javazone.no"
 	BASE="/home/javabin/web/submitit"
 elif [ $ENV == "dev" ]; then
 	HOST="192.168.111.222"
 	BASE="/home/javabin/web/submitit"
 elif [ $ENV == "test" ]; then
-	HOST="test.2015.javazone.no"
+	HOST="test.javazone.no"
 	BASE="/home/javabin/web/submitit"
 else
 	fail "Det du sa gav null mening!"

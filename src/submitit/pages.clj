@@ -61,7 +61,7 @@
       (if error-response error-response
         (let [talk-result (communicate-talk-to-ems talk session)]
           (timbre/trace "TALKRES:" talk-result)
-          (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2015 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
+          (send-mail (speaker-mail-list talk) (str "Confirmation " (if (exsisting-talk? talk) "on updating" "of") " your JavaZone 2016 submission \"" (talk "title") "\"") (generate-mail-text (slurp (clojure.java.io/resource "speakerMailTemplate.txt"))
                                                                                                                                                                              (assoc talk "talkmess" (generate-mail-talk-mess talk-result))))
           (generate-string (merge talk-result
                              (if (talk-result :submitError) {:retError true :addr "xxx"}

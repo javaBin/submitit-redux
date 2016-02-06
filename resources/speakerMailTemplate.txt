@@ -14,13 +14,11 @@ program@java.no
 The following has been registered:
 
 Format: %presentationType%
+Length:
 Title: %title%
 
 Abstract:
 %abstract%
-
-Summary:
-%highlight%
 
 Outline:
 %outline%
@@ -35,14 +33,8 @@ Equipment:
 Expected audience:
 %expectedAudience%
 
-Category:
-%selectedTopic%
-
 Tags:
 %atalkTags%
-
-Type of talk:
-%selectedType%
 
 Speakers:
 %tspeakers
