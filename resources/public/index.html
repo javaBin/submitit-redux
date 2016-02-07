@@ -180,8 +180,8 @@
               <h4>Prefered presentation length</h4>
               <p class="help">Please select the length of the presentation (in minutes). {{lengthDescription}}</p>
               <p>
-                <select class="form-control" ng-model="talk.length">
-                  <option ng-repeat="tlen in talkLengths" value={{tlen}}>{{tlen}} minutes</option>
+                <select class="form-control" ng-model="talk.length" >
+                  <option ng-repeat="tlen in talkLengths">{{tlen}}</option>
                 </select>
               </p>
             </div>

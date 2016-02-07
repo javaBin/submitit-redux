@@ -73,6 +73,12 @@
 
 )
 
+(defn compute-length-from-tags [talk-data]
+  (let [lentags (filter #(.startsWith % "len") (if (coll? (if (map? talk-data) (talk-data "tags") [])) (talk-data "tags") []))]
+    (Integer/parseInt (.substring (if (empty? lentags) "len60" (first lentags)) 3))
+
+  ))
+
 
 (defn json-talk [encoded-talkid]
   (if (frontend-develop-mode?) (slurp (clojure.java.io/resource "exampleTalk.json"))
@@ -86,12 +92,11 @@
         (generate-string
           {
             :presentationType (talk-data "format"),
+            :length (compute-length-from-tags talk-data)
             :title (talk-data "title"),
             :abstract (talk-data "body"),
             :language (talk-data "lang"),
-            :level (talk-data "level"),
             :outline (talk-data "outline"),
-            :highlight (talk-data "summary"),
             :equipment (talk-data "equipment")
             :expectedAudience (talk-data "audience")
             :talkTags (remove-system-tags (talk-data "keywords"))
@@ -99,8 +104,6 @@
             :addSpeakers (encode-string (str add-speak-ref))
             :lastModified (item :lastModified)
             :speakers speaker-list
-            :selectedTopic (match-tag (talk-data "keywords") "topic:")
-            :selectedType (match-tag (talk-data "keywords") "type:")
             }
           ))))
   )

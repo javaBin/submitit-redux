@@ -114,6 +114,7 @@ angular.module('submititapp', [])
     if (talkid === 0) {
         $scope.talk = {
             presentationType : "presentation",
+            length: 60,
             title: "",
             abstract: "",
             language: "no",
