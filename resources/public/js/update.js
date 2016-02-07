@@ -78,15 +78,15 @@ angular.module('submititapp', [])
     var typeDescription = {
         presentation: {
             text: "Presentations can have a length of 45 or 60 minutes. Including Q&A",
-            lengths: [45,60]
+            lengths: [{id:45,text:"45 minutes"},{id:60,text:"60 minutes"}]
         },
         "lightning-talk": {
             text: "Lightning talks can be 10 or 20 minutes long. The time limit is strictly enforced",
-            lengths: [10,20]
+            lengths: [{id:10,text:"10 minutes"},{id:20,text:"20 minutes"}]
         },
         workshop: {
             text: "Workshops last 2, 4 or 8 hours (120, 240 or 480 minutes)",
-            lengths: [120,240,480]
+            lengths: [{id:120,text:"120 minutes"},{id:240,text:"240 minutes"},{id:480,text:"480 minutes"}]
         }
     }
     $scope.prestypeChanged = function(presentationType) {
