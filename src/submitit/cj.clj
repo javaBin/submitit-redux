@@ -9,6 +9,15 @@
   (seq (concat (talk "talkTags") [(str "topic:" (talk "selectedTopic")) (str "type:" (talk "selectedType"))]))
   )
 
+(defn add-length-to-tags[exisisting-talk talk-length-str]
+  (let [talk-length (str "len" talk-length-str)
+        exsisting-tags (if (and (map? exisisting-talk) (vector? (exisisting-talk "tags"))) (exisisting-talk "tags") [])
+        ]
+  {
+    "tags" (vec (conj (filter #(not (and (string? %) (.startsWith % "len"))) exsisting-tags) talk-length))
+    }
+  ))
+
 (defn talk-to-template [talk exisisting-talk]
   (let [t (cj/create-template (merge {
     "title" (talk "title")
@@ -23,7 +32,7 @@
     "summary" (talk "highlight")
   }
   (if (and (map? exisisting-talk) (exisisting-talk "state")) {"state" (exisisting-talk "state")} {})
-  (if (and (map? exisisting-talk) (exisisting-talk "tags")) {"tags" (exisisting-talk "tags")} {})
+  (add-length-to-tags exisisting-talk (talk "length"))
     ))]
     (timbre/trace "Template: " t) t))
 
