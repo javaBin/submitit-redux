@@ -14,7 +14,7 @@ program@java.no
 The following has been registered:
 
 Format: %presentationType%
-Length:
+Length: %length% minutes
 Title: %title%
 
 Abstract:

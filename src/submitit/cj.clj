@@ -6,7 +6,7 @@
   )
 
 (defn compute-tags [talk]
-  (seq (concat (talk "talkTags") [(str "topic:" (talk "selectedTopic")) (str "type:" (talk "selectedType"))]))
+  (seq (concat (talk "talkTags")))
   )
 
 (defn add-length-to-tags[exisisting-talk talk-length-str]
@@ -14,7 +14,7 @@
         exsisting-tags (if (and (map? exisisting-talk) (vector? (exisisting-talk "tags"))) (exisisting-talk "tags") [])
         ]
   {
-    "tags" (vec (conj (filter #(not (and (string? %) (.startsWith % "len"))) exsisting-tags) talk-length))
+    "tags" (seq (conj (filter #(not (and (string? %) (.startsWith % "len"))) exsisting-tags) talk-length))
     }
   ))
 
