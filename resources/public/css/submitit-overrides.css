@@ -1,112 +1,130 @@
 .input-section h4 {
-	margin: 2em 0 0 0;
-	font-size: 1.3em;
-	font-weight: 300;
+    margin: 2em 0 0 0;
+    font-size: 1.3em;
+    font-weight: 300;
 }
+
 .input-section h4.first {
-	margin-top: .5em;
+    margin-top: .5em;
 }
+
 .input-section p {
-	margin: .5em 0;
-	font-size: .8em;
+    margin: .5em 0;
+    font-size: .8em;
 }
+
 .input-section p.help {
-	color: #666;
+    color: #666;
 }
+
 .input-section input, .input-section textarea, .input-section .customtag .label input {
-	width: 100%;
-	padding: 1em;
-	border: 1px solid #eee;
+    width: 100%;
+    padding: 1em;
+    border: 1px solid #eee;
 }
 
 .choice {
-	font-size: .8em;
-	margin: 1em 0 0 0;
-	cursor: pointer;
+    font-size: .8em;
+    margin: 1em 0 0 0;
+    cursor: pointer;
 }
+
 .choice label input {
-	position: absolute;
-	left: 0;
-	top: .4em;
-	width: auto;
+    position: absolute;
+    left: 0;
+    top: .4em;
+    width: auto;
 }
+
 .choice label {
-	display: block;
-	position: relative;
-	width: 100%;
-	font-weight: 300;
-	font-size: .9em;
+    display: block;
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    font-size: .9em;
 }
+
 .choice label .label {
-	margin: 0 0 0 2em;
+    margin: 0 0 0 2em;
 }
+
 .choice label span {
-	font-weight: 400;
-	display: block;
-	font-size: 1.3em;
+    font-weight: 400;
+    display: block;
+    font-size: 1.3em;
 }
+
 .choice label.customtag .label {
-	height: 3em;
+    height: 3em;
 }
+
 .choice label.customtag .label input {
-	margin: 0 0 0 1.5em;
-	padding: .5em;
-	font-size: 1.2em;
+    margin: 0 0 0 1.5em;
+    padding: .5em;
+    font-size: 1.2em;
 }
+
 .choice label.customtag .tagCheckbox {
-	top: 1.2em;
+    top: 1.2em;
 }
 
 .center {
-	text-align: center;
+    text-align: center;
 }
+
 button {
-	background: none;
-	font-weight: 300;
+    background: none;
+    font-weight: 300;
 }
 
 .section-content p.explanation {
-	margin: 1.5em 0;
-}
-.tagexplanation {
-	font-size: .8em;
-	color: #777;
-	font-style: italic;
-}
-.uploader {
-	margin: 1.5em 0 0 0;
-	padding: .5em 0 1em 0;
-	border: 1px solid #eee;
-}
-.uploader .uploader-left {
-	float: left;
-	width: 50%;
-}
-.uploader .uploader-right {
-	float: left;
-	width: 50%;
-}
-.uploader .imagepreview-wrapper {
-	width: 150px;
-	margin: 0 auto;
-}
-.imagepreview {
-	width: 150px;
-	height: 150px;
-	border-radius: 1000px;
-	border: 1px solid #bbb;
-}
-.uploader h4 {
-	font-weight: bold;
-	text-transform: uppercase;
-	margin: 0 0 .5em 0;
-	font-size: .8em;
-	text-align: center;
+    margin: 1.5em 0;
 }
 
+.tagexplanation {
+    font-size: .8em;
+    color: #777;
+    font-style: italic;
+}
+
+.uploader {
+    margin: 1.5em 0 0 0;
+    padding: .5em 0 1em 0;
+    border: 1px solid #eee;
+}
+
+.uploader .uploader-left {
+    float: left;
+    width: 50%;
+}
+
+.uploader .uploader-right {
+    float: left;
+    width: 50%;
+}
+
+.uploader .imagepreview-wrapper {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.imagepreview {
+    width: 150px;
+    height: 150px;
+    border-radius: 1000px;
+    border: 1px solid #bbb;
+}
+
+.uploader h4 {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 .5em 0;
+    font-size: .8em;
+    text-align: center;
+}
 
 .ingress {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 input:invalid, textarea:invalid {
@@ -114,32 +132,30 @@ input:invalid, textarea:invalid {
 }
 
 .preserve-newlines {
-	white-space: pre-wrap;
+    white-space: pre-wrap;
 }
-
-
 
 /*  menu */
 .nav {
-	top: 0;
+    top: 0;
 }
 
 .nav .logo a {
-	margin-left: 0;
+    margin-left: 0;
 }
 
 .nav-toggle {
-	display: none;
+    display: none;
 }
 
 .nav-element {
-	width: 33.33%;
+    width: 33.33%;
 }
 
 .nav-mobile {
-	display: none;
+    display: none;
 }
 
 .nav-item {
-	display: table-cell;
+    display: table-cell;
 }

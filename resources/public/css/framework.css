@@ -1,117 +1,117 @@
 .section {
-	padding-bottom: 2.5em;
-	padding-top: 2.5em;
+    padding-bottom: 2.5em;
+    padding-top: 2.5em;
 }
 
 .sub-section h2 {
-	color: #505050;
-	font-size: 1.3em;
-	font-weight: 300;
+    color: #505050;
+    font-size: 1.3em;
+    font-weight: 300;
 }
 
 .section-content h2:first-child {
-	margin-top: .65em;
+    margin-top: .65em;
 }
 
 .section-header h1 {
-	margin: 0;
+    margin: 0;
 }
 
 .section-content p {
-	margin: 2.5em 0;
-	text-align: left;
+    margin: 2.5em 0;
+    text-align: left;
 }
 
 .section-content h2 + p {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 .section-content p:first-child {
-	margin-top: 1.16em;
+    margin-top: 1.16em;
 }
 
 .section-content p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .section-content ul {
-	margin: 2.5em 0;
+    margin: 2.5em 0;
 }
 
 .sub-section ul {
-	list-style: none;
-	position: relative;
+    list-style: none;
+    position: relative;
 }
 
 .sub-section ul:before {
-	background: #101010;
-	content: "";
-	display: block;
-	top: 7px;
-	bottom: 5px;
-	left: 1px;
-	position: absolute;
-	width: 3px;
+    background: #101010;
+    content: "";
+    display: block;
+    top: 7px;
+    bottom: 5px;
+    left: 1px;
+    position: absolute;
+    width: 3px;
 }
 
 .section-content ul {
-	padding-right: 0;
-	padding-left: 30px;
-	margin-top: .3em;
+    padding-right: 0;
+    padding-left: 30px;
+    margin-top: .3em;
 }
 
 .section-content li {
-	margin-bottom: 20px;
-	text-align: justify;
+    margin-bottom: 20px;
+    text-align: justify;
 }
 
 .section-content li:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .jumbotron {
-	text-align: center;
+    text-align: center;
 }
 
 @media (min-width: 768px) {
 
-	.sub-section {
-		/* margin-top: 2.5em; */
-	}
+    .sub-section {
+        /* margin-top: 2.5em; */
+    }
 
-	.sub-section-margin-top {
-		margin-top: 2.5em;
-	}
+    .sub-section-margin-top {
+        margin-top: 2.5em;
+    }
 
-	.sub-section .section-header {
-		float: left;
-		margin: 0;
-		padding-right: 20px;
-		text-align: right;
-		width: 40%;
-	}
+    .sub-section .section-header {
+        float: left;
+        margin: 0;
+        padding-right: 20px;
+        text-align: right;
+        width: 40%;
+    }
 
-	.sub-section .section-header.centered {
-		float: none;
-		padding-right: 0;
-		text-align: center;
-		width: 100%;
-	}
+    .sub-section .section-header.centered {
+        float: none;
+        padding-right: 0;
+        text-align: center;
+        width: 100%;
+    }
 
-	.section-content {
-		float: left;
-		padding-left: 20px;
-		width: 60%;
-	}
+    .section-content {
+        float: left;
+        padding-left: 20px;
+        width: 60%;
+    }
 
-	.sub-section .section-header.centered + .section-content {
-		float: none;
-		margin-top: 1.3em;
-		padding-left: 0;
-		width: 100%;
-	}
+    .sub-section .section-header.centered + .section-content {
+        float: none;
+        margin-top: 1.3em;
+        padding-left: 0;
+        width: 100%;
+    }
 
-	.jumbotron-desktop {
-		text-align: center;
-	}
+    .jumbotron-desktop {
+        text-align: center;
+    }
 }
