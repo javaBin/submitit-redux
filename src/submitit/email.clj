@@ -84,14 +84,18 @@
 
 (defn generate-mail-text [template value-map]
   (timbre/trace "** gen-mail-text **")
+  (timbre/trace "template ;" template ";")
+  (timbre/trace "value-map ;" value-map ";")
   (if (empty? value-map) template
-    (let [[tkey tvalue] (first value-map)]
-      (timbre/trace "Mailrep " tkey "+++" tvalue)
+    (let [[tkey tval] (first value-map)
+          tvalue (if (nil? tval) "" tval)
+          ]
+      (timbre/trace "Mailrep " tkey "+++" tvalue "---")
       (generate-mail-text
       (clojure.string/replace
-       (handle-arr 
-        (handle-template generate-mail-text template tkey tvalue) 
-        tkey tvalue) 
-       (re-pattern (str "%" tkey "%")) (replace-me (replace-me tvalue "$" "&#36;") "&#36;" "\\$"))
+          (handle-arr (handle-template generate-mail-text template tkey tvalue) tkey tvalue)
+          (re-pattern (str "%" tkey "%"))
+          (str (replace-me (replace-me tvalue "$" "&#36;") "&#36;" "\\$"))
+        )
       (dissoc value-map tkey)))))
 
