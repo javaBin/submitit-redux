@@ -10,14 +10,14 @@
     z-index: 1;
 }
 
-.nav .logo {
-    font-size: 0;
+.nav .logo .the-logo {
+    margin: 0 auto;
+    width: 150px;
+    height: 150px;
+    background: url("../img/logo.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
 }
-
-.nav .logo svg {
-    margin: 20px 0;
-}
-
 .nav .logo a {
     margin-left: 30px;
 }
