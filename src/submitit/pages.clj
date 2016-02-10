@@ -168,6 +168,7 @@
         (> (count photo-byte-arr) 500000) (upload-form "Picture too large (max 500k)" speakerKey dummyKey false)
         (empty? speakerKey) {:session (assoc session dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
                              :body (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
+                             :headers {"Content-Type" "text/html;charset=utf-8"}
                              }
 
         :else (do
@@ -175,6 +176,7 @@
                 {
                   :session (assoc session dummyKey {:photo-byte-arr photo-byte-arr :photo-content-type photo-content-type :photo-filename photo-filename})
                   :body (upload-form (str "Picture uploaded: " (filehandler :filename)) speakerKey dummyKey true)
+                  :headers {"Content-Type" "text/html;charset=utf-8"}
                   })
         ))
 
