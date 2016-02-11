@@ -128,19 +128,18 @@
 (defn upload-form [message speaker-key dummy-key picChanged]
   (html
     [:html
-    (if picChanged
       [:header
        [:script {:src "js/jquery-1.7.2.js"}]
        [:script {:src "js/uploadPictureCommunication.js"}]
        ]
-      )
     [:body
-     (if message [:p message])
+
+     (if message [:p {:id "messagePara"} message] [:p {:id "messagePara"}])
      [:form {:method "POST" :action "addPic" :enctype "multipart/form-data"}
       [:input {:type "file" :name "file" :id "filehandler" :required "required"}]
       [:input {:type "hidden" :value speaker-key :name "speakerKey" :id "speakerKey"}]
       [:input {:type "hidden" :value dummy-key :name "dummyKey" :id "dummyKey"}]
-      [:input {:type "submit" :value "Upload File"}]
+      [:input {:type "submit" :value "Upload File" :id "uploadBtn"}]
       ]]]))
 
 (defn upload-picture [request]
@@ -150,7 +149,7 @@
     ))
 
 
-(defn add-picture [mprequest]
+ (defn add-picture [mprequest]
   (let [filehandler ((mprequest :multipart-params) "file")
         speakerKey ((mprequest :multipart-params) "speakerKey")
         dummyKey ((mprequest :multipart-params) "dummyKey")
@@ -191,7 +190,7 @@
     nil
     ))
 
-(defn speaker-photo [request]
+                                       (defn speaker-photo [request]
   (let [param ((ring-params/params-request request) :query-params)]
     (let [author (create-encoded-auth) connection (.openConnection (new java.net.URL (decode-string (param "photoid"))))]
       (.setRequestMethod connection "GET")
@@ -216,7 +215,7 @@
       )))
   )
 
-(defn saved-picture [request]
+                                       (defn saved-picture [request]
   (let [param ((ring-params/params-request request) :query-params)]
     {
       :headers {"Content-Type" "image/jpeg"}
@@ -235,7 +234,7 @@
   ))
 
 
-(defroutes main-routes
+                                       (defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
   (GET "/tagCollection" [] (generate-string (tag-list)))
@@ -262,7 +261,7 @@
   ))
 
 
-(defn -main [& m]
+                                       (defn -main [& m]
 
   (println "Starting " (java.lang.System/getenv "SUBMITIT_SETUP_FILE"))
   (if (not (frontend-develop-mode?))
