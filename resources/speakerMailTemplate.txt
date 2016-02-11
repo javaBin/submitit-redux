@@ -25,9 +25,7 @@ Outline:
 
 Language: %language% 
 
-Level: %level%
-
-Equipment: 
+Equipment:
 %equipment%
 
 Expected audience:
