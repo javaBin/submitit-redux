@@ -250,6 +250,11 @@ angular.module('submititapp', [])
             $scope.userErrorMessage = message;
         };
 
+        if ($scope.talk.talkTags.length > 3) {
+            displayUserError("Your talk can maximum have three tags. Please delete one or more tags");
+            return false;
+        }
+
 
 
         $http({method: 'POST', url: "addTalk", data: $scope.talk}).
