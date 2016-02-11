@@ -373,6 +373,11 @@
                                        ng-model="speaker.zipCode" placeholder="Your postal code (postnummer)"/>
                             </p>
                         </div>
+                        <div class="center section container cf">
+                            <button ng-show="canDeleteSpeaker" class="btn button" id="deleteSpeakerBtn" ng-click="deleteSpeaker(speaker)">
+                                Remove speaker
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -227,6 +227,7 @@ angular.module('submititapp', [])
         $scope.talk.speakers.push(newsp);
 
         $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
+        $scope.canDeleteSpeaker = (talkid === 0) && ($scope.talk.speakers.length > 1);
     }
 
     
@@ -312,6 +313,16 @@ angular.module('submititapp', [])
             speaker.picurl = get_gravatar(speaker.email);
         };
 
+    };
+
+    $scope.canDeleteSpeaker = false;
+    $scope.deleteSpeaker = function(speaker) {
+        var ind = _.indexOf($scope.talk.speakers,speaker);
+        if (ind !== -1) {
+            $scope.talk.speakers.splice(ind, 1);
+        }
+
+        $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
     };
 
 
