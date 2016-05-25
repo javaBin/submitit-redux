@@ -10,11 +10,14 @@
   )
 
 (defn add-length-to-tags[exisisting-talk talk-length-str]
+  (timbre/trace "Adding length " exisisting-talk)
+  (timbre/trace "Adding length str " talk-length-str)
+
   (let [talk-length (str "len" talk-length-str)
-        exsisting-tags (if (and (map? exisisting-talk) (vector? (exisisting-talk "tags"))) (exisisting-talk "tags") [])
+        exsisting-tags (if (map? exisisting-talk) (exisisting-talk "tags") [])
         ]
   {
-    "tags" (seq (conj (filter #(not (and (string? %) (.startsWith % "len"))) exsisting-tags) talk-length))
+    "tags" (seq (conj (filter (fn[extag] (empty? (filter (fn[x] (= extag x)) ["len10" "len20" "len45" "len60" "len120" "len240" "len480"]))) exsisting-tags) talk-length))
     }
   ))
 
