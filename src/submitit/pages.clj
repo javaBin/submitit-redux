@@ -234,7 +234,7 @@
   ))
 
 
-                                       (defroutes main-routes
+(defroutes main-routes
   (GET "/" [] (response-util/redirect "index.html"))
   (GET "/newSpeakerId" [] (new-speaker-id))
   (GET "/tagCollection" [] (generate-string (tag-list)))

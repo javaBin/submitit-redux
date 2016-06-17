@@ -35,6 +35,7 @@
     "summary" (talk "highlight")
   }
   (if (and (map? exisisting-talk) (exisisting-talk "state")) {"state" (exisisting-talk "state")} {})
+  (if (and (map? exisisting-talk) (exisisting-talk "published")) {"published" (exisisting-talk "published")} {})
   (add-length-to-tags exisisting-talk (talk "length"))
     ))]
     (timbre/trace "Template: " t) t))
