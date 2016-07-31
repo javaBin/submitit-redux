@@ -150,10 +150,13 @@ angular.module('submititapp', [])
         $scope.talk.speakers[0].ifurl="uploadPicture?speakerid=&dummyKey=" +
             $scope.talk.speakers[0].dummyId;
 
+        $scope.submitClosed = false;
 
         $http({method: 'GET', url: "needPassword"}).
         success(function(data, status, headers, config) {
             $scope.needPassword = data.needPassword;
+            $scope.submitClosed = data.isClosed;
+
         }).
         error(function(data, status, headers, config) {
             console.log("Error fetching password neeeded");

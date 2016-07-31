@@ -35,7 +35,18 @@ angular.module('submititapp', [])
 			$scope.showError = true;
 	  	});
 
-	
+
+		$scope.submitClosed = false;
+		$http({method: 'GET', url: "needPassword"}).
+		success(function(data, status, headers, config) {
+			if (data.isClosed) {
+				$scope.showMain = false;
+				//$scope.failureError = "Talk updates are closed. If you need to change anything, please contact us at program@java.no";
+				$scope.submitClosed = true;
+
+			}
+		})
+
 	$scope.formatLanguage = function() {
 		if ($scope.talkData.language === "no") {
 			return "Norwegian";

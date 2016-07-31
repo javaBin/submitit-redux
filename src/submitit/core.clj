@@ -218,6 +218,11 @@
   (let [close-time (read-setup :closing-time)]
     (and (not (nil? close-time)) (< 0 (.compareTo (time-now) close-time)))))
 
+(defn submitit-closed? []
+  (= "true" (read-setup :submititClosed))
+  )
+
+
 (defn illegal-keywords? [keywords]
   (reduce (fn [a b] (or a b)) (map #(not (re-find #"^[A-Za-z0-9 æøåÆØÅ]+$" %)) keywords))
   )
