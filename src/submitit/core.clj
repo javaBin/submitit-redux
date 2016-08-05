@@ -193,8 +193,10 @@
       (if errormsg errormsg (validate-speaker-fields (rest speakers))))))
 
 (defn validate-unique-email [speakers]
-  (let [all-mails (map #(% "email") speakers)]
-    (if (= (count all-mails) (count (set all-mails))) nil "Speakers must have different email")))
+  nil
+  ; (let [all-mails (map #(% "email") speakers)]
+  ;  (if (= (count all-mails) (count (set all-mails))) nil "Speakers must have different email")
+  )
 
 (defn validate-speaker-input [speakers]
   (let [speak-field-error (validate-speaker-fields speakers)]
@@ -239,7 +241,7 @@
     (para-error? (talk "expectedAudience")) "Expected audience is required"
     (> (count (talk "talkTags")) 3) "Max 3 tags is allowed"
     (< (count (talk "speakers")) 1) "One speaker must be added"
-    (> (count (talk "speakers")) 2) "Max 2 speakers is allowed"
+    ;(> (count (talk "speakers")) 2) "Max 2 speakers is allowed"
     :else (validate-speaker-input (talk "speakers"))
   )]
   (if error-msg (generate-string {:errormessage error-msg}) nil)))

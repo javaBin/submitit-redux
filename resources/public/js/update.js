@@ -194,7 +194,7 @@ angular.module('submititapp', [])
                                 speaker.ifurl="uploadPicture?speakerid=" + speaker.givenId + "&dummyKey=";
                             });
 
-                            $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
+                            //$scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
 
                         }).
                         error(function(data, status, headers, config) {
@@ -229,7 +229,7 @@ angular.module('submititapp', [])
         newsp.ifurl="uploadPicture?speakerid=&dummyKey=" + newsp.dummyId;
         $scope.talk.speakers.push(newsp);
 
-        $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
+        //$scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
         $scope.canDeleteSpeaker = (talkid === 0) && ($scope.talk.speakers.length > 1);
     }
 
@@ -325,7 +325,7 @@ angular.module('submititapp', [])
             $scope.talk.speakers.splice(ind, 1);
         }
 
-        $scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
+        //$scope.canHaveMoreSpeakers = ($scope.talk.speakers.length < 2);
     };
 
 
